@@ -20,24 +20,21 @@
 		<!-- Header -->
 		<header id="header">
 			<div class="logo">
-				<span class="icon fa-gem"></span>
+				<span ><!--class="icon fa-gem">-->1056 m</span>
 			</div>
 			<div class="content">
 				<div class="inner">
-					<h1>Dimension</h1>
+					<h1>Lost in Guarda</h1>
 					<p>
-						A fully responsive site template designed by <a href="https://html5up.net">HTML5 UP</a> and released<br />
-						for free under the <a href="https://html5up.net/license">Creative Commons</a> license.
+						<a>Guarda</a> uma Cidade a Pensar no Mundo.
 					</p>
 				</div>
 			</div>
 			<nav>
 				<ul>
-					<li><a href="#intro">Intro</a></li>
-					<li><a href="#work">Work</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
-					<!--<li><a href="#elements">Elements</a></li>-->
+					<li><a href="#entrar">Login</a></li>
+					<li><a asp-action="index">Visitar</a></li>
+					<li><a href="#registar">Registar</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -58,7 +55,7 @@
 			<article id="work">
 				<h2 class="major">Work</h2>
 				<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
-				<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
+				<p>jhghjghgjAdipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
 				<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>
 			</article>
 
@@ -344,6 +341,67 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 			</article>
 
+			<!-- Registar -->
+			<article id="registar">
+				<h2 class="major">Registar</h2>
+				<form method="post" action="#">
+					<div class="fields">
+						<div class="field half">
+							<label for="name">Name</label>
+							<input type="text" name="name" id="name" />
+						</div>
+						<div class="field half">
+							<label for="email">Email</label>
+							<input type="text" name="email" id="email" />
+						</div>
+						<div class="field">
+							<label for="message">Message</label>
+							<textarea name="message" id="message" rows="4"></textarea>
+						</div>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Registar" class="primary" asp-action="index" /></li><!--ir para o home/index-->
+						<li><input type="reset" value="Reset" /></li>
+					</ul>
+				</form>
+				@*<ul class="icons">
+					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+				</ul>*@
+			</article>
+
+			<!-- Login -->
+			<article id="entrar">
+				<h2 class="major">Entrar</h2>
+				<form method="post" action="#">
+					<div class="fields">
+						<div class="field half">
+							<label for="name">Name</label>
+							<input type="text" name="name" id="name" />
+						</div>
+						<div class="field half">
+							<label for="email">Email</label>
+							<input type="text" name="email" id="email" />
+						</div>
+						<div class="field">
+							<label for="message">Message</label>
+							<textarea name="message" id="message" rows="4"></textarea>
+						</div>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Send Message" class="primary" /></li><!--ir para o home/index-->
+						<li><input type="reset" value="Reset" /></li>
+					</ul>
+				</form>
+				@*<ul class="icons">
+					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+				</ul>*@
+			</article>
 		</div>
 
 		<!-- Footer -->
