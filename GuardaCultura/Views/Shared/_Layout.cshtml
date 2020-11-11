@@ -6,10 +6,11 @@
 -->
 <html>
 <head>
-    <title>Twenty by HTML5 UP</title>
+    <title>Pagina Principal</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="~/geral/css/main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <noscript><link rel="stylesheet" href="~/geral/css/noscript.css" /></noscript>
 </head>
 <body class="index is-preload">
@@ -17,16 +18,30 @@
 
         <!-- Header -->
         <header id="header" class="alt">
-            <h1 id="logo"><a href="index.html">Twenty <span>by HTML5 UP</span></a></h1>
+            <h1><a asp-action="Index"><span>Lost in Guarda</span></a></h1>//volta para o index
             <nav id="nav">
                 <ul>
-                    <li class="current"><a href="Home/Privacy">Ambiente</a></li>
                     <li class="submenu">
-                        <a href="#">Layouts</a>
+                        <a href="#" class="fas dropdown"> Ambiente</a>
+                    <ul>
+                        <li>
+                            <a>Qualidade do ar</a>
+                        </li>
+                        <li>
+                            <a>Paisagens Naturais</a>
+                        </li>
+                        <li>
+                            <a>Miradouros</a>
+                        </li>
+                    </ul>
+                    </li>
+                    <li><a class="fas"> Capital da Cultura</a></li>
+                    <li class="submenu">
+                        <a href="#" class="fas fa-angle-down"> Conhecer a cidade</a>
                         <ul>
-                            <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                            <li><a href="right-sidebar.html">Right Sidebar</a></li>
-                            <li><a href="no-sidebar.html">No Sidebar</a></li>
+                            <li><a href="left-sidebar.html">História</a></li>
+                            <li><a href="right-sidebar.html">Património</a></li>
+                            <li><a href="no-sidebar.html">Torismo</a></li>
                             <li><a href="contact.html">Contact</a></li>
                             <li class="submenu">
                                 <a href="#">Submenu</a>
@@ -40,7 +55,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#" class="button primary">Sign Up</a></li>
+                    <li><a href="#" class="button primary">Registar</a></li>
                 </ul>
             </nav>
         </header>
@@ -57,19 +72,17 @@
             <div class="inner">
 
                 <header>
-                    <h2>TWENTY</h2>
+                    <h2>Lost in Guarda</h2>
                 </header>
                 <p>
-                    This is <strong>Twenty</strong>, a free
-                    <br />
-                    responsive template
-                    <br />
-                    by <a href="http://html5up.net">HTML5 UP</a>.
+                    <strong>F</strong>orte -
+                    <strong>F</strong>arta -
+                    <strong>F</strong>ria -
+                    <strong>F</strong>iel -
+                    <strong>F</strong>ormosa
                 </p>
                 <footer>
-                    <ul class="buttons stacked">
-                        <li><a href="#main" class="button fit scrolly">Tell Me More</a></li>
-                    </ul>
+                    
                 </footer>
 
             </div>
@@ -82,9 +95,7 @@
             <header class="special container">
                 <span class="icon solid fa-chart-bar"></span>
                 <h2>
-                    As this is my <strong>twentieth</strong> freebie for HTML5 UP
-                    <br />
-                    I decided to give it a really creative name.
+                    <strong>A candidatura da Guarda a Capital Europeia da cultura 2027</strong>
                 </h2>
                 <p>
                     Turns out <strong>Twenty</strong> was the best I could come up with. Anyway, lame name aside,
