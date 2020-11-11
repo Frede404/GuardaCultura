@@ -6,9 +6,9 @@
 
 /* BG */
 
-	body.is-preload #bg:before {
-		background-color: transparent;
-	}
+body.is-preload #bg:before {
+	background-color: transparent;
+}
 
 /* Header */
 
