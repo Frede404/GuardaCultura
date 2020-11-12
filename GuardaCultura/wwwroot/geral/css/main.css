@@ -3358,6 +3358,5 @@ input, select, textarea {
 /*para usar fazer var(--cor-geral-promenores); ex: border-color: var(--cor-geral-promenores);*/
 :root {
 	--cor-geral-promenores: #83d3c9;
-
 }
 
