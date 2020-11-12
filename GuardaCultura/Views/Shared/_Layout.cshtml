@@ -18,14 +18,18 @@
 
         <!-- Header -->
         <header id="header" class="alt">
-            <h1><a asp-action="Index"><span>Lost in Guarda</span></a></h1>@*volta para o index*@
+            <h5>
+                <a asp-action="index">
+	                <img src="~/Imagens/LostInGuardaLogo.png" alt="Lost In Guarda" width=7% height=7%>
+                </a>
+            </h5>
             <nav id="nav">
                 <ul>
                     <li class="submenu">
                         <a href="#" class="fas dropdown"> Ambiente</a>
                         <ul>
                             <li>
-                                <a href="#main">Qualidade do ar</a>
+                                <a>Qualidade do ar</a>
                             </li>
                             <li>
                                 <a>Paisagens Naturais</a>
@@ -35,27 +39,27 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a> Capital da Cultura</a></li>
+                    <li><a class="fas"> Capital da Cultura</a></li>
                     <li class="submenu">
-                        <a href="#"> A cidade</a>
+                        <a href="#" class="fas fa-angle-down"> Conhecer a cidade</a>
                         <ul>
-                            <li><a href="#">História</a></li>
-                            <li><a href="#">Património</a></li>
-                            <li><a href="#">Simbolos</a></li>
-                            <li><a href="#">Mobilidade</a></li>
+                            <li><a href="left-sidebar.html">História</a></li>
+                            <li><a href="right-sidebar.html">Património</a></li>
+                            <li><a href="no-sidebar.html">Torismo</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li class="submenu">
+                                <a href="#">Submenu</a>
+                                <ul>
+                                    <li><a href="#">Dolore Sed</a></li>
+                                    <li><a href="#">Consequat</a></li>
+                                    <li><a href="#">Lorem Magna</a></li>
+                                    <li><a href="#">Sed Magna</a></li>
+                                    <li><a href="#">Ipsum Nisl</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    <li class="submenu">
-                        <a href="#">Cultura</a>
-                        <ul>
-                            <li><a href="#">Agenda Cultural</a></li>
-                            <li><a href="#">Monumentos</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Noticias</a>
-                    </li>
-                    <li><a href="#testar" class="button primary">Registar</a></li>
+                    <li><a href="#" class="button primary">Registar</a></li>
                 </ul>
             </nav>
         </header>
@@ -64,11 +68,11 @@
         <section id="banner">
 
             <!--
-            ".inner" is set up as an inline-block so it automatically expands
-            in both directions to fit whatever's inside it. This means it won't
-            automatically wrap lines, so be sure to use line breaks where
-            appropriate (<br />).
-        -->
+                ".inner" is set up as an inline-block so it automatically expands
+                in both directions to fit whatever's inside it. This means it won't
+                automatically wrap lines, so be sure to use line breaks where
+                appropriate (<br />).
+            -->
             <div class="inner">
 
                 <header>
@@ -82,6 +86,7 @@
                     <strong>F</strong>ormosa
                 </p>
                 <footer>
+                    
                 </footer>
 
             </div>
@@ -90,16 +95,24 @@
 
         <!-- Main -->
         <article id="main">
-
+            @RenderBody()
             <header class="special container">
-                <a><span class="icon solid fa-chart-bar"></span></a>
-                @RenderBody()
-
+                <span class="icon solid fa-chart-bar"></span>
+                <h2>
+                    <strong>A candidatura da Guarda a Capital Europeia da cultura 2027</strong>
+                </h2>
+                <p>
+                    Turns out <strong>Twenty</strong> was the best I could come up with. Anyway, lame name aside,
+                    <br />
+                    it's minimally designed, fully responsive, built on HTML5/CSS3,
+                    and, like all my stuff,
+                    <br />
+                    released for free under the <a href="http://html5up.net/license">Creative Commons Attribution 3.0</a> license. Have fun!
+                </p>
             </header>
 
             <!-- One -->
             <section class="wrapper style2 container special-alt">
-
                 <div class="row gtr-50">
                     <div class="col-8 col-12-narrower">
 
@@ -169,7 +182,7 @@
             </section>
 
             <!-- Three -->
-            <section class="wrapper style3 container special" id="testar">
+            <section class="wrapper style3 container special">
 
                 <header class="major">
                     <h2>Next look at this <strong>cool stuff</strong></h2>
