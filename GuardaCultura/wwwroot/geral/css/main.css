@@ -2301,19 +2301,19 @@ input, select, textarea {
 		}
 	}
 
-	#header {
-		background: #fff;
-		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.075);
-		color: inherit;
-		cursor: default;
-		font-size: 0.8em;
-		left: 0;
-		padding: 1em 1.5em;
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 10000;
-	}
+#header {
+	background: #fff;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.075);
+	color: inherit;
+	cursor: default;
+	font-size: 0.8em;
+	left: 0;
+	padding: 1em 1.5em;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10000;
+}
 
 		#header h1 {
 			font-weight: 900;
@@ -2692,6 +2692,7 @@ input, select, textarea {
 /* Normal */
 
 	@media screen and (max-width: 1280px) {
+		
 
 		/* Basic */
 
@@ -2833,8 +2834,8 @@ input, select, textarea {
 	#navPanel, #navButton {
 		display: none;
 	}
-
-	@media screen and (max-width: 840px) {
+	/*encolhe o menu*/
+	@media screen and (max-width: 1060px) {
 
 		/* Basic */
 
@@ -3346,3 +3347,4 @@ input, select, textarea {
 .center {
 	text-align: center;
 }
+
