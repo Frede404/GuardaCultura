@@ -1814,7 +1814,7 @@ input, select, textarea {
 		input[type="password"]:focus,
 		input[type="email"]:focus,
 		textarea:focus {
-			border-color: #83d3c9;
+			border-color: var(--cor-geral-promenores);
 		}
 
 	input[type="text"],
@@ -2169,8 +2169,8 @@ input, select, textarea {
 		input[type="reset"].primary,
 		button.primary,
 		.button.primary {
-			background: #83d3c9;
-			border-color: #83d3c9;
+			background: var(--cor-geral-promenores);
+			border-color: var(--cor-geral-promenores);
 			color: #fff !important;
 		}
 
@@ -2213,7 +2213,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style2 {
-			background-color: #83d3c9;
+			background-color: var(--cor-geral-promenores);
 			background-image: url("images/light-bl.svg"), url("images/light-br.svg");
 			background-position: bottom left, bottom right;
 			background-repeat: no-repeat, no-repeat;
@@ -2236,7 +2236,7 @@ input, select, textarea {
 			.wrapper.style2 .button.primary {
 				background: #fff;
 				border-color: #fff;
-				color: #83d3c9 !important;
+				color: var(--cor-geral-promenores) !important;
 			}
 
 				.wrapper.style2 input[type="button"].primary:hover,
@@ -2405,6 +2405,9 @@ input, select, textarea {
 			-webkit-animation: reveal-header 0.5s;
 			-ms-animation: reveal-header 0.5s;
 			animation: reveal-header 0.5s;
+			padding: 0em 2.5em;
+			/*meter o header para tras do dropdown*/
+			z-index: 1;
 		}
 
 		#header.alt {
@@ -2415,7 +2418,7 @@ input, select, textarea {
 			background: transparent;
 			box-shadow: none;
 			color: #fff;
-			padding: 2em 2.5em;
+			padding: 0em 2.5em;
 			position: absolute;
 		}
 
@@ -2430,26 +2433,30 @@ input, select, textarea {
 
 /* Dropotron */
 
-	.dropotron {
-		list-style: none;
-		padding-left: 0;
-		background: #fff;
-		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.075);
-		line-height: 2.25em;
-		min-width: 13em;
-		padding: 1em 0;
-		text-transform: uppercase;
-		margin-top: calc(-1em + 1px);
-	}
+.dropotron {
+	list-style: none;
+	padding-left: 0;
+	background: #fff;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.075);
+	line-height: 2.25em;
+	min-width: 13em;
+	padding: 1em 0;
+	text-transform: uppercase;
+	margin-top: calc(-1em + 1px);
+	/*caixa do submenu preta*/
+	border: 1px solid black
+}
 
 		.dropotron.level-0 {
 			font-size: 0.7em;
 			font-weight: 400;
-			margin-top: 1.5em;
+			/*distancia do submenu*/
+			margin-top: 0.5em;
 		}
 
 			.dropotron.level-0:before {
-				border-bottom: solid 0.5em #fff;
+				/*cor da seta do submenu*/
+				border-bottom: solid 0.4em var(--cor-geral-promenores);
 				border-left: solid 0.5em transparent;
 				border-right: solid 0.5em transparent;
 				content: '';
@@ -2475,7 +2482,7 @@ input, select, textarea {
 			}
 
 			.dropotron > li:hover > a {
-				background: #83d3c9;
+				background: var(--cor-geral-promenores);
 				color: #fff;
 			}
 
@@ -2727,7 +2734,7 @@ input, select, textarea {
 				}
 
 		/* Header */
-
+		/*largura entre os butoes*/
 			#header nav ul li {
 				margin-left: 1em;
 			}
@@ -3346,3 +3353,10 @@ input, select, textarea {
 .center {
 	text-align: center;
 }
+
+/*variavel com cor*/
+/*para usar fazer var(--cor-geral-promenores); ex: border-color: var(--cor-geral-promenores);*/
+:root {
+	--cor-geral-promenores: #83d3c9;
+}
+
