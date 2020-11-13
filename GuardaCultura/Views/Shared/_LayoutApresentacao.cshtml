@@ -35,7 +35,7 @@
 					@*<h1>Lost in Guarda</h1>*@
 					@*<p>*@
 					@*<a>Guarda</a> uma Cidade a Pensar no Mundo.*@
-					<a asp-action="index">
+					<a class="logotipo" asp-controller="Ambiente" asp-action="Ambiente">
 						<img src="~/Imagens/LostInGuardaLogo.png" alt="Lost in Guarda Logotipo" width=30% height=30%>
 					</a>
 					@*</p>*@
@@ -354,7 +354,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						</div>
 					</div>
 					<ul class="actions">
-						<li><input type="submit" value="Registar" class="primary" asp-action="index" /></li><!--ir para o home/index-->
+						<li><input type="submit" value="Registar" class="primary" asp-controller="Ambiente" asp-action="Ambiente" /></li><!--ir para o home/index-->
 						<li><input type="reset" value="Reset" /></li>
 					</ul>
 				</form>
@@ -381,7 +381,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						</div>
 					</div>
 					<ul class="actions">
-						<li><input type="submit" value="Login" class="primary" asp-action="index" /></li><!--ir para o home/index-->
+						<li><input type="submit" value="Login" class="primary" asp-controller="Ambiente" asp-action="Ambiente" /></li><!--ir para o home/index-->
 						<li><input type="reset" value="Reset" /></li>
 					</ul>
 				</form>
@@ -396,7 +396,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 		<!-- Footer -->
 		<footer id="footer">
-			<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+			<p class="copyright">&copy; Template: <a href="https://html5up.net/dimension">DIMENSION</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+			@*<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>*@
 		</footer>
 
 	</div>
