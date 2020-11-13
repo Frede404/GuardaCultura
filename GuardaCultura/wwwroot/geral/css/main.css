@@ -2407,7 +2407,7 @@ input/*, select*/, textarea {
 			animation: reveal-header 0.5s;
 			padding: 0em 2.5em;
 			/*meter o header para tras do dropdown*/
-			z-index: 1;
+			z-index: 0;
 		}
 
 		#header.alt {
