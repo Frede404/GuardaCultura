@@ -1,0 +1,27 @@
+#linguagem {
+	/*	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: flex;*/
+	/*	-moz-flex-direction: column;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;*/
+	/*	-moz-align-items: center;
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	align-items: center;*/
+	/*	-moz-justify-content: space-between;
+	-webkit-justify-content: space-between;
+	-ms-justify-content: space-between;
+	justify-content: space-between;*/
+	position: absolute;
+	right: 1%;
+	top: 1%;
+	z-index: 9;
+}
+
+select.linguagem {
+	border: 1px solid #7c8081;
+	font-weight: bold;
+}
