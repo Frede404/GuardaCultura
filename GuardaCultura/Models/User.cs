@@ -18,20 +18,22 @@ namespace GuardaCultura.Models
         [StringLength(512)]
         public string Password { get; set; }
 
-        [Required]
+        
         [StringLength(512)]
         public string Email { get; set; }
 
-        public string data_nasc { get; set; }
+        [StringLength(512)]
+        public string Ultima_Lingua { get; set; }
 
-        public string sexo { get; set; }
+        [Required]
+        public int Funcao { get; set; }
+
+        public string Data_Nasc { get; set; }
+
+        public string Sexo { get; set; }
 
         public string Nacionalidade { get; set; }
 
-        public float fiabilidade { get; set; }
-
-        public string lingua { get; set; }
-
-        public int privilegios { get; set; }
+        public float Fiabilidade { get; set; }
     }
 }
