@@ -11,7 +11,7 @@ namespace GuardaCultura.Models
         public int HoraId { get; set; }
         
         [Required]
-        public string Horas { get; set; }
+        public int Horas { get; set; }
         
         public ICollection<Ocupacao> Ocupacaos { get; set; }
         

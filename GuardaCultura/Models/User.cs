@@ -14,13 +14,13 @@ namespace GuardaCultura.Models
         [StringLength(512)]
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório ter uma password"]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password tem de ter no minimo 8 caracteres e no maximo 20")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "O Email é obrigatório"]
+        [Required(ErrorMessage = "O Email é obrigatório")]
         [StringLength(512)]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "É obrigatório ter uma password")]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password tem de ter no minimo 8 caracteres e no maximo 20")]
+        public string Password { get; set; }
 
         [Required]
         [StringLength(5)]

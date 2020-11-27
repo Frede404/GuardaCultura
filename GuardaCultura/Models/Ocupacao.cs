@@ -17,9 +17,8 @@ namespace GuardaCultura.Models
         public string Data { get; set; }
        
         public int MiradouroId { get; set; }
-        public int HoraId { get; set; }
 
-        public ICollection<Miradouro> Miradouros { get; set; }
+        public int HoraId { get; set; }
 
     }
 }

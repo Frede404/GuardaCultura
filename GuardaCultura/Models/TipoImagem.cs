@@ -11,7 +11,7 @@ namespace GuardaCultura.Models
         public int TipoImagemId { get; set; }
 
         [Required]
-        public string Descrição { get; set; }
+        public string Descricao { get; set; }
 
         public ICollection<Fotografia> Fotografias { get; set; }
     }

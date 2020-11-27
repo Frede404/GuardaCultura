@@ -26,7 +26,7 @@ namespace GuardaCultura.Models
         [Required]
         public bool E_Miradouro { get; set; }
 
-        public string Descricao_condicoes { get; set; }
+        public string Condicoes { get; set; }
         
         [Required]
         public int Ocupacao_maxima { get; set; }
@@ -35,10 +35,10 @@ namespace GuardaCultura.Models
         [StringLength(256, MinimumLength = 3, ErrorMessage = "A localização do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
         public string Descricao { get; set; }
         
-        public int OcupacaoId { get; set; }
-
         public ICollection<Atratividade> Atratividades { get; set; }
 
         public ICollection<Fotografia> Fotografias  { get; set; }
+
+        public ICollection<Ocupacao> Ocupacaos  { get; set; }
     }
 }
