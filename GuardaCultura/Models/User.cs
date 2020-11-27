@@ -8,25 +8,27 @@ namespace GuardaCultura.Models
 {
     public class User
     {
-        public int UserId { get; set; }
+        public int PessoaId { get; set; }
 
         [Required]
         [StringLength(512)]
         public string Nome { get; set; }
 
-        [Required]
-        [StringLength(512)]
+        [Required(ErrorMessage = "É obrigatório ter uma password"]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password tem de ter no minimo 8 caracteres e no maximo 20")]
         public string Password { get; set; }
 
-        
+        [Required(ErrorMessage = "O Email é obrigatório"]
         [StringLength(512)]
         public string Email { get; set; }
 
-        [StringLength(512)]
+        [Required]
+        [StringLength(5)]
         public string Ultima_Lingua { get; set; }
 
         [Required]
-        public int Funcao { get; set; }
+        [StringLength(512)]
+        public string Funcao { get; set; }
 
         public string Data_Nasc { get; set; }
 
@@ -35,5 +37,7 @@ namespace GuardaCultura.Models
         public string Nacionalidade { get; set; }
 
         public float Fiabilidade { get; set; }
+
+        public ICollection<Fotografia> Fotografias { get; set; }
     }
 }
