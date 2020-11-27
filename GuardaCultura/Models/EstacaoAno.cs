@@ -9,8 +9,13 @@ namespace GuardaCultura.Models
     public class EstacaoAno
     {
         public int EstacaoAnoId { get; set; }
+        
         [Required]
         [StringLength(9, MinimumLength = 5)]
         public string Nome_estacao { get; set; }
+
+        public ICollection<Atratividade> Atratividades { get; set; }
+        
+        public ICollection<Fotografia> Fotografias  { get; set; }
     }
 }
