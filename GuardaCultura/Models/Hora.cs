@@ -14,7 +14,5 @@ namespace GuardaCultura.Models
         public int Horas { get; set; }
         
         public ICollection<Ocupacao> Ocupacaos { get; set; }
-        
-        public ICollection<Atratividade> Atratividades { get; set; }
     }
 }

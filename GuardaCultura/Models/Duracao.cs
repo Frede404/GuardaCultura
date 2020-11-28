@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace GuardaCultura.Models
 {
-    public class Atratividade
+    public class Duracao
     {
-        public int AtratividadeId { get; set; }
-        
         public int DuracaoId { get; set; }
-        
-        public int EstacaoAnoId { get; set; }
-        
-        public int MiradouroId { get; set; }
+
+        [Required]
+        public int HorasInicio { get; set; }
+
+        [Required]
+        public int HorasFim { get; set; }
+
+        public ICollection<Atratividade> Atratividades { get; set; }
     }
 }
