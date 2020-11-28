@@ -38,6 +38,9 @@ namespace GuardaCultura.Models
 
         public float Fiabilidade { get; set; }
 
+        [Required]
+        public int FuncaoId { get; set; }
+
         public ICollection<Fotografia> Fotografias { get; set; }
     }
 }
