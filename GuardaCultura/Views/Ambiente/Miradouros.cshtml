@@ -1,15 +1,27 @@
 ﻿@{
-    //Layout = "_Layout";
-    ViewData["Title"] = "Paisagens";
+    ViewData["Title"] = "Miradouros";
 }
-@*localhost:44369/Ambiente/Paisagens*@
+
 <link rel="stylesheet" href="~/geral/css/imgsPaisagens.css" />
 <script src="~/geral/js/imgsPaisagens.js"></script>
 
-<section class="wrapper style3 container special">
+<header class="special container">
+    <span class="icon solid fa-chart-bar"></span>
+    <h2>
+        <strong>Para dias turbulentos, é bom apanhar ar puro.</strong>
+    </h2>
+    <p>
+        Num pais naturalmente vocacionado para o turismo,
+        as paisagens naturais que os miradouros, cascatas e parques naturais nos oferecem
+        são um bom chamaris para quem procura tranquilidade.
+    </p>
+</header>
+
+<!-- One -->
+<section class="wrapper style1 container special">
+    <h2>Miradouros</h2>
 
     <header class="major">
-        <h2>Paisagens </h2>
         <p>
             Há paisagens um pouco por todo o mundo que são incriveis e quase totalmente desconhecidas,
             <br />outras passamos por elas vezes sem conta e nem reparamos.
@@ -112,27 +124,7 @@
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-
-
-                <!--barra com imagens-->
-                <!--
-    <div class="column">
-      <img class="demo cursor" src="img_nature_wide.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="img_snow_wide.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snow">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="img_mountains_wide.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="img_lights_wide.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-    </div>-->
             </div>
         </div>
     </body>
-    <footer class="major">
-    </footer>
-
 </section>
-

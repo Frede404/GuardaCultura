@@ -160,3 +160,8 @@ img.hover-shadow {
     font-size: 150%;
     font-weight: bold;
 }
+
+.centrado {
+    display: flex;
+    justify-content: center;
+}
