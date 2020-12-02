@@ -1,4 +1,4 @@
-//funcao para meter visivel a password
+﻿//funcao para meter visivel a password
 function show(icon, campo) {
     var x = document.getElementById(campo);
     var c = document.getElementById(icon);
@@ -12,9 +12,20 @@ function show(icon, campo) {
     }
 }
 
+//reset aos campos
 function resetPass(icon, campo) {
     var x = document.getElementById(campo);
     var c = document.getElementById(icon);
     x.type = "password";
     c.className = "fa fa-eye";
+}
+
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
