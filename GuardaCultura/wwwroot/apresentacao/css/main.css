@@ -65,12 +65,12 @@ input::-moz-focus-inner {
 	padding: 0;
 }
 
-input, select, textarea {
+/*input, select, textarea {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
-}
+}*/
 
 /* Basic */
 
@@ -466,15 +466,16 @@ a {
 
 	input[type="checkbox"],
 	input[type="radio"] {
-		-moz-appearance: none;
+		/*-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
 		appearance: none;
 		display: block;
 		float: left;
-		margin-right: -2rem;
-		opacity: 0;
-		width: 1rem;
+		margin-right: -2rem;*/
+		font-size: 12pt;/*melhora o visual no chrome*/
+		opacity: 1;
+		/*width: 1rem;*/
 		z-index: -1;
 	}
 
@@ -1665,4 +1666,28 @@ a {
 
 a.logotipo {
 	border-bottom: 4px;
+}
+
+/*selecao da data*/
+input[type="date"] {
+	background: transparent;
+	color: white;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	filter: invert(100%);
+}
+
+.container i {
+	margin-left: -30px;
+	cursor: pointer;
+}
+
+input.password {
+	display: inline;
+	width:96%;
+}
+
+form > .fields > .field.half > input.password{
+	width: 90%;
 }
