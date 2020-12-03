@@ -26,5 +26,7 @@ namespace GuardaCultura.Data
 
         public DbSet<GuardaCultura.Models.TipoImagem> TipoImagem { get; set; }
 
+        public DbSet<GuardaCultura.Models.Duracao> Duracao { get; set; }
+
     }
 }
