@@ -14,7 +14,7 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public MiradouroesController(GuardaCulturaContext context)// recebe a bd dos miradouros
+        public MiradouroesController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Miradouroes/Details/5
-        public async Task<IActionResult> Details(int? id)// recebe o id do miradouro
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -111,7 +111,7 @@ namespace GuardaCultura.Controllers
                     if (!MiradouroExists(miradouro.MiradouroId))
                     {
                         // todo: talvez alguem apagou esse miradouro
-                        // informar o utilizador se quer criar um novo com os mesmos dados
+                        // pergunta ao utilizador se quer criar um novo com os mesmos dados
                         return NotFound();
                     }
                     else
