@@ -9,22 +9,22 @@ using GuardaCultura.Data;
 
 namespace GuardaCultura.Models
 {
-    public class EstacaoAnoesController : Controller
+    public class OcupacaosController : Controller
     {
         private readonly GuardaCulturaContext _context;
 
-        public EstacaoAnoesController(GuardaCulturaContext context)// recebe a bd
+        public OcupacaosController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
 
-        // GET: EstacaoAnoes
-        public async Task<IActionResult> Index()// lista das estacoes do ano
+        // GET: Ocupacaos
+        public async Task<IActionResult> Index()
         {
-            return View(await _context.EstacaoAno.ToListAsync());
+            return View(await _context.Ocupacao.ToListAsync());
         }
 
-        // GET: EstacaoAnoes/Details/5
+        // GET: Ocupacaos/Details/5
         public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
@@ -32,42 +32,41 @@ namespace GuardaCultura.Models
                 return NotFound();
             }
 
-            var estacaoAno = await _context.EstacaoAno
-                .FirstOrDefaultAsync(m => m.EstacaoAnoId == id);
-            if (estacaoAno == null)
+            var ocupacao = await _context.Ocupacao
+                .FirstOrDefaultAsync(m => m.OcupacaoId == id);
+            if (ocupacao == null)
             {
-                //todo: talvez alguem tenha apagado essa estacao. mostrar uma mensagem apropriada para o utilizador
                 return NotFound();
             }
 
-            return View(estacaoAno);
+            return View(ocupacao);
         }
 
-        // GET: EstacaoAnoes/Create
+        // GET: Ocupacaos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: EstacaoAnoes/Create
+        // POST: Ocupacaos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]// validacao de seguranca
-        public async Task<IActionResult> Create([Bind("EstacaoAnoId,Nome_estacao")] EstacaoAno estacaoAno)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("OcupacaoId,Numero_pessoas,Data,MiradouroId,HoraId")] Ocupacao ocupacao)
         {
             if (ModelState.IsValid)
             {
-                // todo: validacoes adicionais antes de inserir uma estacao
-                _context.Add(estacaoAno);
+                // todo: validacoes adicionais antes de inserir a ocupacao
+                _context.Add(ocupacao);
                 await _context.SaveChangesAsync();
-                //todo: informar o utilizador, estacao criada com sucesso
+                // todo: informar o utilizador, ocupacao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
-            return View(estacaoAno);
+            return View(ocupacao);
         }
 
-        // GET: EstacaoAnoes/Edit/5
+        // GET: Ocupacaos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,24 +74,23 @@ namespace GuardaCultura.Models
                 return NotFound();
             }
 
-            var estacaoAno = await _context.EstacaoAno.FindAsync(id);
-            if (estacaoAno == null)
+            var ocupacao = await _context.Ocupacao.FindAsync(id);
+            if (ocupacao == null)
             {
-                //todo: talvez alguem tenha apagado essa estacao. mostrar uma mensagem apropriada para o utilizador
+                // todo: talvez alguem tenha apagado essa ocupacao. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
-            return View(estacaoAno);
+            return View(ocupacao);
         }
 
-        // POST: EstacaoAnoes/Edit/5
+        // POST: Ocupacaos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EstacaoAnoId,Nome_estacao")] EstacaoAno estacaoAno)//serve para evitar alguns ataques,
-                                                                                                                // só recebe campos que estejam no Bind
+        public async Task<IActionResult> Edit(int id, [Bind("OcupacaoId,Numero_pessoas,Data,MiradouroId,HoraId")] Ocupacao ocupacao)
         {
-            if (id != estacaoAno.EstacaoAnoId)
+            if (id != ocupacao.OcupacaoId)
             {
                 return NotFound();
             }
@@ -101,15 +99,15 @@ namespace GuardaCultura.Models
             {
                 try
                 {
-                    _context.Update(estacaoAno);
+                    _context.Update(ocupacao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstacaoAnoExists(estacaoAno.EstacaoAnoId))
+                    if (!OcupacaoExists(ocupacao.OcupacaoId))
                     {
-                        // todo: talvez alguem apagou essa estacao
-                        //perguntar ao utilizador se quer criar um novo com os mesmos dados
+                        // todo: talvez alguem apagou essa ocupacao
+                        // pergunta ao utilizador se quer criar uma nova com os mesmos dados
                         return NotFound();
                     }
                     else
@@ -118,12 +116,13 @@ namespace GuardaCultura.Models
                         throw;
                     }
                 }
+                // todo: informar o utilizador que a ocupacao foi editada com sucesso
                 return RedirectToAction(nameof(Index));
             }
-            return View(estacaoAno);
+            return View(ocupacao);
         }
 
-        // GET: EstacaoAnoes/Delete/5
+        // GET: Ocupacaos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,32 +130,32 @@ namespace GuardaCultura.Models
                 return NotFound();
             }
 
-            var estacaoAno = await _context.EstacaoAno
-                .FirstOrDefaultAsync(m => m.EstacaoAnoId == id);
-            if (estacaoAno == null)
+            var ocupacao = await _context.Ocupacao
+                .FirstOrDefaultAsync(m => m.OcupacaoId == id);
+            if (ocupacao == null)
             {
-                // todo: talvez alguem apagou essa estacao, informar o utilizador
+                // todo: talvez alguem apagou essa ocupacao, informar o utilizador
                 return NotFound();
             }
 
-            return View(estacaoAno);
+            return View(ocupacao);
         }
 
-        // POST: EstacaoAnoes/Delete/5
+        // POST: Ocupacaos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estacaoAno = await _context.EstacaoAno.FindAsync(id);
-            _context.EstacaoAno.Remove(estacaoAno);
+            var ocupacao = await _context.Ocupacao.FindAsync(id);
+            _context.Ocupacao.Remove(ocupacao);
             await _context.SaveChangesAsync();
-            // todo: informar o user que a estacao foi apagada com sucesso
+            // todo: informar o utilizador que a ocupacao foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstacaoAnoExists(int id)
+        private bool OcupacaoExists(int id)
         {
-            return _context.EstacaoAno.Any(e => e.EstacaoAnoId == id);
+            return _context.Ocupacao.Any(e => e.OcupacaoId == id);
         }
     }
 }
