@@ -8,7 +8,7 @@ namespace GuardaCultura.Models
 {
     public class Fotografia
     {
-        public int ImagemId { get; set; }
+        public int FotografiaId { get; set; }
 
         [Required]
         public string nome { get; set; }//alt
