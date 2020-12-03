@@ -17,12 +17,12 @@ namespace GuardaCultura.Models
 
         public float classificacao { get; set; }
 
-        //public TipoImagem foto { get; set; }
+        public byte[] foto { get; set; }
 
         [Required]
         public int EstacaoAnoId { get; set; }
 
-        public int PessoaID { get; set; }
+        public int UserId { get; set; }
 
         public int MiradouroId { get; set; }
 

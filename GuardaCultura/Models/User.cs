@@ -8,7 +8,7 @@ namespace GuardaCultura.Models
 {
     public class User
     {
-        public int PessoaId { get; set; }
+        public int UserId { get; set; }
 
         [Required]
         [StringLength(512)]
