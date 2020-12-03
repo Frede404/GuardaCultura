@@ -28,7 +28,7 @@ span.psw {
 
 /* Modal Content/Box */
 .modal-contentLogin {
-	background-color: #fefefe;
+	background-color: #f3f6fa;
 	margin: auto auto auto auto; /* 5% from the top, 15% from the bottom and centered */
 	border: 1px solid #888;
 	width: 80%; /* Could be more or less, depending on screen size */
@@ -50,7 +50,6 @@ span.psw {
 		color: red;
 		cursor: pointer;
 	}
-
 
 /* Style the buttons inside the tab */
 .tab button {
@@ -119,7 +118,7 @@ form {
 		}
 
 			form > .fields > .field.half {
-				width: 35%;
+				width: 50%;
 			}
 
 @media screen and (max-width: 480px) {
@@ -215,7 +214,7 @@ select {
 
 	select option {
 		color: #000;
-		background: #1b1f22;
+		background: #fff;
 	}
 
 	select:focus::-ms-value {
@@ -325,6 +324,16 @@ input[type="radio"] {
 	input[type="radio"] + label:before {
 		border-radius: 100%;
 	}
+
+input.password {
+	display: inline;
+	width: 96%;
+}
+
+form > .fields > .field.half > input.password {
+	width: 90%;
+}
+
 
 ::-webkit-input-placeholder {
 	color: rgba(0, 0, 0, 0.5) !important;
@@ -470,4 +479,9 @@ ul.actions {
 				ul.actions:not(.fixed) li .button.icon:before {
 					margin-left: -0.5em;
 				}
+}
+
+/*selecao da data*/
+input[type="date"] {
+	background: transparent;
 }
