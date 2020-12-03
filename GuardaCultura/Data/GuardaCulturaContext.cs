@@ -19,5 +19,7 @@ namespace GuardaCultura.Data
         public DbSet<GuardaCultura.Models.EstacaoAno> EstacaoAno { get; set; }
 
         public DbSet<GuardaCultura.Models.Hora> Hora { get; set; }
+
+        public DbSet<GuardaCultura.Models.Ocupacao> Ocupacao { get; set; }
     }
 }
