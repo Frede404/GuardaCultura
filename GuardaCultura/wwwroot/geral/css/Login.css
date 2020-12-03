@@ -30,7 +30,7 @@ span.psw {
 .modal-contentLogin {
 	background-color: #f3f6fa;
 	margin: auto auto auto auto; /* 5% from the top, 15% from the bottom and centered */
-	border: 1px solid #888;
+	/*border: 1px solid #888;*/
 	width: 80%; /* Could be more or less, depending on screen size */
 }
 
@@ -50,6 +50,11 @@ span.psw {
 		color: red;
 		cursor: pointer;
 	}
+
+/* Style the tab */
+.tab {
+	overflow: hidden;
+}
 
 /* Style the buttons inside the tab */
 .tab button {
