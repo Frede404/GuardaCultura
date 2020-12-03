@@ -22,6 +22,9 @@ namespace GuardaCultura.Data
 
         public DbSet<GuardaCultura.Models.Ocupacao> Ocupacao { get; set; }
 
+        public DbSet<GuardaCultura.Models.Atratividade> Atratividade { get; set; }
+
         public DbSet<GuardaCultura.Models.TipoImagem> TipoImagem { get; set; }
+
     }
 }
