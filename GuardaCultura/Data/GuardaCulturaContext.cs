@@ -17,5 +17,7 @@ namespace GuardaCultura.Data
         public DbSet<GuardaCultura.Models.Miradouro> Miradouro { get; set; }
 
         public DbSet<GuardaCultura.Models.EstacaoAno> EstacaoAno { get; set; }
+
+        public DbSet<GuardaCultura.Models.Hora> Hora { get; set; }
     }
 }
