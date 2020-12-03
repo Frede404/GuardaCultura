@@ -54,10 +54,10 @@ namespace GuardaCultura.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]// validacao de seguranca
         public async Task<IActionResult> Create([Bind("MiradouroId,Nome,Localizacao,Coordenadas_gps," +
             "Terreno,E_Miradouro,Condicoes,Ocupacao_maxima,Descricao")] Miradouro miradouro)//serve para evitar alguns ataques,
-            // só recebe campos que estejam no Bind
+                                                                                            // só recebe campos que estejam no Bind
         {
             if (ModelState.IsValid)
             {
