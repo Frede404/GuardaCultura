@@ -11,6 +11,7 @@ namespace GuardaCultura.Models
         public int DuracaoId { get; set; }
 
         [Required]
+        [StringLength(2)]
         public int HorasInicio { get; set; }
 
         [Required]

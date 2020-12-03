@@ -31,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.OcupacaoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OcupacaoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OcupacaoId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.OcupacaoId">Edit</a> |@*botao editar*@
+                <a asp-action="Details" asp-route-id="@item.OcupacaoId">Details</a> |@*botao detalhes*@
+                <a asp-action="Delete" asp-route-id="@item.OcupacaoId">Delete</a>@*botao apagar*@
             </td>
         </tr>
 }
