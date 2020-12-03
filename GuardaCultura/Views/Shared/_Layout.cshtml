@@ -11,139 +11,232 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="~/geral/css/main.css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/geral/css/imgsPaisagens.css" />
-    <noscript><link rel="stylesheet" href="~/geral/css/noscript.css" /></noscript>
+	<link rel="stylesheet" href="~/geral/css/imgsPaisagens.css" />
+	<link rel="stylesheet" href="~/geral/css/Login.css" />
+	<link rel="stylesheet" href="~/css/outros.css" />
+	<noscript><link rel="stylesheet" href="~/geral/css/noscript.css" /></noscript>
 </head>
 <body class="index is-preload">
-    <div id="page-wrapper">
+	<div id="page-wrapper">
 
-        <!-- Header -->
-        <header id="header" class="alt">
-            <h5>
-                <a asp-action="Ambiente">
-                    <img src="~/Imagens/LostInGuardaLogo.png" alt="Lost In Guarda" width=7% height=7%>
-                </a>
-            </h5>
-            <nav id="nav">
-                <ul>
-                    <li class="submenu">
-                        <a href="#" class="fas dropdown"> Ambiente</a>
-                        <ul>
-                            <li>
-                                <a asp-controller="Ambiente" asp-action="QualidadeAr">Qualidade do ar</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Ambiente" asp-action="Paisagens">Paisagens Naturais</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Ambiente" asp-action="Miradouros">Miradouros</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="fas"> Capital da Cultura</a></li>
-                    <li class="submenu">
-                        <a href="#" class="fas fa-angle-down"> Conhecer a cidade</a>
-                        <ul>
-                            <li><a href="#">História</a></li>
-                            <li><a href="#">Património</a></li>
-                            <li><a href="#">Torismo</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="button primary">Registar</a></li>
-                    <li>
-                        <select style="background-color:transparent">
-                            <option value="PT">PT</option>
-                            <option value="ENG">ENG</option>
-                            <option value="TR">TR</option>
-                        </select>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+		<!-- Header -->
+		<header id="header" class="alt">
+			<h5>
+				<a asp-action="Ambiente">
+					<img src="~/Imagens/LostInGuardaLogo.png" alt="Lost In Guarda" width=7% height=7%>
+				</a>
+			</h5>
+			<nav id="nav">
+				<ul>
+					<li class="submenu">
+						<a href="#" class="fas dropdown"> Ambiente</a>
+						<ul>
+							<li>
+								<a asp-controller="Ambiente" asp-action="QualidadeAr">Qualidade do ar</a>
+							</li>
+							<li>
+								<a asp-controller="Ambiente" asp-action="Paisagens">Paisagens Naturais</a>
+							</li>
+							<li>
+								<a asp-controller="Ambiente" asp-action="Miradouros">Miradouros</a>
+							</li>
+						</ul>
+					</li>
+					<li><a class="fas"> Capital da Cultura</a></li>
+					<li class="submenu">
+						<a href="#" class="fas fa-angle-down"> Conhecer a cidade</a>
+						<ul>
+							<li><a href="#">História</a></li>
+							<li><a href="#">Património</a></li>
+							<li><a href="#">Torismo</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</li>
+					@*<li><a href="#" class="button primary">Registar</a></li>*@
+					<li><button class="primary" onclick="document.getElementById('id01').style.display='block'; inicio('BLogGeral')" style="width:auto;">Login</button></li>
+					<li>
+						<select style="background-color:transparent">
+							<option value="PT">PT</option>
+							<option value="ENG">ENG</option>
+							<option value="TR">TR</option>
+						</select>
+					</li>
+				</ul>
+			</nav>
+		</header>
 
-        <!-- Banner -->
-        <section id="banner">
+		<!-- Banner -->
+		<section id="banner">
 
-            <!--
-                ".inner" is set up as an inline-block so it automatically expands
-                in both directions to fit whatever's inside it. This means it won't
-                automatically wrap lines, so be sure to use line breaks where
-                appropriate (<br />).
-            -->
-            <div class="inner">
+			<!--
+				".inner" is set up as an inline-block so it automatically expands
+				in both directions to fit whatever's inside it. This means it won't
+				automatically wrap lines, so be sure to use line breaks where
+				appropriate (<br />).
+			-->
+			<div class="inner">
 
-                <header>
-                    <h2>Lost in Guarda</h2>
-                </header>
-                <p>
-                    <strong>F</strong>orte -
-                    <strong>F</strong>arta -
-                    <strong>F</strong>ria -
-                    <strong>F</strong>iel -
-                    <strong>F</strong>ormosa
-                </p>
-                <footer>
-                </footer>
+				<header>
+					<h2>Lost in Guarda</h2>
+				</header>
+				<p>
+					<strong>F</strong>orte -
+					<strong>F</strong>arta -
+					<strong>F</strong>ria -
+					<strong>F</strong>iel -
+					<strong>F</strong>ormosa
+				</p>
+				<footer>
+				</footer>
 
-            </div>
+			</div>
 
-        </section>
+		</section>
 
-        <!-- Main -->
-        <article id="main">
-            @RenderBody()
+		<!-- Main -->
+		<article id="main">
+			@RenderBody()
 
 
-        </article>
+		</article>
 
-        <!-- CTA -->
-        <!--<section id="cta">
 
-            <header>
-                <h2>Ready to do <strong>something</strong>?</h2>
-                <p>Proin a ullamcorper elit, et sagittis turpis integer ut fermentum.</p>
-            </header>
-            <footer>
-                <ul class="buttons">
-                    <li><a href="#" class="button primary">Take My Money</a></li>
-                    <li><a href="#" class="button">LOL Wut</a></li>
-                </ul>
-            </footer>
 
-        </section>-->
-        <!-- Footer -->
-        <footer id="footer">
-            <ul>
-                <a asp-action="Sobre" class="button btn-primary">Sobre nós</a>
-            </ul>
-            <ul class="icons">
-                <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands circle fa-google-plus-g"><span class="label">Google+</span></a></li>
-                <li><a href="#" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
-                <li><a href="#" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
-            </ul>
+		<div id="id01" class="modalLogin animate">
+			<span onclick="document.getElementById('id01').style.display='none'" class="closeLogin" title="Close Modal">&times;</span>
+			<div class="tab modal-contentLogin">
+				<button id="BLogGeral" class="tablinks" onclick="openLogin(event, 'Login')">Login</button>
+				<button class="tablinks" onclick="openLogin(event, 'Registar')">Registar</button>
+			</div>
 
-            <ul class="copyright">
-                <li>&copy; Template: <a href="https://html5up.net/twenty">TWENTY</a></li>
-                <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            </ul>
+			<div id="Login" class="tabcontent modal-contentLogin">
+				<article id="entrar">
+					<!--<h2 class="major">Entrar</h2>-->
+					<form method="post" action="#">
+						<div class="fields">
+							<div class="field half">
+								<label for="email">Email</label>
+								<input type="text" name="email" id="email" />
+							</div>
+							<div class="field half">
+								<label for="password">Password</label>
+								<input class="password" type="password" name="Password" id="PasswordLogin" placeholder="Password" />
+								<i class="fa fa-eye" onclick="show('olhoPLA','PasswordLogin')" id="olhoPLA"></i>
+							</div>
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Login" class="primary" asp-controller="Ambiente" asp-action="Ambiente" /></li><!--ir para o home/index-->
+							<li><input type="reset" value="Reset" onclick="resetPass('olhoPLA', 'PasswordLogin')" /></li>
+						</ul>
+					</form>
+				</article>
+			</div>
 
-        </footer>
+			<div id="Registar" class="tabcontent modal-contentLogin">
+				<article id="registar">
+					<!--<h2 class="major">Registar</h2>-->
+					<form method="post" action="#">
+						<div class="fields">
+							<div class="field half">
+								<label for="name">Name</label>
+								<input type="text" name="name" id="name" />
+							</div>
+							<div class="field half">
+								<label for="email">Email</label>
+								<input type="text" name="email" id="email" />
+							</div>
+							<div class="field half">
+								<label for="password">Password</label>
+								<input class="password" type="password" name="Password" id="PasswordRegistar" placeholder="Password" />
+								<i class="fa fa-eye" onclick="show('olhoPRA','PasswordRegistar')" id="olhoPRA"></i>
+							</div>
+							<div class="field half">
+								<label for="password">Confirmar Password</label>
+								<input class="password" type="password" name="Password" id="ConfirmPassword" placeholder="Confirm Password" />
+								<i class="fa fa-eye" onclick="show('olhoCPA','ConfirmPassword')" id="olhoCPA"></i>
+							</div>
+							<div class="field half">
+								<label for="Data_Nascimento">Data Nascimento:</label>
+								<input type="date" id="Data_Nascimento" name="birthday">
+							</div>
+							<div class="field half">
+								<label for="Sexo">Sexo:</label>
+								<select id="sexo" name="sexo">
+									<option value="mas">Masculino</option>
+									<option value="fem">Feminino</option>
+								</select>
+							</div>
+							<div class="field half">
+								<label for="Nacionalidade">Nacionalidade:</label>
+								<select id="country" name="country">
+									<option value="zambian">Zambian</option>
+									<option value="zimbabwean">Zimbabwean</option>
+								</select>
+							</div>
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Registar" class="primary" asp-controller="Ambiente" asp-action="Ambiente" /></li><!--ir para o home/index-->
+							<li><input type="reset" value="Reset" onclick="resetPass('olhoPRA', 'PasswordRegistar'); resetPass('olhoCPA','ConfirmPassword');" /></li>
+						</ul>
+					</form>
+				</article>
+			</div>
+		</div>
 
-    </div>
 
-    <!-- Scripts -->
-    <script src="~/geral/js/jquery.min.js"></script>
-    <script src="~/geral/js/jquery.dropotron.min.js"></script>
-    <script src="~/geral/js/jquery.scrolly.min.js"></script>
-    <script src="~/geral/js/jquery.scrollex.min.js"></script>
-    <script src="~/geral/js/browser.min.js"></script>
-    <script src="~/geral/js/breakpoints.min.js"></script>
-    <script src="~/geral/js/util.js"></script>
-    <script src="~/geral/js/main.js"></script>
-    <script src="~/geral/js/imgsPaisagens.js"></script>
+
+
+
+
+		<!-- CTA -->
+		<!--<section id="cta">
+
+			<header>
+				<h2>Ready to do <strong>something</strong>?</h2>
+				<p>Proin a ullamcorper elit, et sagittis turpis integer ut fermentum.</p>
+			</header>
+			<footer>
+				<ul class="buttons">
+					<li><a href="#" class="button primary">Take My Money</a></li>
+					<li><a href="#" class="button">LOL Wut</a></li>
+				</ul>
+			</footer>
+
+		</section>-->
+		<!-- Footer -->
+		<footer id="footer">
+			<ul>
+				<a asp-action="Sobre" class="button btn-primary">Sobre nós</a>
+			</ul>
+			<ul class="icons">
+				<li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon brands circle fa-google-plus-g"><span class="label">Google+</span></a></li>
+				<li><a href="#" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+				<li><a href="#" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+			</ul>
+
+			<ul class="copyright">
+				<li>&copy; Template: <a href="https://html5up.net/twenty">TWENTY</a></li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="~/geral/js/jquery.min.js"></script>
+	<script src="~/geral/js/jquery.dropotron.min.js"></script>
+	<script src="~/geral/js/jquery.scrolly.min.js"></script>
+	<script src="~/geral/js/jquery.scrollex.min.js"></script>
+	<script src="~/geral/js/browser.min.js"></script>
+	<script src="~/geral/js/breakpoints.min.js"></script>
+	<script src="~/geral/js/util.js"></script>
+	<script src="~/geral/js/main.js"></script>
+	<script src="~/geral/js/imgsPaisagens.js"></script>
+	<script src="~/geral/js/Logincontent.js"></script>
+	<script src="~/js/outros.js"></script>
 
 </body>
 </html>

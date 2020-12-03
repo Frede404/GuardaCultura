@@ -29,3 +29,10 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+
+//carrega no butao automaticamente
+function inicio(butao) {
+    var link = document.getElementById(butao);
+    for (var i = 0; i < 50; i++)
+        link.click();
+}
