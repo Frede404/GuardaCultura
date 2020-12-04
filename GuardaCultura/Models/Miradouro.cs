@@ -9,31 +9,30 @@ namespace GuardaCultura.Models
     public class Miradouro
     {
         public int MiradouroId { get; set; }
-        
-        [Required(ErrorMessage =" Escreva o nome do miradouro que pretende inserir!")]
-        [StringLength(256, MinimumLength = 3, ErrorMessage ="O nome do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
+
+        [Required(ErrorMessage = " Escreva o nome do miradouro que pretende inserir!")]
+        [StringLength(256, MinimumLength = 3, ErrorMessage = "O nome do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
         public string Nome { get; set; }
-        
+
         [Required(ErrorMessage = " Escreva a localização do miradouro que pretende inserir!")]
         [StringLength(256, ErrorMessage = "A localização do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
         public string Localizacao { get; set; }
-        
+
         [Required]
         public string Coordenadas_gps { get; set; }
-
+        
+        [Required]// campo, cidade...
         public string Terreno { get; set; }
         
         [Required]
-        public bool E_Miradouro { get; set; }
+        public bool E_Miradouro { get; set; }//inserido pelo sistema
 
         public string Condicoes { get; set; }
         
-        [Required]
-        public int Ocupacao_maxima { get; set; }
+        public int Ocupacao_maxima { get; set; }// required se for miradouro
         
-        [Required(ErrorMessage = " Escreva a localização do miradouro que pretende inserir!")]
         [StringLength(256, MinimumLength = 3, ErrorMessage = "A localização do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
-        public string Descricao { get; set; }
+        public string Descricao { get; set; }// required se for miradouro
         
         public ICollection<Atratividade> Atratividades { get; set; }
 

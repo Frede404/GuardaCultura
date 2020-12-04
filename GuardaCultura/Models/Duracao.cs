@@ -12,10 +12,11 @@ namespace GuardaCultura.Models
 
         [Required]
         [StringLength(2)]
-        public int HorasInicio { get; set; }
+        public int HorasInicio { get; set; }// >=0 e <= 23
 
         [Required]
-        public int HorasFim { get; set; }
+        [StringLength(2)]
+        public int HorasFim { get; set; }// >=0 e <= 23
 
         public ICollection<Atratividade> Atratividades { get; set; }
     }
