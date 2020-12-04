@@ -11,13 +11,13 @@ namespace GuardaCultura.Models
         public int FotografiaId { get; set; }
 
         [Required]
-        public string nome { get; set; }//alt
+        public string Nome { get; set; }//alt
 
-        public string data_imagem { get; set; }
+        public string Data_imagem { get; set; }
 
-        public float classificacao { get; set; }
+        public float Classificacao { get; set; }
 
-        public byte[] foto { get; set; }
+        public byte[] Foto { get; set; }
 
         [Required]
         public int EstacaoAnoId { get; set; }
