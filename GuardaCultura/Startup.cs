@@ -68,6 +68,15 @@ namespace GuardaCultura
                     pattern: "{controller=Home}/{action=privacy}/{id?}");//pagina inicial
                 endpoints.MapRazorPages();
             });
+
+            if (env.IsDevelopment())//ver se está em desenvolvimento
+            {
+                using (var serviceScope = app.ApplicationServices.CreateScope())//cria uma area de acesso a servicos
+                {
+                    var dbContext = serviceScope.ServiceProvider.GetService<GuardaCulturaContext>();
+                    SeedData.Populate(dbContext);
+                }
+            }
         }
     }
 }

@@ -20,5 +20,6 @@ namespace GuardaCultura.Models
 
         public int HoraId { get; set; }
 
+        public Hora Hora { get; set; }
     }
 }

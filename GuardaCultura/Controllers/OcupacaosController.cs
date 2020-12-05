@@ -63,6 +63,7 @@ namespace GuardaCultura.Models
                 // todo: informar o utilizador, ocupacao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "Horas", ocupacao.HoraId);
             return View(ocupacao);
         }
 
