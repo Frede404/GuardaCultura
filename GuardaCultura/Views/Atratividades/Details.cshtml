@@ -1,0 +1,36 @@
+﻿@model GuardaCultura.Models.Atratividade
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Atratividade</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Duracao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Duracao.DuracaoId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EstacaoAno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Miradouro)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Miradouro.Coordenadas_gps)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AtratividadeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
