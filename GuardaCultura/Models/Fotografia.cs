@@ -21,10 +21,18 @@ namespace GuardaCultura.Models
 
         public int EstacaoAnoId { get; set; }
 
-        public int UserId { get; set; }
+        public EstacaoAno EstacaoAno { get; set; }
+
+        public int PessoaId { get; set; }
+
+        public Pessoa Pessoa { get; set; }
 
         public int MiradouroId { get; set; }
 
+        public Miradouro Miradouro { get; set; }
+
         public int TipoImagemId { get; set; }
+
+        public TipoImagem TipoImagem { get; set; }
     }
 }

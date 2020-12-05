@@ -11,9 +11,15 @@ namespace GuardaCultura.Models
         public int AtratividadeId { get; set; }
         
         public int DuracaoId { get; set; }
-        
+
+        public Duracao Duracao { get; set; }
+
         public int EstacaoAnoId { get; set; }
-        
+
+        public EstacaoAno EstacaoAno { get; set; }
+
         public int MiradouroId { get; set; }
+
+        public Miradouro Miradouro { get; set; }
     }
 }

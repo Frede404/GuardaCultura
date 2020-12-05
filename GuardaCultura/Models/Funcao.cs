@@ -13,6 +13,6 @@ namespace GuardaCultura.Models
         [Required]
         public int FuncaoDesempenhar { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<Pessoa> Pessoas { get; set; }
     }
 }
