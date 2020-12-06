@@ -11,6 +11,9 @@ namespace GuardaCultura.Data
         internal static void Populate(GuardaCulturaContext dbContext)
         {
             PopulateHoras(dbContext);
+            PopulateFuncao(dbContext);
+            PopulateEstacaoAno(dbContext);
+            PopulateTipoImagem(dbContext);
         }
 
         private static void PopulateHoras(GuardaCulturaContext dbContext)
@@ -41,10 +44,92 @@ namespace GuardaCultura.Data
                         Horas = i
                     }
                     );
+                dbContext.SaveChanges();//so fica valido se salvarmos
             }
 
-            dbContext.SaveChanges();//so fica valido se salvarmos
+           
+        }
+        
+        private static void PopulateFuncao(GuardaCulturaContext dbContext)
+        {
+            /*if (dbContext.Funcao.Any())//ve se ja ha Horas na base de dados
+            {
+                return;
+            }
 
+            dbContext.Funcao.AddRange(
+                new Funcao
+                {
+                    FuncaoId = 1,
+                    FuncaoDesempenhar = "Administrador"
+                },
+                new Funcao
+                {
+                    FuncaoId = 2,
+                    FuncaoDesempenhar = "Controlador"
+                },
+                new Funcao
+                {
+                    FuncaoId = 3,
+                    FuncaoDesempenhar = "Utilizador"
+                }
+                );
+
+            dbContext.SaveChanges();//so fica valido se salvarmos*/
+        }
+
+        private static void PopulateEstacaoAno(GuardaCulturaContext dbContext)
+        {
+            if (dbContext.EstacaoAno.Any())//ve se ja ha Horas na base de dados
+            {
+                return;
+            }
+
+            dbContext.EstacaoAno.AddRange(
+                new EstacaoAno
+                {
+                    Nome_estacao = "Primavera"
+                },
+                new EstacaoAno
+                {
+                    Nome_estacao = "Verão"
+                },
+                new EstacaoAno
+                {
+                    Nome_estacao = "Outono"
+                },
+                new EstacaoAno
+                {
+                    Nome_estacao = "Inverno"
+                }
+                );
+
+            dbContext.SaveChanges();//so fica valido se salvarmos
+        }
+
+        private static void PopulateTipoImagem(GuardaCulturaContext dbContext)
+        {
+            if (dbContext.TipoImagem.Any())//ve se ja ha Horas na base de dados
+            {
+                return;
+            }
+
+            dbContext.TipoImagem.AddRange(
+                new TipoImagem
+                {
+                    Descricao = "Cidade"
+                },
+                new TipoImagem
+                {
+                    Descricao = "Paisagem"
+                },
+                new TipoImagem
+                {
+                    Descricao = "Serra"
+                }
+                );
+
+            dbContext.SaveChanges();//so fica valido se salvarmos
         }
     }
 }
