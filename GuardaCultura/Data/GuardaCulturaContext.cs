@@ -30,5 +30,7 @@ namespace GuardaCultura.Data
 
         public DbSet<GuardaCultura.Models.Fotografia> Fotografia { get; set; }
 
+        public DbSet<GuardaCultura.Models.Funcao> Funcao { get; set; }
+
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GuardaCultura.Models
 {
-    public class User
+    public class Pessoa
     {
-        public int UserId { get; set; }
+        public int PessoaId { get; set; }
 
         [Required]
         [StringLength(512)]
@@ -34,6 +34,8 @@ namespace GuardaCultura.Models
         public float Fiabilidade { get; set; }
 
         public int FuncaoId { get; set; }
+
+        public Funcao Funcao { get; set; }
 
         public ICollection<Fotografia> Fotografias { get; set; }
     }
