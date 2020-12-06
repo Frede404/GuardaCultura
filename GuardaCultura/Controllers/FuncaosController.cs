@@ -14,7 +14,7 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public FuncaosController(GuardaCulturaContext context)
+        public FuncaosController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Funcaos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -58,8 +58,11 @@ namespace GuardaCultura.Controllers
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir a Funcao
                 _context.Add(funcao);
                 await _context.SaveChangesAsync();
+
+                // todo: informar o utilizador, Funcao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             return View(funcao);
@@ -76,6 +79,7 @@ namespace GuardaCultura.Controllers
             var funcao = await _context.Funcao.FindAsync(id);
             if (funcao == null)
             {
+                // todo: talvez alguem tenha apagado essa Funcao. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             return View(funcao);
@@ -104,15 +108,19 @@ namespace GuardaCultura.Controllers
                 {
                     if (!FuncaoExists(funcao.FuncaoId))
                     {
+                        // todo: talvez alguem apagou essa Funcao
+                        // pergunta ao utilizador se quer criar uma nova com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
+            // todo: informar o utilizador que a Funcao foi editada com sucesso
             return View(funcao);
         }
 
@@ -128,6 +136,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.FuncaoId == id);
             if (funcao == null)
             {
+                // todo: talvez alguem apagou essa Funcao, informar o utilizador
                 return NotFound();
             }
 
@@ -142,6 +151,8 @@ namespace GuardaCultura.Controllers
             var funcao = await _context.Funcao.FindAsync(id);
             _context.Funcao.Remove(funcao);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a Funcao foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

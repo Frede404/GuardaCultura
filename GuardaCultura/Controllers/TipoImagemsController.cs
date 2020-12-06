@@ -14,7 +14,7 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public TipoImagemsController(GuardaCulturaContext context)
+        public TipoImagemsController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: TipoImagems/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -58,8 +58,11 @@ namespace GuardaCultura.Controllers
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir a Tipo de imagem
                 _context.Add(tipoImagem);
                 await _context.SaveChangesAsync();
+
+                // todo: informar o utilizador, Tipo de imagem criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             return View(tipoImagem);
@@ -76,6 +79,7 @@ namespace GuardaCultura.Controllers
             var tipoImagem = await _context.TipoImagem.FindAsync(id);
             if (tipoImagem == null)
             {
+                // todo: talvez alguem tenha apagado esse Tipo de imagem. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             return View(tipoImagem);
@@ -104,10 +108,13 @@ namespace GuardaCultura.Controllers
                 {
                     if (!TipoImagemExists(tipoImagem.TipoImagemId))
                     {
+                        // todo: talvez alguem apagou esse Tipo de imagem
+                        // pergunta ao utilizador se quer criar uma nova com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
@@ -128,6 +135,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.TipoImagemId == id);
             if (tipoImagem == null)
             {
+                // todo: talvez alguem apagou esse Tipo de imagem, informar o utilizador
                 return NotFound();
             }
 
@@ -142,6 +150,8 @@ namespace GuardaCultura.Controllers
             var tipoImagem = await _context.TipoImagem.FindAsync(id);
             _context.TipoImagem.Remove(tipoImagem);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que o Tipo de imagem foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

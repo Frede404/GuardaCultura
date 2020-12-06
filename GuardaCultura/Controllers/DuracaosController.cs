@@ -12,7 +12,7 @@ namespace GuardaCultura.Controllers
 {
     public class DuracaosController : Controller
     {
-        private readonly GuardaCulturaContext _context;
+        private readonly GuardaCulturaContext _context;// recebe a bd
 
         public DuracaosController(GuardaCulturaContext context)
         {
@@ -26,7 +26,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Duracaos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -53,13 +53,16 @@ namespace GuardaCultura.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DuracaoId,HorasInicio,HorasFim")] Duracao duracao)
+        [ValidateAntiForgeryToken]// validacao de seguranca
+        public async Task<IActionResult> Create([Bind("DuracaoId,HorasInicio,HorasFim")] Duracao duracao)//serve para evitar alguns ataques, so recebe campos que estejam no bind
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir a duracao
                 _context.Add(duracao);
                 await _context.SaveChangesAsync();
+
+                // todo: informar o utilizador, duracao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             return View(duracao);
@@ -76,6 +79,7 @@ namespace GuardaCultura.Controllers
             var duracao = await _context.Duracao.FindAsync(id);
             if (duracao == null)
             {
+                // todo: talvez alguem tenha apagado essa duracao. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             return View(duracao);
@@ -104,10 +108,13 @@ namespace GuardaCultura.Controllers
                 {
                     if (!DuracaoExists(duracao.DuracaoId))
                     {
+                        // todo: talvez alguem apagou essa duracao
+                        // pergunta ao utilizador se quer criar uma nova com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
@@ -128,6 +135,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.DuracaoId == id);
             if (duracao == null)
             {
+                // todo: talvez alguem apagou essa duracao, informar o utilizador
                 return NotFound();
             }
 
@@ -142,6 +150,8 @@ namespace GuardaCultura.Controllers
             var duracao = await _context.Duracao.FindAsync(id);
             _context.Duracao.Remove(duracao);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a duracao foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

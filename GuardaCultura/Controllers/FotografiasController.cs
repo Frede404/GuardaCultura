@@ -14,7 +14,7 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public FotografiasController(GuardaCulturaContext context)
+        public FotografiasController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Fotografias/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -42,6 +42,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.FotografiaId == id);
             if (fotografia == null)
             {
+                // todo: talvez alguem tenha apagado essa fotografia. "Mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
 
@@ -63,12 +64,15 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FotografiaId,Nome,Data_imagem,Classificacao,Foto,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId")] Fotografia fotografia)
+        public async Task<IActionResult> Create([Bind("FotografiaId,Nome,Data_imagem,Classificacao,Foto,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId")] Fotografia fotografia)//serve para evitar alguns ataques, só recebe campos que estejam no Bind
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir a foto
                 _context.Add(fotografia);
                 await _context.SaveChangesAsync();
+
+                // todo: informar o utilizador, foto inserida com sucesso
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
@@ -89,6 +93,7 @@ namespace GuardaCultura.Controllers
             var fotografia = await _context.Fotografia.FindAsync(id);
             if (fotografia == null)
             {
+                // todo: talvez alguem tenha apagado essa Hora. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
@@ -121,10 +126,13 @@ namespace GuardaCultura.Controllers
                 {
                     if (!FotografiaExists(fotografia.FotografiaId))
                     {
+                        // todo: talvez alguem apagou essa Foto
+                        // pergunta ao utilizador se quer criar um novo com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
@@ -134,6 +142,8 @@ namespace GuardaCultura.Controllers
             ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
+
+            // todo: informar o utilizador que a foto foi editada com sucesso
             return View(fotografia);
         }
 
@@ -153,6 +163,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.FotografiaId == id);
             if (fotografia == null)
             {
+                // todo: talvez alguem apagou essa foto, informar o utilizador
                 return NotFound();
             }
 
@@ -167,6 +178,8 @@ namespace GuardaCultura.Controllers
             var fotografia = await _context.Fotografia.FindAsync(id);
             _context.Fotografia.Remove(fotografia);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a foto foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

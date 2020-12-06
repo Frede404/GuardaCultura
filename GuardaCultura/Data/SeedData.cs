@@ -46,8 +46,6 @@ namespace GuardaCultura.Data
                     );
                 dbContext.SaveChanges();//so fica valido se salvarmos
             }
-
-           
         }
         
         private static void PopulateFuncao(GuardaCulturaContext dbContext)

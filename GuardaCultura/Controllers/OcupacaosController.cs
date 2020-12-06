@@ -14,7 +14,7 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public OcupacaosController(GuardaCulturaContext context)
+        public OcupacaosController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Ocupacaos/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -63,8 +63,11 @@ namespace GuardaCultura.Controllers
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir a ocupacao
                 _context.Add(ocupacao);
                 await _context.SaveChangesAsync();
+
+                // todo: informar o utilizador, ocupacao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "HoraId", ocupacao.HoraId);
@@ -83,6 +86,7 @@ namespace GuardaCultura.Controllers
             var ocupacao = await _context.Ocupacao.FindAsync(id);
             if (ocupacao == null)
             {
+                // todo: talvez alguem tenha apagado essa ocupacao. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "HoraId", ocupacao.HoraId);
@@ -113,10 +117,13 @@ namespace GuardaCultura.Controllers
                 {
                     if (!OcupacaoExists(ocupacao.OcupacaoId))
                     {
+                        // todo: talvez alguem apagou essa ocupacao
+                        // pergunta ao utilizador se quer criar uma nova com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
@@ -141,6 +148,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.OcupacaoId == id);
             if (ocupacao == null)
             {
+                // todo: talvez alguem apagou essa ocupacao, informar o utilizador
                 return NotFound();
             }
 
@@ -155,6 +163,8 @@ namespace GuardaCultura.Controllers
             var ocupacao = await _context.Ocupacao.FindAsync(id);
             _context.Ocupacao.Remove(ocupacao);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a ocupacao foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

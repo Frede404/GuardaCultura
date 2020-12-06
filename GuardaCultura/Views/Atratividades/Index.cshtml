@@ -36,11 +36,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Miradouro.Coordenadas_gps)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AtratividadeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AtratividadeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AtratividadeId">Delete</a>
-            </td>
+			<td>
+				<a asp-action="Edit" asp-route-id="@item.AtratividadeId">Edit</a> | @*Botao Editar*@
+				<a asp-action="Details" asp-route-id="@item.AtratividadeId">Details</a> | @*Botao Detalhes*@
+				<a asp-action="Delete" asp-route-id="@item.AtratividadeId">Delete</a>@*Botao Apagar*@
+			</td>
         </tr>
 }
     </tbody>

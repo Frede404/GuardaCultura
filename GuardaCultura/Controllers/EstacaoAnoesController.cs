@@ -14,19 +14,19 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public EstacaoAnoesController(GuardaCulturaContext context)
+        public EstacaoAnoesController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
 
         // GET: EstacaoAnoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()// lista das estacoes do ano
         {
             return View(await _context.EstacaoAno.ToListAsync());
         }
 
         // GET: EstacaoAnoes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -37,6 +37,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.EstacaoAnoId == id);
             if (estacaoAno == null)
             {
+                //todo: talvez alguem tenha apagado essa estacao. mostrar uma mensagem apropriada para o utilizador
                 return NotFound();
             }
 
@@ -53,13 +54,16 @@ namespace GuardaCultura.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]// validacao de seguranca
         public async Task<IActionResult> Create([Bind("EstacaoAnoId,Nome_estacao")] EstacaoAno estacaoAno)
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir uma estacao
                 _context.Add(estacaoAno);
                 await _context.SaveChangesAsync();
+
+                //todo: informar o utilizador, estacao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             return View(estacaoAno);
@@ -76,6 +80,7 @@ namespace GuardaCultura.Controllers
             var estacaoAno = await _context.EstacaoAno.FindAsync(id);
             if (estacaoAno == null)
             {
+                //todo: talvez alguem tenha apagado essa estacao. mostrar uma mensagem apropriada para o utilizador
                 return NotFound();
             }
             return View(estacaoAno);
@@ -86,7 +91,7 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EstacaoAnoId,Nome_estacao")] EstacaoAno estacaoAno)
+        public async Task<IActionResult> Edit(int id, [Bind("EstacaoAnoId,Nome_estacao")] EstacaoAno estacaoAno)//serve para evitar alguns ataques, so recebe campos que estejam no bind
         {
             if (id != estacaoAno.EstacaoAnoId)
             {
@@ -104,10 +109,13 @@ namespace GuardaCultura.Controllers
                 {
                     if (!EstacaoAnoExists(estacaoAno.EstacaoAnoId))
                     {
+                        // todo: talvez alguem apagou essa estacao
+                        //perguntar ao utilizador se quer criar um novo com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
@@ -128,6 +136,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.EstacaoAnoId == id);
             if (estacaoAno == null)
             {
+                // todo: talvez alguem apagou essa estacao, informar o utilizador
                 return NotFound();
             }
 
@@ -142,6 +151,8 @@ namespace GuardaCultura.Controllers
             var estacaoAno = await _context.EstacaoAno.FindAsync(id);
             _context.EstacaoAno.Remove(estacaoAno);
             await _context.SaveChangesAsync();
+
+            // todo: informar o user que a estacao foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

@@ -14,19 +14,19 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public HorasController(GuardaCulturaContext context)
+        public HorasController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
 
         // GET: Horas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()// lista dos Horas
         {
             return View(await _context.Hora.ToListAsync());
         }
 
         // GET: Horas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe o id
         {
             if (id == null)
             {
@@ -34,9 +34,10 @@ namespace GuardaCultura.Controllers
             }
 
             var hora = await _context.Hora
-                .FirstOrDefaultAsync(m => m.HoraId == id);
+                .FirstOrDefaultAsync(m => m.HoraId == id);// um registo ou o default que é null
             if (hora == null)
             {
+                // todo: talvez alguem tenha apagado essa Hora. "Mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
 
@@ -54,12 +55,15 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HoraId,Horas")] Hora hora)
+        public async Task<IActionResult> Create([Bind("HoraId,Horas")] Hora hora)//serve para evitar alguns ataques,só recebe campos que estejam no Bind
         {
             if (ModelState.IsValid)
             {
+                // todo: validacoes adicionais antes de inserir a Hora
                 _context.Add(hora);
                 await _context.SaveChangesAsync();
+
+                // todo: informar o utilizador, Hora criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             return View(hora);
@@ -76,6 +80,7 @@ namespace GuardaCultura.Controllers
             var hora = await _context.Hora.FindAsync(id);
             if (hora == null)
             {
+                // todo: talvez alguem tenha apagado essa Hora. " mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             return View(hora);
@@ -104,10 +109,13 @@ namespace GuardaCultura.Controllers
                 {
                     if (!HoraExists(hora.HoraId))
                     {
+                        // todo: talvez alguem apagou essa Hora
+                        // pergunta ao utilizador se quer criar um novo com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
@@ -128,6 +136,7 @@ namespace GuardaCultura.Controllers
                 .FirstOrDefaultAsync(m => m.HoraId == id);
             if (hora == null)
             {
+                // todo: talvez alguem apagou essa Hora, informar o utilizador
                 return NotFound();
             }
 
@@ -142,6 +151,8 @@ namespace GuardaCultura.Controllers
             var hora = await _context.Hora.FindAsync(id);
             _context.Hora.Remove(hora);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a Hora foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 

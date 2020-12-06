@@ -14,7 +14,7 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public AtratividadesController(GuardaCulturaContext context)
+        public AtratividadesController(GuardaCulturaContext context)// recebe bd
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Atratividades/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)// recebe id
         {
             if (id == null)
             {
@@ -60,13 +60,16 @@ namespace GuardaCultura.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]// validacao de seguranca
         public async Task<IActionResult> Create([Bind("AtratividadeId,DuracaoId,EstacaoAnoId,MiradouroId")] Atratividade atratividade)
         {
             if (ModelState.IsValid)
             {
+                //todo: validacoes antes de inserir a atratividade
                 _context.Add(atratividade);
                 await _context.SaveChangesAsync();
+
+                //todo: informar o utilizador, atratividade criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DuracaoId"] = new SelectList(_context.Duracao, "DuracaoId", "DuracaoId", atratividade.DuracaoId);
@@ -86,6 +89,7 @@ namespace GuardaCultura.Controllers
             var atratividade = await _context.Atratividade.FindAsync(id);
             if (atratividade == null)
             {
+                //todo: talvez alguem tenha apagado essa atratividade. "mostrar uma mensagem apropriada ao utilizador"
                 return NotFound();
             }
             ViewData["DuracaoId"] = new SelectList(_context.Duracao, "DuracaoId", "DuracaoId", atratividade.DuracaoId);
@@ -99,7 +103,7 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AtratividadeId,DuracaoId,EstacaoAnoId,MiradouroId")] Atratividade atratividade)
+        public async Task<IActionResult> Edit(int id, [Bind("AtratividadeId,DuracaoId,EstacaoAnoId,MiradouroId")] Atratividade atratividade)//serve para evitar alguns ataques, so recebe campos que estejam no bind
         {
             if (id != atratividade.AtratividadeId)
             {
@@ -117,13 +121,17 @@ namespace GuardaCultura.Controllers
                 {
                     if (!AtratividadeExists(atratividade.AtratividadeId))
                     {
+                        // todo: talvez alguem apagou essa atratividade
+                        // pergunta ao utilizador se quer criar uma nova com os mesmos dados
                         return NotFound();
                     }
                     else
                     {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
                         throw;
                     }
                 }
+                // todo: informar o utilizador que a atratividade foi editada com sucesso
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DuracaoId"] = new SelectList(_context.Duracao, "DuracaoId", "DuracaoId", atratividade.DuracaoId);
@@ -137,6 +145,7 @@ namespace GuardaCultura.Controllers
         {
             if (id == null)
             {
+                // todo: talvez alguem apagou essa atratividade, informar o utilizador
                 return NotFound();
             }
 
@@ -161,6 +170,8 @@ namespace GuardaCultura.Controllers
             var atratividade = await _context.Atratividade.FindAsync(id);
             _context.Atratividade.Remove(atratividade);
             await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a atratividade foi apagada com sucesso
             return RedirectToAction(nameof(Index));
         }
 
