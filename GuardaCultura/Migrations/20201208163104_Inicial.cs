@@ -35,6 +35,19 @@ namespace GuardaCultura.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Funcao",
+                columns: table => new
+                {
+                    FuncaoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FuncaoDesempenhar = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcao", x => x.FuncaoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Hora",
                 columns: table => new
                 {
@@ -78,6 +91,33 @@ namespace GuardaCultura.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TipoImagem", x => x.TipoImagemId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pessoa",
+                columns: table => new
+                {
+                    PessoaId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(maxLength: 512, nullable: false),
+                    Email = table.Column<string>(maxLength: 512, nullable: false),
+                    Password = table.Column<string>(maxLength: 20, nullable: false),
+                    Ultima_Lingua = table.Column<string>(maxLength: 5, nullable: true),
+                    Data_Nasc = table.Column<string>(nullable: true),
+                    Sexo = table.Column<string>(nullable: true),
+                    Nacionalidade = table.Column<string>(nullable: true),
+                    Fiabilidade = table.Column<float>(nullable: false),
+                    FuncaoId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pessoa", x => x.PessoaId);
+                    table.ForeignKey(
+                        name: "FK_Pessoa_Funcao_FuncaoId",
+                        column: x => x.FuncaoId,
+                        principalTable: "Funcao",
+                        principalColumn: "FuncaoId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,7 +192,7 @@ namespace GuardaCultura.Migrations
                     Classificacao = table.Column<float>(nullable: false),
                     Foto = table.Column<byte[]>(nullable: true),
                     EstacaoAnoId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
+                    PessoaId = table.Column<int>(nullable: false),
                     MiradouroId = table.Column<int>(nullable: false),
                     TipoImagemId = table.Column<int>(nullable: false)
                 },
@@ -170,6 +210,12 @@ namespace GuardaCultura.Migrations
                         column: x => x.MiradouroId,
                         principalTable: "Miradouro",
                         principalColumn: "MiradouroId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Fotografia_Pessoa_PessoaId",
+                        column: x => x.PessoaId,
+                        principalTable: "Pessoa",
+                        principalColumn: "PessoaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Fotografia_TipoImagem_TipoImagemId",
@@ -205,6 +251,11 @@ namespace GuardaCultura.Migrations
                 column: "MiradouroId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Fotografia_PessoaId",
+                table: "Fotografia",
+                column: "PessoaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fotografia_TipoImagemId",
                 table: "Fotografia",
                 column: "TipoImagemId");
@@ -218,6 +269,11 @@ namespace GuardaCultura.Migrations
                 name: "IX_Ocupacao_MiradouroId",
                 table: "Ocupacao",
                 column: "MiradouroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pessoa_FuncaoId",
+                table: "Pessoa",
+                column: "FuncaoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -238,6 +294,9 @@ namespace GuardaCultura.Migrations
                 name: "EstacaoAno");
 
             migrationBuilder.DropTable(
+                name: "Pessoa");
+
+            migrationBuilder.DropTable(
                 name: "TipoImagem");
 
             migrationBuilder.DropTable(
@@ -245,6 +304,9 @@ namespace GuardaCultura.Migrations
 
             migrationBuilder.DropTable(
                 name: "Miradouro");
+
+            migrationBuilder.DropTable(
+                name: "Funcao");
         }
     }
 }

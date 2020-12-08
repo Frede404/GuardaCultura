@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GuardaCultura.Migrations
 {
     [DbContext(typeof(GuardaCulturaContext))]
-    [Migration("20201204215757_Inicial")]
+    [Migration("20201208163104_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,10 +111,10 @@ namespace GuardaCultura.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TipoImagemId")
+                    b.Property<int>("PessoaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("TipoImagemId")
                         .HasColumnType("int");
 
                     b.HasKey("FotografiaId");
@@ -123,9 +123,27 @@ namespace GuardaCultura.Migrations
 
                     b.HasIndex("MiradouroId");
 
+                    b.HasIndex("PessoaId");
+
                     b.HasIndex("TipoImagemId");
 
                     b.ToTable("Fotografia");
+                });
+
+            modelBuilder.Entity("GuardaCultura.Models.Funcao", b =>
+                {
+                    b.Property<int>("FuncaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FuncaoDesempenhar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FuncaoId");
+
+                    b.ToTable("Funcao");
                 });
 
             modelBuilder.Entity("GuardaCultura.Models.Hora", b =>
@@ -215,6 +233,54 @@ namespace GuardaCultura.Migrations
                     b.ToTable("Ocupacao");
                 });
 
+            modelBuilder.Entity("GuardaCultura.Models.Pessoa", b =>
+                {
+                    b.Property<int>("PessoaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Data_Nasc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
+
+                    b.Property<float>("Fiabilidade")
+                        .HasColumnType("real");
+
+                    b.Property<int>("FuncaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nacionalidade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Sexo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ultima_Lingua")
+                        .HasColumnType("nvarchar(5)")
+                        .HasMaxLength(5);
+
+                    b.HasKey("PessoaId");
+
+                    b.HasIndex("FuncaoId");
+
+                    b.ToTable("Pessoa");
+                });
+
             modelBuilder.Entity("GuardaCultura.Models.TipoImagem", b =>
                 {
                     b.Property<int>("TipoImagemId")
@@ -233,19 +299,19 @@ namespace GuardaCultura.Migrations
 
             modelBuilder.Entity("GuardaCultura.Models.Atratividade", b =>
                 {
-                    b.HasOne("GuardaCultura.Models.Duracao", null)
+                    b.HasOne("GuardaCultura.Models.Duracao", "Duracao")
                         .WithMany("Atratividades")
                         .HasForeignKey("DuracaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuardaCultura.Models.EstacaoAno", null)
+                    b.HasOne("GuardaCultura.Models.EstacaoAno", "EstacaoAno")
                         .WithMany("Atratividades")
                         .HasForeignKey("EstacaoAnoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuardaCultura.Models.Miradouro", null)
+                    b.HasOne("GuardaCultura.Models.Miradouro", "Miradouro")
                         .WithMany("Atratividades")
                         .HasForeignKey("MiradouroId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -254,19 +320,25 @@ namespace GuardaCultura.Migrations
 
             modelBuilder.Entity("GuardaCultura.Models.Fotografia", b =>
                 {
-                    b.HasOne("GuardaCultura.Models.EstacaoAno", null)
+                    b.HasOne("GuardaCultura.Models.EstacaoAno", "EstacaoAno")
                         .WithMany("Fotografias")
                         .HasForeignKey("EstacaoAnoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuardaCultura.Models.Miradouro", null)
+                    b.HasOne("GuardaCultura.Models.Miradouro", "Miradouro")
                         .WithMany("Fotografias")
                         .HasForeignKey("MiradouroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuardaCultura.Models.TipoImagem", null)
+                    b.HasOne("GuardaCultura.Models.Pessoa", "Pessoa")
+                        .WithMany("Fotografias")
+                        .HasForeignKey("PessoaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GuardaCultura.Models.TipoImagem", "TipoImagem")
                         .WithMany("Fotografias")
                         .HasForeignKey("TipoImagemId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -275,15 +347,24 @@ namespace GuardaCultura.Migrations
 
             modelBuilder.Entity("GuardaCultura.Models.Ocupacao", b =>
                 {
-                    b.HasOne("GuardaCultura.Models.Hora", null)
+                    b.HasOne("GuardaCultura.Models.Hora", "Hora")
                         .WithMany("Ocupacaos")
                         .HasForeignKey("HoraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GuardaCultura.Models.Miradouro", null)
+                    b.HasOne("GuardaCultura.Models.Miradouro", "Miradouro")
                         .WithMany("Ocupacaos")
                         .HasForeignKey("MiradouroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GuardaCultura.Models.Pessoa", b =>
+                {
+                    b.HasOne("GuardaCultura.Models.Funcao", "Funcao")
+                        .WithMany("Pessoas")
+                        .HasForeignKey("FuncaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

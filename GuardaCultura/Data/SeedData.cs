@@ -50,7 +50,7 @@ namespace GuardaCultura.Data
         
         private static void PopulateFuncao(GuardaCulturaContext dbContext)
         {
-            /*if (dbContext.Funcao.Any())//ve se ja ha Horas na base de dados
+            if (dbContext.Funcao.Any())//ve se ja ha Funcoes na base de dados
             {
                 return;
             }
@@ -58,22 +58,19 @@ namespace GuardaCultura.Data
             dbContext.Funcao.AddRange(
                 new Funcao
                 {
-                    FuncaoId = 1,
                     FuncaoDesempenhar = "Administrador"
                 },
                 new Funcao
                 {
-                    FuncaoId = 2,
                     FuncaoDesempenhar = "Controlador"
                 },
                 new Funcao
                 {
-                    FuncaoId = 3,
                     FuncaoDesempenhar = "Utilizador"
                 }
                 );
 
-            dbContext.SaveChanges();//so fica valido se salvarmos*/
+            dbContext.SaveChanges();//so fica valido se salvarmos
         }
 
         private static void PopulateEstacaoAno(GuardaCulturaContext dbContext)
