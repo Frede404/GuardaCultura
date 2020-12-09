@@ -23,10 +23,10 @@ namespace GuardaCultura.Models
         
         [Required]// campo, cidade...
         public string Terreno { get; set; }
-        
+
         [Required]
         public bool E_Miradouro { get; set; }//inserido pelo sistema
-
+   
         public string Condicoes { get; set; }
         
         public int Ocupacao_maxima { get; set; }// required se for miradouro

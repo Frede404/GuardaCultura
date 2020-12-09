@@ -385,6 +385,7 @@ a {
 		text-transform: uppercase;
 	}
 
+	input[type="number"],
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
@@ -410,6 +411,7 @@ a {
 		width: 100%;
 	}
 
+		input[type="number"]:invalid,
 		input[type="text"]:invalid,
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
@@ -419,6 +421,7 @@ a {
 			box-shadow: none;
 		}
 
+		input[type="number"]:focus,
 		input[type="text"]:focus,
 		input[type="password"]:focus,
 		input[type="email"]:focus,
@@ -453,6 +456,7 @@ a {
 			display: none;
 		}
 
+	input[type="number"],
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],

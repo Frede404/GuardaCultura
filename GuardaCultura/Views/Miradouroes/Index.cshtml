@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="button btn-primary">Novo</a>
 </p>
 <table class="table">
     <thead>
@@ -55,7 +55,15 @@
                 @Html.DisplayFor(modelItem => item.Terreno)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.E_Miradouro)
+                @*@Html.DisplayFor(modelItem => item.E_Miradouro)*@
+                @if (item.E_Miradouro)
+                {
+                    @Html.Encode("Miradouro")
+                }
+                else
+                {
+                    @Html.Encode("Paisagem")
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Condicoes)

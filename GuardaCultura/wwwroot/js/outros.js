@@ -36,3 +36,7 @@ function inicio(butao) {
     for (var i = 0; i < 50; i++)
         link.click();
 }
+
+function goBack() {
+    window.history.back();
+}
