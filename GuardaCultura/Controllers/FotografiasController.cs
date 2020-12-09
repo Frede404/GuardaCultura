@@ -53,7 +53,7 @@ namespace GuardaCultura.Controllers
         public IActionResult Create()
         {
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao");
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps");
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome");
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email");
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao");
             return View();
@@ -76,7 +76,7 @@ namespace GuardaCultura.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
@@ -97,7 +97,7 @@ namespace GuardaCultura.Controllers
                 return NotFound();
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
@@ -139,7 +139,7 @@ namespace GuardaCultura.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
 
