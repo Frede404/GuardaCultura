@@ -34,3 +34,7 @@
 #tabelaconfig td {
 	border-bottom: 1px solid black;
 }
+
+.textoErro{
+	color:red;
+}
