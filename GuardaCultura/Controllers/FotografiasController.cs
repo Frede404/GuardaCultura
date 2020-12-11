@@ -20,8 +20,25 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Fotografias
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+           /* var pagination = new PagingInfo
+            {
+                CurrentPage = page,
+                PageSize = PagingInfo.PAGE_SIZE,
+                TotalItems = repository.Products.Count()
+            };
+
+            return View(
+                new ProductsListViewModle
+                {
+                    Products = repository.Products
+                        .OrderBy(p => p.Price)
+                        .Skip((page - 1) * pagination.PageSize)
+                        .Take(pagination.PageSize),
+                    pagination = pagination
+                }
+            );*/
             var guardaCulturaContext = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem);
             return View(await guardaCulturaContext.ToListAsync());
         }
@@ -69,6 +86,7 @@ namespace GuardaCultura.Controllers
             if (ModelState.IsValid)
             {
                 // todo: validacoes adicionais antes de inserir a foto
+                fotografia.Classificacao = 0;
                 _context.Add(fotografia);
                 await _context.SaveChangesAsync();
 

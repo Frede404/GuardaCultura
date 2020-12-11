@@ -4,15 +4,14 @@
 	ViewData["Title"] = "Delete";
 }
 <section class="wrapper style3 container special">
-
 	<header class="major">
-		<h1>Delete</h1>
+		<h1>Apagar Fotografia</h1>
 
-		<h3>Are you sure you want to delete this?</h3>
+		<h3>Tem a certesa que pretende apagar?</h3>
 	</header>
 	<body>
 		<table class="table">
-			<thead>
+			<thead id="tabelaconfig">
 				<tr>
 					<th>
 						@Html.DisplayNameFor(model => model.Nome)
@@ -70,9 +69,13 @@
 			</tbody>
 		</table>
 		<form asp-action="Delete">
-			<input type="hidden" asp-for="FotografiaId" />
-			<input type="submit" value="Delete" class="btn btn-danger" /> |
-			<a asp-action="Index" class="button btn-primary">Back to List</a>
+			<footer class="major">
+				<div class="form-group">
+					<input type="hidden" asp-for="FotografiaId" />
+					<input type="submit" value="Delete" class="btn btn-danger" />
+					<a asp-action="Index" class="button btn-primary">Back to List</a>
+				</div>
+			</footer>
 		</form>
 	</body>
 </section>
