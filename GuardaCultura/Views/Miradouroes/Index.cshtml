@@ -5,7 +5,7 @@
 }
 <section class="wrapper style3 container special">
     <header class="major">
-        <h1>Index</h1>
+        <h1>Tabela Miradouros</h1>
 
         <p class="alinhaBotaoEsquerda">
             <a asp-action="Create" class="button btn-primary" >Novo</a>
@@ -79,9 +79,9 @@
                             @Html.DisplayFor(modelItem => item.Descricao)
                         </td>*@
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.MiradouroId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.MiradouroId">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.MiradouroId">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> |
+                            <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>
                         </td>
                     </tr>
                 }

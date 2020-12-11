@@ -60,6 +60,10 @@ namespace GuardaCultura.Controllers
             if (ModelState.IsValid)
             {
                 // todo: validacoes adicionais antes de inserir o miradouro
+                if (!miradouro.E_Miradouro)
+                {
+                    miradouro.Ocupacao_maxima = 100;
+                }
                 _context.Add(miradouro);
                 await _context.SaveChangesAsync();
 

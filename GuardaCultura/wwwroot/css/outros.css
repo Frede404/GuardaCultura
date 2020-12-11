@@ -38,3 +38,7 @@
 .textoErro{
 	color:red;
 }
+input:checked+#divTeste{
+	display:none;
+}
+
