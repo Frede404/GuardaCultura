@@ -23,3 +23,14 @@
 		transform: scale(1)
 	}
 }
+.alinhaBotaoEsquerda {
+	text-align: left;
+}
+
+#tabelaconfig th {
+	background-color: #eee;
+	border-bottom: 1px solid black;
+}
+#tabelaconfig td {
+	border-bottom: 1px solid black;
+}
