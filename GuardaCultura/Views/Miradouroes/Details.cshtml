@@ -4,63 +4,128 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Miradouro</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Localizacao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Localizacao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Coordenadas_gps)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Coordenadas_gps)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Terreno)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Terreno)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.E_Miradouro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.E_Miradouro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Condicoes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Condicoes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ocupacao_maxima)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ocupacao_maxima)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MiradouroId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<section class="wrapper style3 container special">
+    <header>
+        @if (Model.E_Miradouro)
+        {
+            <h1>Detalhes Miradouro</h1>
+        }
+        else
+        {
+            <h1>Detalhes Paisagem</h1>
+        }
+    </header>
+    <body>
+        <div>
+            <table class="table">
+                <thead id="tabelaconfig">
+                    <tr>
+                        <th class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th class="col-sm-2">
+                            Localização
+                            @*@Html.DisplayNameFor(model => model.Localizacao)*@
+                        </th>
+                        <th class="col-sm-2">
+                            Coordenadas GPS
+                            @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
+                        </th>
+                        <th class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Terreno)
+                        </th>
+                        <th class="col-sm-2">
+                            @*É miradouro
+                                @Html.DisplayNameFor(model => model.E_Miradouro)*@
+                        </th>
+                        <th class="col-sm-2">
+                            Ocupação maxima
+                            @*@Html.DisplayNameFor(model => model.Ocupacao_maxima)*@
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Localizacao)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Coordenadas_gps)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Terreno)
+                        </td>
+                        <td>
+                            @*
+                            @if (Model.E_Miradouro)
+                            {
+                                @Html.Encode("Miradouro")
+                            }
+                            else
+                            {
+                                @Html.Encode("Paisagem")
+                            }
+                            @Html.DisplayFor(model => model.E_Miradouro)*@
+                        </td>
+                        <td>
+                            @if (Model.Ocupacao_maxima == -1)
+                            {
+                                @Html.Encode("Nao tem ocupacao maxima")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.Ocupacao_maxima)
+                            }
+                            @* @Html.DisplayFor(model => model.Ocupacao_maxima)*@
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table">
+                <thead id="tabelaconfig">
+                    <tr>
+                        <th class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Condicoes)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Condicoes)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table">
+                <thead id="tabelaconfig">
+                    <tr>
+                        <th class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Descricao)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Descricao)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <form asp-action="Details">
+            <footer class="major">
+                <div class="form-group">
+                    <a asp-action="Delete" asp-route-id="@Model.MiradouroId"  class="button btn-primary">Apagar</a>
+                    <a asp-action="Edit" asp-route-id="@Model.MiradouroId"  class="button btn-primary">Editar</a>
+                    <a asp-action="Index" class="button btn-primary">Voltar</a>
+                </div>
+            </footer>
+        </form>
+    </body>
+</section>

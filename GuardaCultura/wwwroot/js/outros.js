@@ -36,3 +36,17 @@ function inicio(butao) {
     for (var i = 0; i < 50; i++)
         link.click();
 }
+
+function goBack() {
+    window.history.back();
+}
+
+function myFunction() {
+    var checkBox = document.getElementById("checkTeste");
+    var text = document.getElementById("checkTests");
+    if (checkBox.checked == false) {
+        text.checked = true;
+    } else {
+        text.checked = false;
+    }
+}

@@ -122,6 +122,19 @@ form {
 			width: 100%;
 		}
 
+		form > .fields > .field.campoBox {/*aqui*/
+			-moz-flex-grow: 0;
+			-webkit-flex-grow: 0;
+			-ms-flex-grow: 0;
+			flex-grow: 0;
+			-moz-flex-shrink: 0;
+			-webkit-flex-shrink: 0;
+			-ms-flex-shrink: 0;
+			flex-shrink: 0;
+			padding: 3rem 0 0 5rem;
+			width: 100%;
+		}
+
 			form > .fields > .field.half {
 				width: 50%;
 			}
@@ -162,6 +175,7 @@ label {
 	text-transform: uppercase;
 }
 
+input[type="number"],
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -187,6 +201,7 @@ textarea {
 	width: 100%;
 }
 
+	input[type="number"]:invalid,
 	input[type="text"]:invalid,
 	input[type="password"]:invalid,
 	input[type="email"]:invalid,
@@ -196,6 +211,7 @@ textarea {
 		box-shadow: none;
 	}
 
+	input[type="number"]:focus,
 	input[type="text"]:focus,
 	input[type="password"]:focus,
 	input[type="email"]:focus,
@@ -230,6 +246,7 @@ select {
 		display: none;
 	}
 
+input[type="number"],
 input[type="text"],
 input[type="password"],
 input[type="email"],
