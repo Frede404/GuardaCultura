@@ -302,7 +302,6 @@ namespace GuardaCultura.Data
                 }
                 else
                 {
-
                     dbContext.Fotografia.Add(
                     new Fotografia
                     {
@@ -311,7 +310,7 @@ namespace GuardaCultura.Data
                         EstacaoAnoId = Estacao_ID,
                         MiradouroId = Miradoruro_ID,
                         TipoImagemId = Tipo_ID,
-                        Aprovada = true
+                        Aprovada = false
                     }
                     );
                 }
