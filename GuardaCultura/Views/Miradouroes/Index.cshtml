@@ -5,7 +5,7 @@
 }
 <section class="wrapper style3 container special">
     <header class="major">
-        <h1>Tabela Miradouros</h1>
+        <h1>Lista de Miradouros</h1>
 
         <p class="alinhaBotaoEsquerda">
             <a asp-action="Create" class="button btn-primary" >Novo</a>
@@ -19,22 +19,26 @@
                         @Html.DisplayNameFor(model => model.Nome)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Localizacao)
+                        @*Localização
+                        @Html.DisplayNameFor(model => model.Localizacao)*@
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Coordenadas_gps)
+                        Coordenadas GPS
+                        @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Terreno)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.E_Miradouro)
+                        É miradouro
+                        @*@Html.DisplayNameFor(model => model.E_Miradouro)*@
                     </th>
                     @*<th>
                         @Html.DisplayNameFor(model => model.Condicoes)
                     </th>*@
                     <th>
-                        @Html.DisplayNameFor(model => model.Ocupacao_maxima)
+                        Ocupação maxima
+                        @*@Html.DisplayNameFor(model => model.Ocupacao_maxima)*@
                     </th>
                     @*<th>
                         @Html.DisplayNameFor(model => model.Descricao)
@@ -50,7 +54,7 @@
                             @Html.DisplayFor(modelItem => item.Nome)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Localizacao)
+                            @*@Html.DisplayFor(modelItem => item.Localizacao)*@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Coordenadas_gps)
@@ -72,9 +76,16 @@
                         @*<td>
                             @Html.DisplayFor(modelItem => item.Condicoes)
                         </td>*@
-                        <td>
+                    <td>
+                        @if (item.Ocupacao_maxima == -1)
+                        {
+                            @Html.Encode("-")
+                        }
+                        else
+                        {
                             @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
-                        </td>
+                        }
+                    </td>
                         @*<td>
                             @Html.DisplayFor(modelItem => item.Descricao)
                         </td>*@

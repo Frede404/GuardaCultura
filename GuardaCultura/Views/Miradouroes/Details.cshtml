@@ -7,7 +7,14 @@
 
 <section class="wrapper style3 container special">
     <header>
-    <h1>Detalhes Miradouro</h1>
+        @if (Model.E_Miradouro)
+        {
+            <h1>Detalhes Miradouro</h1>
+        }
+        else
+        {
+            <h1>Detalhes Paisagem</h1>
+        }
     </header>
     <body>
         <div>
@@ -18,19 +25,23 @@
                             @Html.DisplayNameFor(model => model.Nome)
                         </th>
                         <th class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Localizacao)
+                            Localização
+                            @*@Html.DisplayNameFor(model => model.Localizacao)*@
                         </th>
                         <th class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Coordenadas_gps)
+                            Coordenadas GPS
+                            @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
                         </th>
                         <th class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Terreno)
                         </th>
                         <th class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.E_Miradouro)
+                            @*É miradouro
+                                @Html.DisplayNameFor(model => model.E_Miradouro)*@
                         </th>
                         <th class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Ocupacao_maxima)
+                            Ocupação maxima
+                            @*@Html.DisplayNameFor(model => model.Ocupacao_maxima)*@
                         </th>
                     </tr>
                 </thead>
@@ -49,6 +60,7 @@
                             @Html.DisplayFor(model => model.Terreno)
                         </td>
                         <td>
+                            @*
                             @if (Model.E_Miradouro)
                             {
                                 @Html.Encode("Miradouro")
@@ -57,10 +69,18 @@
                             {
                                 @Html.Encode("Paisagem")
                             }
-                            @*@Html.DisplayFor(model => model.E_Miradouro)*@
+                            @Html.DisplayFor(model => model.E_Miradouro)*@
                         </td>
                         <td>
-                            @Html.DisplayFor(model => model.Ocupacao_maxima)
+                            @if (Model.Ocupacao_maxima == -1)
+                            {
+                                @Html.Encode("Nao tem ocupacao maxima")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.Ocupacao_maxima)
+                            }
+                            @* @Html.DisplayFor(model => model.Ocupacao_maxima)*@
                         </td>
                     </tr>
                 </tbody>

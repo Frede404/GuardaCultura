@@ -8,7 +8,7 @@
         <h1>Editar Miradouro</h1>
         <hr />
     </header>
-    <body>
+    <body onload="myFunction()">@*chama a funcao de controlo de paisagem/miradouro quando carrega o formulario*@
         <div class="row centrado">
             <div class="col-md-4">
                 <form asp-action="Edit">
@@ -21,12 +21,12 @@
                             <span asp-validation-for="Nome" class="textoErro"></span>
                         </div>
                         <div class="form-group field half">
-                            <label asp-for="Localizacao" class="control-label"></label>
+                            <label asp-for="Localizacao" class="control-label">Localização</label>
                             <input asp-for="Localizacao" class="form-control" />
                             <span asp-validation-for="Localizacao" class="textoErro"></span>
                         </div>
                         <div class="form-group field half">
-                            <label asp-for="Coordenadas_gps" class="control-label"></label>
+                            <label asp-for="Coordenadas_gps" class="control-label">Coordenadas GPS</label>
                             <input asp-for="Coordenadas_gps" class="form-control" />
                             <span asp-validation-for="Coordenadas_gps" class="textoErro"></span>
                         </div>
@@ -37,28 +37,37 @@
                         </div>
                         <div class="form-group form-check field half campoBox">
                             @*<label>E_Miradouro</label>
-                            <select asp-for="E_Miradouro" class="form-control">
-                                <option value="true">Sim</option>
-                                <option value="false">Não</option>
-                            </select>*@
+            <select asp-for="E_Miradouro" class="form-control">
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>*@
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="E_Miradouro" /> @Html.DisplayNameFor(model => model.E_Miradouro)
+                                <input id="checkTeste" onclick="myFunction()" class="form-check-input" asp-for="E_Miradouro" /> @Html.DisplayNameFor(model => model.E_Miradouro)
+                                É miradouro
                             </label>
                         </div>
                         <div class="form-group field half">
-                            <label asp-for="Condicoes" class="control-label"></label>
+                            <label asp-for="Condicoes" class="control-label">Condições</label>
                             <input asp-for="Condicoes" class="form-control" />
                             <span asp-validation-for="Condicoes" class="textoErro"></span>
                         </div>
                         <div class="form-group field half">
-                            <label asp-for="Ocupacao_maxima" class="control-label"></label>
-                            <input asp-for="Ocupacao_maxima" class="form-control" min="0" max="10"/>
-                            <span asp-validation-for="Ocupacao_maxima" class="textoErro"></span>
-                        </div>
-                        <div class="form-group field half">
-                            <label asp-for="Descricao" class="control-label"></label>
+                            <label asp-for="Descricao" class="control-label">Descrição</label>
                             <input asp-for="Descricao" class="form-control" />
                             <span asp-validation-for="Descricao" class="textoErro"></span>
+                        </div>
+                        <input type="checkbox" class="form-check-input" style="display:none" id="checkTests" />
+                        <div class="form-group field half" id="divTeste">
+                            <label asp-for="Ocupacao_maxima" class="control-label"> Ocupação maxima</label>
+                            @if (Model.Ocupacao_maxima != -1)
+                            {
+                                <input asp-for="Ocupacao_maxima" class="form-control" min="0" max="10" />
+                            }
+                            else
+                            {
+                                <input asp-for="Ocupacao_maxima" class="form-control" value="" min="0" max="10" />
+                            }
+                            <span asp-validation-for="Ocupacao_maxima" class="textoErro"></span>@*validacao de campo*@
                         </div>
                     </div>
                     <footer class="major">

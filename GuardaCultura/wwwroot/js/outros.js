@@ -40,6 +40,7 @@ function inicio(butao) {
 function goBack() {
     window.history.back();
 }
+
 function myFunction() {
     var checkBox = document.getElementById("checkTeste");
     var text = document.getElementById("checkTests");
@@ -49,4 +50,3 @@ function myFunction() {
         text.checked = false;
     }
 }
-

@@ -18,10 +18,10 @@ namespace GuardaCultura.Models
         [StringLength(256, ErrorMessage = "A localização do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
         public string Localizacao { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas do miradouro!")]
         public string Coordenadas_gps { get; set; }
         
-        [Required]// campo, cidade...
+        [Required(ErrorMessage = " Campo obrigatório. Insira o tipo de terreno do miradouro!")]// campo, cidade...
         public string Terreno { get; set; }
 
         [Required]
