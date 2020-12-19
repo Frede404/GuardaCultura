@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-/*drop-database -Context GuardaCulturaContext
+/*Instrucoes
+ * drop-database -Context GuardaCulturaContext
  * update-database -Context GuardaCulturaContext
  * criar na tabela pessoa
  * alterar o Pessoa_ID
@@ -314,6 +315,7 @@ namespace GuardaCultura.Data
                     }
                     );
                 }
+                //ver no inicio da janela as instrucoes
                 dbContext.SaveChanges();//so fica valido se salvarmos
             }
         }
