@@ -5,7 +5,14 @@
 }
 <section class="wrapper style3 container special">
     <header>
-        <h1>Editar Miradouro</h1>
+        @if (Model.E_Miradouro)
+        {
+            <h1>Editar Miradouro</h1>
+        }
+        else
+        {
+            <h1>Editar Paisagem</h1>
+        }
         <hr />
     </header>
     <body onload="myFunction()">@*chama a funcao de controlo de paisagem/miradouro quando carrega o formulario*@
@@ -42,7 +49,7 @@
                                 <option value="false">Não</option>
                             </select>*@
                             <label class="form-check-label">
-                                <input id="checkTeste" onclick="myFunction()" class="form-check-input" asp-for="E_Miradouro" /> @Html.DisplayNameFor(model => model.E_Miradouro)
+                                <input id="checkMiradouro" onclick="checkMiradouroFunction()" class="form-check-input" asp-for="E_Miradouro" /> @Html.DisplayNameFor(model => model.E_Miradouro)
                                 É miradouro
                             </label>
                         </div>
@@ -56,8 +63,8 @@
                             <input asp-for="Descricao" class="form-control" />
                             <span asp-validation-for="Descricao" class="textoErro"></span>
                         </div>
-                        <input type="checkbox" class="form-check-input" style="display:none" id="checkTests" />
-                        <div class="form-group field half" id="divTeste">
+                        <input type="checkbox" class="form-check-input" style="display:none" id="checkOcupacao" />
+                        <div class="form-group field half" id="divCheckBox">
                             <label asp-for="Ocupacao_maxima" class="control-label"> Ocupação maxima</label>
                             @if (Model.Ocupacao_maxima != -1)
                             {

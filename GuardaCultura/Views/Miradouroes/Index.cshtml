@@ -43,8 +43,8 @@
                     @*<th>
                         @Html.DisplayNameFor(model => model.Descricao)
                     </th>*@
-                    <th></th>
-                    <th>Ativar/Desativar Miradouro</th>
+                    <th>Opções</th>
+                    <th>Ativar/Desativar</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,11 +98,11 @@
                         <td>
                             @if (!item.Ativo)
                             {
-                                <a asp-action="#" asp-route-id="@item.MiradouroId">Ativar</a>
+                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Ativar</a>
                             }
                             else
                             {
-                                <a asp-action="#" asp-route-id="@item.MiradouroId">Desativar</a>
+                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Desativar</a>
                             }
                         </td>
                     </tr>

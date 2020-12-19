@@ -162,11 +162,51 @@ namespace GuardaCultura.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var miradouro = await _context.Miradouro.FindAsync(id);
-            _context.Miradouro.Remove(miradouro);
+            /*_context.Miradouro.Remove(miradouro);
             await _context.SaveChangesAsync();
 
             // todo: informar o utilizador que o miradouro foi apagado com sucesso
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));*/
+
+            if (id != miradouro.MiradouroId)
+            {
+                return NotFound();
+            }
+
+            if (miradouro.Ativo)
+            {
+                miradouro.Ativo = false;
+            }
+            else
+            {
+                miradouro.Ativo = true;
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(miradouro);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MiradouroExists(miradouro.MiradouroId))
+                    {
+                        // todo: talvez alguem apagou esse miradouro
+                        // pergunta ao utilizador se quer criar um novo com os mesmos dados
+                        return NotFound();
+                    }
+                    else
+                    {
+                        // todo: mostrar o erro e perguntar se quer tentar outra vez
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            // todo: informar o utilizador que o miradouro foi editado com sucesso
+            return View(miradouro);
         }
 
         private bool MiradouroExists(int id)

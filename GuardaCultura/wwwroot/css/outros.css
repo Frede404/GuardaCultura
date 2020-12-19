@@ -38,7 +38,7 @@
 .textoErro{
 	color:red;
 }
-input:checked+#divTeste{
+input:checked+#divCheckBox{
 	display:none;
 }
 

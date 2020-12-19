@@ -41,9 +41,9 @@ function goBack() {
     window.history.back();
 }
 
-function myFunction() {
-    var checkBox = document.getElementById("checkTeste");
-    var text = document.getElementById("checkTests");
+function checkMiradouroFunction() {
+    var checkBox = document.getElementById("checkMiradouro");
+    var text = document.getElementById("checkOcupacao");
     if (checkBox.checked == false) {
         text.checked = true;
     } else {

@@ -7,9 +7,33 @@
 <section class="wrapper style3 container special">
 
     <header class="major">
-        <h1>Apagar Miradouro</h1>
+        @if (Model.E_Miradouro)
+        {
+            <h1>Miradouro</h1>
+            @if (!Model.Ativo)
+            {
+                <h3 class="textoErro">Tem a certeza que pretende Ativar este miradouro?</h3>
+            }
+            else
+            {
+                <h3 class="textoErro">Tem a certeza que pretende Desativar este miradouro?</h3>
+            }
+        }
+        else
+        {
+            <h1>Paisagem</h1>
+            @if (!Model.Ativo)
+            {
+                <h3 class="textoErro">Tem a certeza que pretende Ativar esta paisagem?</h3>
+            }
+            else
+            {
+                <h3 class="textoErro">Tem a certeza que pretende Desativar esta paisagem?</h3>
+            }
+        }
+        @*<h1>Apagar Miradouro</h1>*@
+        @*<h3 class="textoErro">Tem a certeza que pretende apagar este miradouro?</h3>*@
 
-        <h3 class="textoErro">Tem a certeza que pretende apagar este miradouro?</h3>
     </header>
     <body>
         <table class="table">
@@ -94,7 +118,15 @@
             <footer class="major">
                 <div class="form-group">
                     <input type="hidden" asp-for="MiradouroId" />
-                    <input type="submit" value="Apagar" class="btn btn-danger" />
+                    @*<input type="submit" value="Apagar" class="btn btn-danger" />*@
+                    @if (!Model.Ativo)
+                    {
+                        <input type="submit" value="Ativar" class="btn btn-danger" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Desativar" class="btn btn-danger" />
+                    }
                     <a asp-action="Index" class="button btn-primary">Voltar</a>
                 </div>
             </footer>
