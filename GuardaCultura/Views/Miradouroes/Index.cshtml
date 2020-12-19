@@ -44,6 +44,7 @@
                         @Html.DisplayNameFor(model => model.Descricao)
                     </th>*@
                     <th></th>
+                    <th>Ativar/Desativar Miradouro</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,23 +77,33 @@
                         @*<td>
                             @Html.DisplayFor(modelItem => item.Condicoes)
                         </td>*@
-                    <td>
-                        @if (item.Ocupacao_maxima == -1)
-                        {
-                            @Html.Encode("-")
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
-                        }
-                    </td>
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.Descricao)
-                        </td>*@
+                        <td>
+                            @if (item.Ocupacao_maxima == -1)
+                            {
+                                @Html.Encode("-")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
+                            }
+                        </td>
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.Descricao)
+                            </td>*@
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.MiradouroId">Editar</a> |
-                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> |
-                            <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>
+                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> @*|
+                            <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>*@
+                        </td>
+                        <td>
+                            @if (!item.Ativo)
+                            {
+                                <a asp-action="#" asp-route-id="@item.MiradouroId">Ativar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="#" asp-route-id="@item.MiradouroId">Desativar</a>
+                            }
                         </td>
                     </tr>
                 }

@@ -121,10 +121,18 @@
         <form asp-action="Details">
             <footer class="major">
                 <div class="form-group">
-                    <a asp-action="Delete" asp-route-id="@Model.MiradouroId"  class="button btn-primary">Apagar</a>
-                    <a asp-action="Edit" asp-route-id="@Model.MiradouroId"  class="button btn-primary">Editar</a>
-                    <a asp-action="Index" class="button btn-primary">Voltar</a>
-                </div>
+                        @if (!Model.Ativo)
+                        {
+                            <a asp-action="#" asp-route-id="@Model.MiradouroId" class="button btn-primary">Ativar</a>
+                        }
+                        else
+                        {
+                            <a asp-action="#" asp-route-id="@Model.MiradouroId" class="button btn-primary">Desativar</a>
+                        }
+                        @*<a asp-action="Delete" asp-route-id="@Model.MiradouroId" class="button btn-primary">Apagar</a>*@
+                        <a asp-action="Edit" asp-route-id="@Model.MiradouroId" class="button btn-primary">Editar</a>
+                        <a asp-action="Index" class="button btn-primary">Voltar</a>
+</div>
             </footer>
         </form>
     </body>
