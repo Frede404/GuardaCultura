@@ -1,69 +1,144 @@
 ﻿@model GuardaCultura.Models.Fotografia
 
 @{
-    ViewData["Title"] = "Delete";
+	ViewData["Title"] = "Delete";
 }
+<section class="wrapper style3 container special">
+	<header class="major">
+		<h1>Apagar Fotografia</h1>
 
-<h1>Delete</h1>
+		<h3>Tem a certesa que pretende apagar?</h3>
+	</header>
+	<body>
+		<table class="table">
+			<thead id="tabelaconfig">
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Nome)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Data_imagem)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Classificacao)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Foto)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.EstacaoAno)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Pessoa)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Miradouro)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.TipoImagem)
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						@Html.DisplayFor(model => model.Nome)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.Data_imagem)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.Classificacao)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.Foto)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.Pessoa.Email)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.Miradouro.Coordenadas_gps)
+					</td>
+					<td>
+						@Html.DisplayFor(model => model.TipoImagem.Descricao)
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<form asp-action="Delete">
+			<footer class="major">
+				<div class="form-group">
+					<input type="hidden" asp-for="FotografiaId" />
+					<input type="submit" value="Delete" class="btn btn-danger" />
+					<a asp-action="Index" class="button btn-primary">Back to List</a>
+				</div>
+			</footer>
+		</form>
+	</body>
+</section>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Fotografia</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Data_imagem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Data_imagem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Classificacao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Classificacao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstacaoAno)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pessoa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pessoa.Email)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Miradouro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Miradouro.Coordenadas_gps)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoImagem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TipoImagem.Descricao)
-        </dd class>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="FotografiaId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+@*
+	<div>
+		<h4>Fotografia</h4>
+		<hr />
+		<dl class="row">
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Nome)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Nome)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Data_imagem)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Data_imagem)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Classificacao)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Classificacao)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Foto)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Foto)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.EstacaoAno)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Pessoa)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Pessoa.Email)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Miradouro)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Miradouro.Coordenadas_gps)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.TipoImagem)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.TipoImagem.Descricao)
+			</dd>
+		</dl>
+
+		<form asp-action="Delete">
+			<input type="hidden" asp-for="FotografiaId" />
+			<input type="submit" value="Delete" class="btn btn-danger" /> |
+			<a asp-action="Index">Back to List</a>
+		</form>
+	</div>
+*@

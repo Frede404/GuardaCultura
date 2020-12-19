@@ -20,8 +20,25 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Fotografias
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+           /* var pagination = new PagingInfo
+            {
+                CurrentPage = page,
+                PageSize = PagingInfo.PAGE_SIZE,
+                TotalItems = repository.Products.Count()
+            };
+
+            return View(
+                new ProductsListViewModle
+                {
+                    Products = repository.Products
+                        .OrderBy(p => p.Price)
+                        .Skip((page - 1) * pagination.PageSize)
+                        .Take(pagination.PageSize),
+                    pagination = pagination
+                }
+            );*/
             var guardaCulturaContext = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem);
             return View(await guardaCulturaContext.ToListAsync());
         }
@@ -53,7 +70,7 @@ namespace GuardaCultura.Controllers
         public IActionResult Create()
         {
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao");
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps");
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome");
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email");
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao");
             return View();
@@ -69,6 +86,7 @@ namespace GuardaCultura.Controllers
             if (ModelState.IsValid)
             {
                 // todo: validacoes adicionais antes de inserir a foto
+                fotografia.Classificacao = 0;
                 _context.Add(fotografia);
                 await _context.SaveChangesAsync();
 
@@ -76,7 +94,7 @@ namespace GuardaCultura.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
@@ -97,7 +115,7 @@ namespace GuardaCultura.Controllers
                 return NotFound();
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
@@ -139,7 +157,7 @@ namespace GuardaCultura.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", fotografia.MiradouroId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Email", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
 

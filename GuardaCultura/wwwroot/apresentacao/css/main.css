@@ -1682,6 +1682,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	filter: invert(100%);
 }
 
+input[type="date"] {
+	height: 2.75rem;
+	width: 100%;
+}
+
 .container i {
 	margin-left: -30px;
 	cursor: pointer;
