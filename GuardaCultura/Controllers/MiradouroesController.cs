@@ -64,6 +64,9 @@ namespace GuardaCultura.Controllers
                 {
                     miradouro.Ocupacao_maxima = -1;
                 }
+
+                miradouro.Ativo = true;
+
                 _context.Add(miradouro);
                 await _context.SaveChangesAsync();
 
