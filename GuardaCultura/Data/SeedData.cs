@@ -15,6 +15,7 @@ namespace GuardaCultura.Data
             PopulateEstacaoAno(dbContext);
             PopulateTipoImagem(dbContext);
             PopulateMiradouro(dbContext);
+            //PopulateFotografias(dbContext);
         }
 
         private static void PopulateHoras(GuardaCulturaContext dbContext)
@@ -212,6 +213,105 @@ namespace GuardaCultura.Data
                             Coordenadas_gps = "coordenada" + (i + 1),
                             Terreno = "Cidade",
                             E_Miradouro = false,
+                            Ocupacao_maxima = -1,
+                            Ativo = true
+                        }
+                        );
+                    }
+                    else
+                    {
+                        dbContext.Miradouro.Add(
+                        new Miradouro
+                        {
+                            Nome = "miradouro" + (i + 1),
+                            Localizacao = "localizacao" + (i + 1),
+                            Coordenadas_gps = "coordenada" + (i + 1),
+                            Terreno = "Cidade",
+                            E_Miradouro = false,
+                            Ocupacao_maxima = -1,
+                            Ativo = false
+                        }
+                        );
+                    }
+                }
+                dbContext.SaveChanges();//so fica valido se salvarmos
+            }
+        }
+
+        private static void PopulateFotografias(GuardaCulturaContext dbContext)
+        {
+            if (dbContext.Fotografia.Any())//ve se ja ha Horas na base de dados
+            {
+                return;
+            }
+
+            //dbContext.Products.Add//insere 1 unico item
+            //introduzir 1 a 1
+            dbContext.Fotografia.AddRange(
+                new Fotografia
+                {
+                    Nome = "Foto1",
+                    Aprovada=true
+                },
+                new Fotografia
+                {
+                    Nome = "Foto2",
+                    Aprovada = false
+                }
+                ) ;
+            dbContext.SaveChanges();//so fica valido se salvarmos
+            
+            /*
+            Random rnd = new Random();
+            for (int i = 0; i < 100; i++)
+            {
+                int ocupacaomax = rnd.Next(0, 10);
+
+                if (rnd.Next(1, 100) > 50)
+                {
+                    if (rnd.Next(1, 100) > 50)
+                    {
+                        dbContext.Miradouro.Add(
+                        new Miradouro
+                        {
+                            Nome = "miradouro" + (i + 1),
+                            Localizacao = "localizacao" + (i + 1),
+                            Coordenadas_gps = "coordenada" + (i + 1),
+                            Terreno = "Cidade",
+                            E_Miradouro = true,
+                            Ocupacao_maxima = ocupacaomax,
+                            Ativo = true
+                        }
+                        );
+                    }
+                    else
+                    {
+                        dbContext.Miradouro.Add(
+                        new Miradouro
+                        {
+                            Nome = "miradouro" + (i + 1),
+                            Localizacao = "localizacao" + (i + 1),
+                            Coordenadas_gps = "coordenada" + (i + 1),
+                            Terreno = "Cidade",
+                            E_Miradouro = true,
+                            Ocupacao_maxima = ocupacaomax,
+                            Ativo = false
+                        }
+                        );
+                    }
+                }
+                else
+                {
+                    if (rnd.Next(1, 100) > 50)
+                    {
+                        dbContext.Miradouro.Add(
+                        new Miradouro
+                        {
+                            Nome = "miradouro" + (i + 1),
+                            Localizacao = "localizacao" + (i + 1),
+                            Coordenadas_gps = "coordenada" + (i + 1),
+                            Terreno = "Cidade",
+                            E_Miradouro = false,
                             Ocupacao_maxima = ocupacaomax,
                             Ativo = true
                         }
@@ -234,7 +334,7 @@ namespace GuardaCultura.Data
                     }
                 }
                 dbContext.SaveChanges();//so fica valido se salvarmos
-            }
+            }*/
         }
     }
 }
