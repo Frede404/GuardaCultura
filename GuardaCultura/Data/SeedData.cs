@@ -252,6 +252,7 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Foto1",
                     Aprovada=true
+
                 },
                 new Fotografia
                 {
