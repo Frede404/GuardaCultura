@@ -33,7 +33,10 @@ namespace GuardaCultura.Models
         
         [StringLength(256, MinimumLength = 3, ErrorMessage = "A localização do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
         public string Descricao { get; set; }// required se for miradouro
-        
+
+        [Required]
+        public bool Ativo { get; set; }
+
         public ICollection<Atratividade> Atratividades { get; set; }
 
         public ICollection<Fotografia> Fotografias  { get; set; }

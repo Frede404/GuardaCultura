@@ -19,6 +19,9 @@ namespace GuardaCultura.Models
 
         public byte[] Foto { get; set; }// required após erstar feito
 
+        [Required]
+        public bool Aprovada { get; set; }
+
         public int EstacaoAnoId { get; set; }
 
         public EstacaoAno EstacaoAno { get; set; }
