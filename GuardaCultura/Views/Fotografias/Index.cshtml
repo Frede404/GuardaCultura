@@ -39,6 +39,9 @@
 					<th>
 						@Html.DisplayNameFor(model => model.TipoImagem)
 					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Aprovada)
+					</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -62,13 +65,23 @@
 							@Html.DisplayFor(modelItem => item.EstacaoAno.Nome_estacao)
 						</td>
 						<td>
-							@Html.DisplayFor(modelItem => item.Pessoa.Email)
+							@Html.DisplayFor(modelItem => item.Pessoa.Nome)
 						</td>
 						<td>
-							@Html.DisplayFor(modelItem => item.Miradouro.Coordenadas_gps)
+							@Html.DisplayFor(modelItem => item.Miradouro.Nome)
 						</td>
 						<td>
 							@Html.DisplayFor(modelItem => item.TipoImagem.Descricao)
+						</td>
+						<td>
+							@if (item.Aprovada)
+							{
+								@Html.Encode("Aprovada")
+							}
+							else
+							{
+								@Html.Encode("Nao Aprovada")
+							}
 						</td>
 						<td>
 							<a asp-action="Edit" asp-route-id="@item.FotografiaId">Edit</a> |

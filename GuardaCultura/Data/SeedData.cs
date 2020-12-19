@@ -4,10 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/*drop-database -Context GuardaCulturaContext
+ * update-database -Context GuardaCulturaContext
+ * criar na tabela pessoa
+ * alterar o Pessoa_ID
+*/
+
 namespace GuardaCultura.Data
 {
     public class SeedData//proposito de inserir na base de dados
     {
+        static int Pessoa_ID = 2;
         internal static void Populate(GuardaCulturaContext dbContext)
         {
             PopulateHoras(dbContext);
@@ -15,7 +22,7 @@ namespace GuardaCultura.Data
             PopulateEstacaoAno(dbContext);
             PopulateTipoImagem(dbContext);
             PopulateMiradouro(dbContext);
-            //PopulateFotografias(dbContext);
+            PopulateFotografias(dbContext);
         }
 
         private static void PopulateHoras(GuardaCulturaContext dbContext)
@@ -247,95 +254,68 @@ namespace GuardaCultura.Data
 
             //dbContext.Products.Add//insere 1 unico item
             //introduzir 1 a 1
-            dbContext.Fotografia.AddRange(
+            /*dbContext.Fotografia.AddRange(
                 new Fotografia
                 {
                     Nome = "Foto1",
+                    PessoaId = Pessoa_ID,
+                    EstacaoAnoId=1,
+                    MiradouroId=2,
+                    TipoImagemId=2,
                     Aprovada=true
 
                 },
                 new Fotografia
                 {
                     Nome = "Foto2",
+                    PessoaId = Pessoa_ID,
+                    EstacaoAnoId = 2,
+                    MiradouroId = 3,
+                    TipoImagemId = 3,
                     Aprovada = false
                 }
                 ) ;
             dbContext.SaveChanges();//so fica valido se salvarmos
+            */
+
             
-            /*
             Random rnd = new Random();
             for (int i = 0; i < 100; i++)
             {
-                int ocupacaomax = rnd.Next(0, 10);
-
+                int Miradoruro_ID = rnd.Next(1, 100);
+                int Estacao_ID = rnd.Next(1, 4);
+                int Tipo_ID = rnd.Next(1, 3);
                 if (rnd.Next(1, 100) > 50)
                 {
-                    if (rnd.Next(1, 100) > 50)
+                    dbContext.Fotografia.Add(
+                    new Fotografia
                     {
-                        dbContext.Miradouro.Add(
-                        new Miradouro
-                        {
-                            Nome = "miradouro" + (i + 1),
-                            Localizacao = "localizacao" + (i + 1),
-                            Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
-                            E_Miradouro = true,
-                            Ocupacao_maxima = ocupacaomax,
-                            Ativo = true
-                        }
-                        );
+                        Nome = "Foto"+(i+1),
+                        PessoaId = Pessoa_ID,
+                        EstacaoAnoId = Estacao_ID,
+                        MiradouroId = Miradoruro_ID,
+                        TipoImagemId = Tipo_ID,
+                        Aprovada = true
                     }
-                    else
-                    {
-                        dbContext.Miradouro.Add(
-                        new Miradouro
-                        {
-                            Nome = "miradouro" + (i + 1),
-                            Localizacao = "localizacao" + (i + 1),
-                            Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
-                            E_Miradouro = true,
-                            Ocupacao_maxima = ocupacaomax,
-                            Ativo = false
-                        }
-                        );
-                    }
+                    );
                 }
                 else
                 {
-                    if (rnd.Next(1, 100) > 50)
+
+                    dbContext.Fotografia.Add(
+                    new Fotografia
                     {
-                        dbContext.Miradouro.Add(
-                        new Miradouro
-                        {
-                            Nome = "miradouro" + (i + 1),
-                            Localizacao = "localizacao" + (i + 1),
-                            Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
-                            E_Miradouro = false,
-                            Ocupacao_maxima = ocupacaomax,
-                            Ativo = true
-                        }
-                        );
+                        Nome = "Foto"+(i+1),
+                        PessoaId = Pessoa_ID,
+                        EstacaoAnoId = Estacao_ID,
+                        MiradouroId = Miradoruro_ID,
+                        TipoImagemId = Tipo_ID,
+                        Aprovada = true
                     }
-                    else
-                    {
-                        dbContext.Miradouro.Add(
-                        new Miradouro
-                        {
-                            Nome = "miradouro" + (i + 1),
-                            Localizacao = "localizacao" + (i + 1),
-                            Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
-                            E_Miradouro = false,
-                            Ocupacao_maxima = ocupacaomax,
-                            Ativo = false
-                        }
-                        );
-                    }
+                    );
                 }
                 dbContext.SaveChanges();//so fica valido se salvarmos
-            }*/
+            }
         }
     }
 }
