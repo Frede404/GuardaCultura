@@ -43,7 +43,7 @@
                                 <option value="false">Não</option>
                             </select>*@
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="E_Miradouro" id="checkTeste" onclick="myFunction()" checked/> @Html.DisplayNameFor(model => model.E_Miradouro)
+                                <input class="form-check-input" asp-for="E_Miradouro" id="checkMiradouro" onclick="checkMiradouroFunction()" checked/> @Html.DisplayNameFor(model => model.E_Miradouro)
                             É miradouro</label>
                         </div>
                         <div class="form-group field half">
@@ -56,8 +56,8 @@
                             <input asp-for="Descricao" class="form-control" />
                             <span asp-validation-for="Descricao" class="textoErro"></span>@*validacao de campo*@
                         </div>
-                        <input type ="checkbox"  class="form-check-input" style="display:none" id="checkTests"/>
-                        <div class="form-group field half" id="divTeste">
+                        <input type ="checkbox"  class="form-check-input" style="display:none" id="checkOcupacao"/>
+                        <div class="form-group field half" id="divCheckBox">
                             <label asp-for="Ocupacao_maxima" class="control-label"> Ocupação maxima</label>
                             <input asp-for="Ocupacao_maxima" class="form-control" value="0" min="0" max="10" />
                             <span asp-validation-for="Ocupacao_maxima" class="textoErro"></span>@*validacao de campo*@
