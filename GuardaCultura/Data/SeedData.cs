@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 /*Instrucoes
  * drop-database -Context GuardaCulturaContext
  * update-database -Context GuardaCulturaContext
- * criar na tabela pessoa
- * alterar o Pessoa_ID
 */
 
 namespace GuardaCultura.Data
 {
     public class SeedData//proposito de inserir na base de dados
     {
-        static int Pessoa_ID = 2;
         internal static void Populate(GuardaCulturaContext dbContext)
         {
             PopulateHoras(dbContext);
             PopulateFuncao(dbContext);
+            PopulatePessoa(dbContext);
             PopulateEstacaoAno(dbContext);
             PopulateTipoImagem(dbContext);
             PopulateMiradouro(dbContext);
@@ -77,6 +75,51 @@ namespace GuardaCultura.Data
                 new Funcao
                 {
                     FuncaoDesempenhar = "Utilizador"
+                }
+                );
+
+            dbContext.SaveChanges();//so fica valido se salvarmos
+        }
+
+        private static void PopulatePessoa(GuardaCulturaContext dbContext)
+        {
+            if (dbContext.Pessoa.Any())//ve se ja ha Horas na base de dados
+            {
+                return;
+            }
+
+            //dbContext.Products.Add//insere 1 unico item
+            //introduzir 1 a 1
+            dbContext.Pessoa.AddRange(
+                new Pessoa
+                {
+                    Nome = "Fred",
+                    Email = "Fred@mail.com",
+                    Password = "123",
+                    Fiabilidade = 10,
+                    FuncaoId = 1,
+                }
+                );
+            dbContext.SaveChanges();//so fica valido se salvarmos
+            dbContext.Pessoa.AddRange(
+                new Pessoa
+                {
+                    Nome = "Leandro",
+                    Email = "Leandro@mail.com",
+                    Password = "321",
+                    Fiabilidade = 10,
+                    FuncaoId = 2,
+                }
+                );
+            dbContext.SaveChanges();//so fica valido se salvarmos
+            dbContext.Pessoa.AddRange(
+                new Pessoa
+                {
+                    Nome = "Turista",
+                    Email = "Turista@mail.com",
+                    Password = "turista",
+                    Fiabilidade = 0,
+                    FuncaoId = 3,
                 }
                 );
 
@@ -283,36 +326,66 @@ namespace GuardaCultura.Data
             Random rnd = new Random();
             for (int i = 0; i < 100; i++)
             {
-                int Miradoruro_ID = rnd.Next(1, 100);
-                int Estacao_ID = rnd.Next(1, 4);
-                int Tipo_ID = rnd.Next(1, 3);
-                if (rnd.Next(1, 100) > 50)
+                int Miradoruro_ID = rnd.Next(1, 101);
+                int Estacao_ID = rnd.Next(1, 5);
+                int Tipo_ID = rnd.Next(1, 4);
+                int Pessoa_ID = rnd.Next(1, 4);
+                if (Pessoa_ID == 2)
                 {
-                    dbContext.Fotografia.Add(
-                    new Fotografia
+                    if (rnd.Next(1, 100) > 50)
                     {
-                        Nome = "Foto"+(i+1),
-                        PessoaId = Pessoa_ID,
-                        EstacaoAnoId = Estacao_ID,
-                        MiradouroId = Miradoruro_ID,
-                        TipoImagemId = Tipo_ID,
-                        Aprovada = true
+                        Pessoa_ID = 1;
                     }
-                    );
+                    else
+                    {
+                        Pessoa_ID = 3;
+                    }
+                }
+
+                if (Pessoa_ID == 3)
+                {
+                    if (rnd.Next(1, 100) > 50)
+                    {
+                        dbContext.Fotografia.Add(
+                        new Fotografia
+                        {
+                            Nome = "Foto" + (i + 1),
+                            PessoaId = Pessoa_ID,
+                            EstacaoAnoId = Estacao_ID,
+                            MiradouroId = Miradoruro_ID,
+                            TipoImagemId = Tipo_ID,
+                            Aprovada = true
+                        }
+                        );
+                    }
+                    else
+                    {
+                        dbContext.Fotografia.Add(
+                        new Fotografia
+                        {
+                            Nome = "Foto" + (i + 1),
+                            PessoaId = Pessoa_ID,
+                            EstacaoAnoId = Estacao_ID,
+                            MiradouroId = Miradoruro_ID,
+                            TipoImagemId = Tipo_ID,
+                            Aprovada = false
+                        }
+                        );
+                    }
                 }
                 else
                 {
                     dbContext.Fotografia.Add(
-                    new Fotografia
-                    {
-                        Nome = "Foto"+(i+1),
-                        PessoaId = Pessoa_ID,
-                        EstacaoAnoId = Estacao_ID,
-                        MiradouroId = Miradoruro_ID,
-                        TipoImagemId = Tipo_ID,
-                        Aprovada = false
-                    }
-                    );
+                        new Fotografia
+                        {
+                            Nome = "Foto" + (i + 1),
+                            PessoaId = Pessoa_ID,
+                            EstacaoAnoId = Estacao_ID,
+                            MiradouroId = Miradoruro_ID,
+                            TipoImagemId = Tipo_ID,
+                            Aprovada = true
+                        }
+                        );
                 }
                 //ver no inicio da janela as instrucoes
                 dbContext.SaveChanges();//so fica valido se salvarmos
