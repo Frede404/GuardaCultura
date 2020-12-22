@@ -42,3 +42,36 @@ input:checked+#divCheckBox{
 	display:none;
 }
 
+.pagination {
+	display: -ms-flexbox;
+	display: flex;
+	list-style: none; /*nao mostrar os pontos antes dos elementos da lista*/
+	
+}
+
+.page-link {
+	position: relative;
+	display: block;
+	padding: 0.15rem 0.75rem; /*pading entre os numeros*/
+	color: Black;
+	background-color: white;
+	border: 1px solid #dee2e6;
+	border-radius: 0.50rem; /* cantos arredondados*/
+}
+
+/*ao passar o cursor por cima dos numeros*/
+.page-link:hover {
+	z-index: 2;
+	color: #1a6490;
+	text-decoration: none;
+	background-color: #c7ece8;
+	border-color: #dee2e6;
+	font-weight: bold;
+}
+
+.page-link.active {
+	z-index: 1;
+	color: white;
+	background-color: #83d3c9;
+	font-weight: bold;
+}

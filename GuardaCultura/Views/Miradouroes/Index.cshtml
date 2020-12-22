@@ -1,22 +1,46 @@
-﻿@model IEnumerable<GuardaCultura.Models.Miradouro>
+﻿@*@model IEnumerable<GuardaCultura.Models.Miradouro>*@
 
-@{
-    ViewData["Title"] = "Index";
-}
+@model MiradouroLista
+
 <section class="wrapper style3 container special">
     <header class="major">
         <h1>Lista de Miradouros</h1>
 
         <p class="alinhaBotaoEsquerda">
-            <a asp-action="Create" class="button btn-primary" >Novo</a>
+            <a asp-action="Create" class="button btn-primary">Novo</a>
         </p>
+        @*
+        <div>
+            <h1>Filtros</h1>
+            <div class="field half">
+                <label for="name">ocupacao max</label>
+                <input type="text" name="name" id="name" />
+            </div>
+            <div class="field half">
+                <label for="Sexo">tipo:</label>
+                <select id="sexo" name="sexo">
+                    <option value="mas">Miradouro</option>
+                    <option value="fem">Paisagem</option>
+                    <option value="fem">Tudo</option>
+                </select>
+            </div>
+            <div class="field half">
+                <label for="Sexo">atividade:</label>
+                <select id="sexo" name="sexo">
+                    <option value="mas">ativo</option>
+                    <option value="fem">desativo</option>
+                    <option value="fem">Tudo</option>
+                </select>
+            </div>
+        </div>*@
     </header>
     <body>
         <table class="table" id="tabelaconfig">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Nome)
+                        @*@Html.DisplayNameFor(model => model.Nome)*@
+                        Nome
                     </th>
                     <th>
                         @*Localização
@@ -27,7 +51,8 @@
                         @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Terreno)
+                        @*@Html.DisplayNameFor(model => model.Terreno)*@
+                        Terreno
                     </th>
                     <th>
                         É miradouro
@@ -48,7 +73,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Miradouros)
                 {
                     <tr>
                         <td>
@@ -87,9 +112,9 @@
                                 @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
                             }
                         </td>
-                            @*<td>
-                                @Html.DisplayFor(modelItem => item.Descricao)
-                            </td>*@
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                        </td>*@
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.MiradouroId">Editar</a> |
                             <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> @*|
@@ -109,5 +134,36 @@
                 }
             </tbody>
         </table>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1"><<</a></li>
+                @{
+                    
+                    int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+                    if (primeiraPagina < 1)
+                    {
+                        primeiraPagina = 1;
+                    }
+
+                    int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+                    if (ultimaPagina > Model.pagination.TotalPages)
+                    {
+                        ultimaPagina = Model.pagination.TotalPages;
+                    }
+                }
+                @for (int p = primeiraPagina; p <= ultimaPagina; p++)
+                {
+                    if (p == Model.pagination.CurrentPage)
+                    {
+                        <li class="page-item"><a class="page-link active" href="#">@p</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
+                    }
+                }
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">>></a></li>
+            </ul>
+        </nav>
     </body>
 </section>
