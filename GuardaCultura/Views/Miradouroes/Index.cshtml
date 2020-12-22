@@ -155,11 +155,11 @@
                 {
                     if (p == Model.pagination.CurrentPage)
                     {
-                        <li class="page-item active"><a class="page-link" href="#">@p</a></li>
+                        <li class="page-item"><a class="page-link active" href="#">@p</a></li>
                     }
                     else
                     {
-                        <li class="page-item active"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
                     }
                 }
                 <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">>></a></li>
