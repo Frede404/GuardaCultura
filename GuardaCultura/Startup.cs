@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GuardaCultura
+namespace GuardaCultura//linha 69 apagar
 {
     public class Startup
     {
@@ -65,7 +65,8 @@ namespace GuardaCultura
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=privacy}/{id?}");//pagina inicial
+                    //pattern: "{controller=Home}/{action=index}/{id?}");//pagina inicial
+                    pattern: "{controller=Fotografias}/{action=index}/{id?}");//pagina inicial fotografia
                 endpoints.MapRazorPages();
             });
 
