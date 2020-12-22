@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
+using System.IO;
 
 namespace GuardaCultura.Controllers
 {
@@ -99,7 +100,7 @@ namespace GuardaCultura.Controllers
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
         }
-
+      
         // GET: Fotografias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

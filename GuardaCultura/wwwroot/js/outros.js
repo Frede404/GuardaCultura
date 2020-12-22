@@ -50,3 +50,24 @@ function checkMiradouroFunction() {
         text.checked = false;
     }
 }
+
+function CodificaImagem(path){
+    bos = null;
+    try {
+        f = new File(path);
+        fis = new FileInputStream(f);
+        buffer = new byte[1024];
+        bos = new ByteArrayOutputStream();
+        for (len; (len = fis.read(buffer)) != -1;) {
+            bos.write(buffer, 0, len);
+        }
+    } catch (e) {
+        System.err.println(e.getMessage());
+    }
+
+    return bos != null ? bos.toByteArray() : null;
+}
+
+function returnimage(nome) {
+    document.getElementById(nome).innerHTML = CodificaImagem;
+}
