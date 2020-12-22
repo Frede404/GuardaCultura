@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<GuardaCultura.Models.Miradouro>
+@{
     ViewData["Title"] = "Miradouros";
 }
 
@@ -25,25 +26,126 @@
         </p>
     </header>
     <body>
-        <div class="row centrado">
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda1.jpg" style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
-            </div>
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda2.jpg" style="width:100%" onclick="openModal();currentSlide(2);" class="hover-shadow cursor">
-            </div>
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
-            </div>
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda4.jpg" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
-            </div>
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda5.jpg" style="width:100%" onclick="openModal();currentSlide(5)" class="hover-shadow cursor">
-            </div>
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda6.jpg" style="width:100%" onclick="openModal();currentSlide(6)" class="hover-shadow cursor">
-            </div>
+        @*
+            <div class="row centrado">
+                <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda1.jpg" style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
+                </div>
+                <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda2.jpg" style="width:100%" onclick="openModal();currentSlide(2);" class="hover-shadow cursor">
+                </div>
+                <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+                </div>
+                <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda4.jpg" style="width:100%" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+                </div>
+                <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda5.jpg" style="width:100%" onclick="openModal();currentSlide(5)" class="hover-shadow cursor">
+                </div>
+                <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda6.jpg" style="width:100%" onclick="openModal();currentSlide(6)" class="hover-shadow cursor">
+                </div>
+        *@
+
+        <table class="table" id="tabelaconfig">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>
+                        @*Localização
+                            @Html.DisplayNameFor(model => model.Localizacao)*@
+                    </th>
+                    <th>
+                        Coordenadas GPS
+                        @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Terreno)
+                    </th>
+                    <th>
+                        É miradouro
+                        @*@Html.DisplayNameFor(model => model.E_Miradouro)*@
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.Condicoes)
+                        </th>*@
+                    <th>
+                        Ocupação maxima
+                        @*@Html.DisplayNameFor(model => model.Ocupacao_maxima)*@
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.Descricao)
+                        </th>*@
+                    <th>Opções</th>
+                    <th>Ativar/Desativar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Localizacao)*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Coordenadas_gps)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Terreno)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.E_Miradouro)*@
+                            @if (item.E_Miradouro)
+                            {
+                                @Html.Encode("Miradouro")
+                            }
+                            else
+                            {
+                                @Html.Encode("Paisagem")
+                            }
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Condicoes)
+                            </td>*@
+                        <td>
+                            @if (item.Ocupacao_maxima == -1)
+                            {
+                                @Html.Encode("-")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
+                            }
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Descricao)
+                            </td>*@
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.MiradouroId">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> @*|
+                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>*@
+                        </td>
+                        <td>
+                            @if (!item.Ativo)
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Ativar</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Desativar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
         </div>
 
         <div id="myModal" class="modal">
@@ -124,5 +226,16 @@
             </div>
         </div>
     </body>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary">Lista de Miradouros</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="1">Lista de todos</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="2">Lista de todos ativos</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="3">Lista de todos inativos</a>
+
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="1">Lista de Miradouros</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="2">Lista de Miradouros ativos</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="3">Lista de Miradouros desativos</a>
+
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="1">Lista de Paisagens</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="2">Lista de Paisagens ativos</a>
+    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="3">Lista de Paisagens desativos</a>
+
 </section>
