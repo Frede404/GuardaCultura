@@ -42,4 +42,21 @@ input:checked+#divCheckBox{
 	display:none;
 }
 
-
+/*https://localhost:44369/Miradouroes/Index?page=1&e_miradouro=1&estado=2 */
+.pagination {
+	display: -ms-flexbox;
+	display: flex;
+	list-style: none; /*nao mostrar os pontos antes dos elementos da lista*/
+	
+}
+.page-link {
+	position: relative;
+	display: block;
+	padding: 0.15rem 0.75rem; /*pading entre os numeros*/
+	/*margin-left: -1px;
+	line-height: 1.25;*/
+	color: white;
+	background-color: #83d3c9;
+	border: 1px solid #dee2e6;
+	border-radius: 0.50rem; /*cantos arredondados*/
+}
