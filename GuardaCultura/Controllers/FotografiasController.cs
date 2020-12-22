@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace GuardaCultura.Controllers
 {
@@ -82,10 +84,23 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FotografiaId,Nome,Data_imagem,Classificacao,Foto,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId")] Fotografia fotografia)//serve para evitar alguns ataques, só recebe campos que estejam no Bind
+        public async Task<IActionResult> Create([Bind("FotografiaId,Nome,Data_imagem,Classificacao,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId")] Fotografia fotografia, List<IFormFile> Foto)//serve para evitar alguns ataques, só recebe campos que estejam no Bind
         {
             if (ModelState.IsValid)
             {
+                //conversao da imagem para binario
+                foreach (var item in Foto)
+                {
+                    if (item.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await item.CopyToAsync(stream);
+                            fotografia.Foto = stream.ToArray();
+                        }
+                    }
+                }
+
                 // todo: validacoes adicionais antes de inserir a foto
                 fotografia.Classificacao = 0;
                 _context.Add(fotografia);
@@ -100,7 +115,7 @@ namespace GuardaCultura.Controllers
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
         }
-      
+
         // GET: Fotografias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

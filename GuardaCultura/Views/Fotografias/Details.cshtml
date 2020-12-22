@@ -32,7 +32,13 @@
 					@Html.DisplayNameFor(model => model.Foto)
 				</dt>
 				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Foto)
+					@*<input type="image" src="data:image/gif;base64,(@Model.Foto)" style="width:500px;height:300px" />*@
+					 @*@Html.DisplayFor(model => model.Foto)*@
+					@{
+						var base64 = Convert.ToBase64String(Model.Foto);
+						var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+					}
+					<img src='@imgsrc' />
 				</dd>
 				<dt class="col-sm-2">
 					@Html.DisplayNameFor(model => model.EstacaoAno)
