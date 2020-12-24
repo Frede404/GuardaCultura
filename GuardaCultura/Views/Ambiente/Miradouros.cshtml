@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<GuardaCultura.Models.Miradouro>
+
 @{
     ViewData["Title"] = "Miradouros";
 }
@@ -26,9 +27,23 @@
         </p>
     </header>
     <body>
-        @*
-            <div class="row centrado">
+
+        <div class="row centrado">
+            @foreach (var item in Model)
+            {
                 <div class="column" style="margin:1%">
+                    <img src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" onclick="openModal();currentSlide(2);" class="hover-shadow cursor">
+                </div>
+                /*<div class="column" style="margin:1%">
+                    @{
+                        var base64 = Convert.ToBase64String(item.tabelaFotografia.Foto);// não funciona
+                        var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+                    }
+                    <img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
+                </div>*/
+            }
+
+            @*<div class="column" style="margin:1%">
                     <img src="~/apresentacao/imagens/guarda1.jpg" style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
                 </div>
                 <div class="column" style="margin:1%">
@@ -45,106 +60,8 @@
                 </div>
                 <div class="column" style="margin:1%">
                     <img src="~/apresentacao/imagens/guarda6.jpg" style="width:100%" onclick="openModal();currentSlide(6)" class="hover-shadow cursor">
-                </div>
-        *@
+                </div>*@
 
-        <table class="table" id="tabelaconfig">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nome)
-                    </th>
-                    <th>
-                        @*Localização
-                            @Html.DisplayNameFor(model => model.Localizacao)*@
-                    </th>
-                    <th>
-                        Coordenadas GPS
-                        @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Terreno)
-                    </th>
-                    <th>
-                        É miradouro
-                        @*@Html.DisplayNameFor(model => model.E_Miradouro)*@
-                    </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.Condicoes)
-                        </th>*@
-                    <th>
-                        Ocupação maxima
-                        @*@Html.DisplayNameFor(model => model.Ocupacao_maxima)*@
-                    </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.Descricao)
-                        </th>*@
-                    <th>Opções</th>
-                    <th>Ativar/Desativar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nome)
-                        </td>
-                        <td>
-                            @*@Html.DisplayFor(modelItem => item.Localizacao)*@
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Coordenadas_gps)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Terreno)
-                        </td>
-                        <td>
-                            @*@Html.DisplayFor(modelItem => item.E_Miradouro)*@
-                            @if (item.E_Miradouro)
-                            {
-                                @Html.Encode("Miradouro")
-                            }
-                            else
-                            {
-                                @Html.Encode("Paisagem")
-                            }
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.Condicoes)
-                            </td>*@
-                        <td>
-                            @if (item.Ocupacao_maxima == -1)
-                            {
-                                @Html.Encode("-")
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
-                            }
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.Descricao)
-                            </td>*@
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.MiradouroId">Editar</a> |
-                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> @*|
-                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>*@
-                        </td>
-                        <td>
-                            @if (!item.Ativo)
-                            {
-                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Ativar</a>
-                            }
-                            else
-                            {
-                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Desativar</a>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
 
         </div>
 
@@ -157,18 +74,55 @@
                     <p class="tituloimg" id="caption"></p>
                 </div>
 
-                <!-- imagens slider -->
-                <div class="mySlides">
-                    <!--<div class="numbertext">1 / 4</div>-->
-                    <img class="demo" src="~/apresentacao/imagens/guarda1.jpg" style="width:100%" alt="Um ponto de vista diferente!">
-                    <div class="descricaoimg">
-                        <p>
-                            Nesta imagem podemos ver a sé e parte da cidade de uma prespetiva diferente do abitual.
-                        </p>
-                    </div>
-                </div>
+                @foreach (var item in Model)
+                {
+                    @if (item.E_Miradouro)
+                    {
+                        <!-- imagens slider -->
+                        <div class="mySlides">
+                            <!--<div class="numbertext">1 / 4</div>-->
+                            <img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()">@*Um ponto de vista diferente!*@
+                            <div class="descricaoimg">
+                                <p>
+                                    Id:
+                                    @Html.DisplayFor(modelItem => item.MiradouroId)
+                                </p>
+                                <p>
+                                    Nome:
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </p>
+                                <p>
+                                    Localização:
+                                    @Html.DisplayFor(modelItem => item.Localizacao)
+                                </p>
+                                <p>
+                                    Coordenadas GPS:
+                                    @Html.DisplayFor(modelItem => item.Coordenadas_gps)
+                                </p>
+                                <p>
+                                    Terreno:
+                                    @Html.DisplayFor(modelItem => item.Terreno)
+                                </p>
+                                <p>
+                                    Condições:
+                                    @Html.DisplayFor(modelItem => item.Condicoes)
+                                </p>
+                                <p>
+                                    Ocupação maxima:
+                                    @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
+                                </p>
+                                <p>
+                                    Descrição:
+                                    @Html.DisplayFor(modelItem => item.Descricao)
+                                    @*Nesta imagem podemos ver a sé e parte da cidade de uma prespetiva diferente do abitual.*@
+                                </p>
 
-                <div class="mySlides">
+                            </div>
+                        </div>
+                    }
+                }
+
+                @*<div class="mySlides">
                     <!--<div class="numbertext">2 / 4</div>-->
                     <img class="demo" src="~/apresentacao/imagens/guarda2.jpg" style="width:100%" alt="Por vezes a cidade acorda pintada de branco">
                     <div class="descricaoimg">
@@ -217,12 +171,11 @@
                         </p>
 
                     </div>
-                </div>
+                </div>*@
 
                 <!--Butoes-->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
             </div>
         </div>
     </body>
