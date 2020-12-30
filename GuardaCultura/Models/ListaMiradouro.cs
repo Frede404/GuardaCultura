@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace GuardaCultura.Models
 {
-    public class MiradouroLista
+    public class ListaMiradouro
     {
          public IEnumerable<Miradouro> Miradouros { get; set; }
 
         public PagingInfoMiradouro pagination { get; set; }
 
-        public int mira { get; set; }
+        public int e_miradouro { get; set; }
 
-        public int ati { get; set; }
+        public int estado { get; set; }
     }
 }

@@ -84,10 +84,6 @@
                             <img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()">@*Um ponto de vista diferente!*@
                             <div class="descricaoimg">
                                 <p>
-                                    Id:
-                                    @Html.DisplayFor(modelItem => item.MiradouroId)
-                                </p>
-                                <p>
                                     Nome:
                                     @Html.DisplayFor(modelItem => item.Nome)
                                 </p>
@@ -179,16 +175,4 @@
             </div>
         </div>
     </body>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="1">Lista de todos</a>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="2">Lista de todos ativos</a>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="3">Lista de todos inativos</a>
-
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="1">Lista de Miradouros</a>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="2">Lista de Miradouros ativos</a>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="3">Lista de Miradouros desativos</a>
-
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="1">Lista de Paisagens</a>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="2">Lista de Paisagens ativos</a>
-    <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="3">Lista de Paisagens desativos</a>
-
 </section>

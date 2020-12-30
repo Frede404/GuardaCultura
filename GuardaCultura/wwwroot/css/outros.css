@@ -75,3 +75,12 @@ input:checked+#divCheckBox{
 	background-color: #83d3c9;
 	font-weight: bold;
 }
+
+.divFiltro{
+	padding-top: 2%;
+	border-style: outset;
+	border-width: medium;
+}
+.primeiroUltimoNumero{
+	background:red;
+}

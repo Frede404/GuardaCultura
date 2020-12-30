@@ -66,8 +66,9 @@ namespace GuardaCultura//linha 69 apagar
                 endpoints.MapControllerRoute(
                     name: "default",
                     //pattern: "{controller=Home}/{action=index}/{id?}");//pagina inicial
-                    pattern: "{controller=Fotografias}/{action=index}/{id?}");//pagina inicial fotografia
-                endpoints.MapRazorPages();
+                    //pattern: "{controller=Fotografias}/{action=index}/{id?}");//pagina inicial fotografia
+                    pattern: "{controller=Miradouroes}/{action=index}/{id?}");//pagina inicial Miradouros
+            endpoints.MapRazorPages();
             });
 
             if (env.IsDevelopment())//ver se está em desenvolvimento
