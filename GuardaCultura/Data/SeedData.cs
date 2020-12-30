@@ -1,6 +1,9 @@
 ﻿using GuardaCultura.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +16,7 @@ namespace GuardaCultura.Data
 {
     public class SeedData//proposito de inserir na base de dados
     {
+        
         internal static void Populate(GuardaCulturaContext dbContext)
         {
             PopulateHoras(dbContext);
@@ -229,7 +233,7 @@ namespace GuardaCultura.Data
                             Nome = "miradouro" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
                             Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
+                            Terreno = "Montanha",
                             E_Miradouro = true,
                             Ocupacao_maxima = ocupacaomax,
                             Ativo = true
@@ -262,7 +266,7 @@ namespace GuardaCultura.Data
                             Nome = "miradouro" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
                             Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
+                            Terreno = "Montanha",
                             E_Miradouro = false,
                             Ocupacao_maxima = -1,
                             Ativo = true
@@ -277,7 +281,7 @@ namespace GuardaCultura.Data
                             Nome = "miradouro" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
                             Coordenadas_gps = "coordenada" + (i + 1),
-                            Terreno = "Cidade",
+                            Terreno = "Planicie",
                             E_Miradouro = false,
                             Ocupacao_maxima = -1,
                             Ativo = false
@@ -289,7 +293,7 @@ namespace GuardaCultura.Data
             }
         }
 
-        private static void PopulateFotografias(GuardaCulturaContext dbContext)
+        private static async void PopulateFotografias(GuardaCulturaContext dbContext)
         {
             if (dbContext.Fotografia.Any())//ve se ja ha Horas na base de dados
             {
@@ -324,12 +328,16 @@ namespace GuardaCultura.Data
 
             
             Random rnd = new Random();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 int Miradoruro_ID = rnd.Next(1, 101);
                 int Estacao_ID = rnd.Next(1, 5);
                 int Tipo_ID = rnd.Next(1, 4);
                 int Pessoa_ID = rnd.Next(1, 4);
+                int foto_nome= rnd.Next(50, 61);
+                float classificacao = (float) rnd.Next(0, 1001)/100;
+                byte[] fotogafia= File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
+
                 if (Pessoa_ID == 2)
                 {
                     if (rnd.Next(1, 100) > 50)
@@ -354,7 +362,9 @@ namespace GuardaCultura.Data
                             EstacaoAnoId = Estacao_ID,
                             MiradouroId = Miradoruro_ID,
                             TipoImagemId = Tipo_ID,
-                            Aprovada = true
+                            Aprovada = true,
+                            Foto=fotogafia,
+                            Classificacao=classificacao
                         }
                         );
                     }
@@ -368,7 +378,9 @@ namespace GuardaCultura.Data
                             EstacaoAnoId = Estacao_ID,
                             MiradouroId = Miradoruro_ID,
                             TipoImagemId = Tipo_ID,
-                            Aprovada = false
+                            Aprovada = false,
+                            Foto = fotogafia,
+                            Classificacao = classificacao
                         }
                         );
                     }
@@ -383,7 +395,9 @@ namespace GuardaCultura.Data
                             EstacaoAnoId = Estacao_ID,
                             MiradouroId = Miradoruro_ID,
                             TipoImagemId = Tipo_ID,
-                            Aprovada = true
+                            Aprovada = true,
+                            Foto = fotogafia,
+                            Classificacao = classificacao
                         }
                         );
                 }
