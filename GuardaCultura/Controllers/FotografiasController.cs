@@ -330,7 +330,7 @@ namespace GuardaCultura.Controllers
             return _context.Fotografia.Any(e => e.FotografiaId == id);
         }
 
-        public async Task<IActionResult> Aprova(int? id)
+        public async Task<IActionResult> Aprova(int? id, int page=1)
         {
             if (id == null)
             {
@@ -366,7 +366,116 @@ namespace GuardaCultura.Controllers
                 }
             }
             //return RedirectToAction(nameof(Index(0,"0",0,0)));
-            return RedirectToAction(nameof(Index));
+            if (auxaprovacao == 1)
+            {
+                int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                int totalitems = _context.Fotografia.Count();
+                int paginaatual;
+                if((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                {
+                    paginaatual = page - 1;
+                }
+                else
+                {
+                    paginaatual = page;
+                }
+
+                var pagination = new PagingInfoFotografias
+                {
+                    CurrentPage = paginaatual,
+                    PageSize = tamanho,
+                    TotalItems = totalitems
+                };
+
+                if (auxdirecaoordena == 1)
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+                else
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderByDescending(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+            }
+            else
+            {
+                bool auxaprovado;
+                if (auxaprovacao == 2)
+                {
+                    auxaprovado = true;
+                }
+                else
+                {
+                    auxaprovado = false;
+                }
+
+                int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                int totalitems = _context.Fotografia
+                        .Where(p => p.Aprovada == auxaprovado)
+                        .Count();
+                int paginaatual;
+                if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                {
+                    paginaatual = page - 1;
+                }
+                else
+                {
+                    paginaatual = page;
+                }
+
+                var pagination = new PagingInfoFotografias
+                {
+                    CurrentPage = paginaatual,
+                    PageSize = tamanho,
+                    TotalItems = totalitems
+                };
+
+                if (auxdirecaoordena == 1)
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .Where(p => p.Aprovada == auxaprovado)
+                                .OrderBy(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+                else
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .Where(p => p.Aprovada == auxaprovado)
+                                .OrderByDescending(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+            }
 
             /*ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
             ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
