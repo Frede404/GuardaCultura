@@ -20,6 +20,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Fotos_FCMusic\1.jpg" />
+    <Content Include="Fotos_FCMusic\10.jpg" />
+    <Content Include="Fotos_FCMusic\11.jpg" />
+    <Content Include="Fotos_FCMusic\12.jpg" />
+    <Content Include="Fotos_FCMusic\13.jpg" />
+    <Content Include="Fotos_FCMusic\14.jpg" />
+    <Content Include="Fotos_FCMusic\15.jpg" />
+    <Content Include="Fotos_FCMusic\16.jpg" />
+    <Content Include="Fotos_FCMusic\17.jpg" />
+    <Content Include="Fotos_FCMusic\18.jpg" />
+    <Content Include="Fotos_FCMusic\19.jpg" />
+    <Content Include="Fotos_FCMusic\2.jpg" />
+    <Content Include="Fotos_FCMusic\3.jpg" />
+    <Content Include="Fotos_FCMusic\4.jpg" />
+    <Content Include="Fotos_FCMusic\5.jpg" />
+    <Content Include="Fotos_FCMusic\6.jpg" />
+    <Content Include="Fotos_FCMusic\7.jpg" />
+    <Content Include="Fotos_FCMusic\8.jpg" />
+    <Content Include="Fotos_FCMusic\9.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
