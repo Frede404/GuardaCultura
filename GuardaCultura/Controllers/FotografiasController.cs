@@ -483,5 +483,146 @@ namespace GuardaCultura.Controllers
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             */
         }
+
+        public async Task<IActionResult> Apagar(int? id, int page = 1)
+        {
+            var fotografia = await _context.Fotografia.FindAsync(id);
+            _context.Fotografia.Remove(fotografia);
+            await _context.SaveChangesAsync();
+
+            // todo: informar o utilizador que a foto foi apagada com sucesso
+            if (page == 0) {
+                page = 1;
+                var pagination = new PagingInfoFotografias
+                {
+                    CurrentPage = page,
+                    PageSize = PagingInfoFotografias.TAM_PAGINA,
+                    TotalItems = _context.Fotografia.Count()
+                };
+
+                return View(
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => p.FotografiaId)
+                                .Skip((page - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+            }
+
+            if (auxaprovacao == 1)
+            {
+                int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                int totalitems = _context.Fotografia.Count();
+                int paginaatual;
+                if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                {
+                    paginaatual = page - 1;
+                }
+                else
+                {
+                    paginaatual = page;
+                }
+
+                var pagination = new PagingInfoFotografias
+                {
+                    CurrentPage = paginaatual,
+                    PageSize = tamanho,
+                    TotalItems = totalitems
+                };
+
+                if (auxdirecaoordena == 1)
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+                else
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderByDescending(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+            }
+            else
+            {
+                bool auxaprovado;
+                if (auxaprovacao == 2)
+                {
+                    auxaprovado = true;
+                }
+                else
+                {
+                    auxaprovado = false;
+                }
+
+                int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                int totalitems = _context.Fotografia
+                        .Where(p => p.Aprovada == auxaprovado)
+                        .Count();
+                int paginaatual;
+                if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                {
+                    paginaatual = page - 1;
+                }
+                else
+                {
+                    paginaatual = page;
+                }
+
+                var pagination = new PagingInfoFotografias
+                {
+                    CurrentPage = paginaatual,
+                    PageSize = tamanho,
+                    TotalItems = totalitems
+                };
+
+                if (auxdirecaoordena == 1)
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .Where(p => p.Aprovada == auxaprovado)
+                                .OrderBy(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+                else
+                {
+                    return View("Index",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .Where(p => p.Aprovada == auxaprovado)
+                                .OrderByDescending(p => EF.Property<Object>(p, auxordenar))
+                                .Skip((paginaatual - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+                }
+            }
+            //return RedirectToAction(nameof(Index));
+        }
     }
 }

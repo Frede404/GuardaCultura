@@ -138,21 +138,40 @@
 					<td>
 						@if (!item.Aprovada)
 						{
-							<a style="cursor: pointer" onclick="document.getElementById('id+@item.FotografiaId').style.display='block'">Aprovar2</a>
-							<a asp-action="Aprova" asp-route-id="@item.FotografiaId">Aprovar</a>
+							<a style="cursor: pointer" onclick="document.getElementById('id+@item.FotografiaId').style.display='block'">Aprovar</a>
 						}
 						else
 						{
-							<a asp-action="Aprova" asp-route-id="@item.FotografiaId">Desaprovar</a>
+							<a style="cursor: pointer" onclick="document.getElementById('id+@item.FotografiaId').style.display='block'">Apagar</a>
 						}
+
 						<div id="id+@item.FotografiaId" class="modal">
 							<form class="modal-content" action="/action_page.php">
 								<div class="container">
-									<h1>Tem a certeza que pretende Aprovar esta Fotografia </h1>
+									<h1>
+										Tem a certeza que pretende
+										@if (!item.Aprovada)
+										{
+											<b style="color:red">Aprovar/Apagar</b>
+										}
+										else
+										{
+											<b style="color:red">Apagar</b>
+										}
+										esta Fotografia
+									</h1>
 									<img src='@imgsrc' height="200">
 									<br />
 									<div style="margin:20px">
-										<a class="button" asp-action="Aprova" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Aprovar</a>
+										@if (!item.Aprovada)
+										{
+											<a class="button" asp-action="Aprova" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Aprovar</a>
+											<a class="button" asp-action="Apagar" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Apagar</a>
+										}
+										else
+										{
+											<a class="button" asp-action="Apagar" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Apagar</a>
+										}
 										<button type="button" onclick="document.getElementById('id+@item.FotografiaId').style.display='none'" class="cancelbtn">Cancel</button>
 									</div>
 								</div>
@@ -161,8 +180,7 @@
 					</td>
 					<td>
 						<a asp-action="Edit" asp-route-id="@item.FotografiaId">Editar</a> |
-						<a asp-action="Details" asp-route-id="@item.FotografiaId">Detailhes</a> |
-						<a asp-action="Delete" asp-route-id="@item.FotografiaId">Apagar</a>
+						<a asp-action="Details" asp-route-id="@item.FotografiaId">Detailhes</a>
 					</td>
 				</tr>
 							}
