@@ -75,3 +75,36 @@
 		</footer>
 	</body>
 </section>
+
+@*<div id="id01" class="modal">
+	<form class="modal-content" action="/action_page.php">
+		<div class="container">
+			<h1>
+				Tem a certeza que pretende
+				@if (!Model.Aprovada)
+				{
+					<b style="color:red">Aprovar/Apagar</b>
+				}
+				else
+				{
+					<b style="color:red">Apagar</b>
+				}
+				esta Fotografia
+			</h1>
+			<img src='@imgsrc' height="200">
+			<br />
+			<div style="margin:20px">
+				@if (!@Model.Aprovada)
+				{
+					<a class="button" asp-action="Aprova" asp-route-id="@Model.FotografiaId" asp-route-page="0">Aprovar</a>
+					<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="0">Apagar</a>
+				}
+				else
+				{
+					<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="0">Apagar</a>
+				}
+				<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			</div>
+		</div>
+	</form>
+</div>*@
