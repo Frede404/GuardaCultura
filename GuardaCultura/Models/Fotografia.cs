@@ -17,11 +17,15 @@ namespace GuardaCultura.Models
 
         public float Classificacao { get; set; }// não é introduzida pelo utilizador, inicializada a 3.5
 
+        //[Required]
         public byte[] Foto { get; set; }// required após erstar feito
 
         [Required]
         public bool Aprovada { get; set; }
 
+        [Required]
+        public int N_Votos { get; set; }
+        
         public int EstacaoAnoId { get; set; }
 
         public EstacaoAno EstacaoAno { get; set; }

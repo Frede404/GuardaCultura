@@ -108,6 +108,9 @@ namespace GuardaCultura.Migrations
                     b.Property<int>("MiradouroId")
                         .HasColumnType("int");
 
+                    b.Property<int>("N_Votos")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

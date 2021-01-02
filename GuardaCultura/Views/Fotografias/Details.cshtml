@@ -9,69 +9,142 @@
 	</header>
 	<body>
 		<div>
-			<dl class="row">
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.Nome)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Nome)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.Data_imagem)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Data_imagem)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.Classificacao)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Classificacao)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.EstacaoAno)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.Pessoa)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Pessoa.Nome)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.Miradouro)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.Miradouro.Coordenadas_gps)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.TipoImagem)
-				</dt>
-				<dd class="col-sm-10">
-					@Html.DisplayFor(model => model.TipoImagem.Descricao)
-				</dd>
-				<dt class="col-sm-2">
-					@Html.DisplayNameFor(model => model.Foto)
-				</dt>
-				<dd class="col-sm-10">
-					@*<input type="image" src="data:image/gif;base64,(@Model.Foto)" style="width:500px;height:300px" />*@
-					@*@Html.DisplayFor(model => model.Foto)*@
-					@{
-						var base64 = Convert.ToBase64String(Model.Foto);
-						var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-					}
-					<img src='@imgsrc' width="80%"/>
-				</dd>
-			</dl>
-		</div>
-		<footer class="major">
+			<table class="table" id="tabelaconfig">
+				<thead>
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.Nome)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Data_imagem)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.EstacaoAno)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.TipoImagem)
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							@Html.DisplayFor(model => model.Nome)
+						</td>
+						<td>
+							@Html.DisplayFor(model => model.Data_imagem)
+						</td>
+						<td>
+							@Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
+						</td>
+						<td>
+							@Html.DisplayFor(model => model.TipoImagem.Descricao)
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+
+			<table class="table" id="tabelaconfig">
+				<thead>
+					<tr>
+						<th>
+							Introduzida por:
+						</th>
+						<th>
+							@if (Model.Miradouro.E_Miradouro)
+							{
+								@Html.DisplayNameFor(model => model.Miradouro)
+							}
+							else
+							{
+								<span>Paisagem</span>
+							}
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Classificacao)
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							@Html.DisplayFor(model => model.Pessoa.Nome)
+						</td>
+						<td>
+							<a asp-controller="Miradouroes" asp-action="Details" asp-route-id="@Model.MiradouroId">@Html.DisplayFor(model => model.Miradouro.Nome)</a>
+						</td>
+						<td>
+							@Html.DisplayFor(model => model.Classificacao)
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
 			<div>
-				<a asp-action="Edit" asp-route-id="@Model.FotografiaId" class="button btn-primary">Edit</a>
-				<a asp-action="Delete" asp-route-id="@Model.FotografiaId" class="button btn-primary">Delete</a>
-				<a asp-action="Index" class="button btn-primary">Back to List</a>
+				<p><b>Fotografia</b></p>
+
+				@{
+					var base64 = Convert.ToBase64String(Model.Foto);
+					var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+				}
+				<img src='@imgsrc' width="80%" />
 			</div>
-		</footer>
-	</body>
+			<footer class="major">
+				<div>
+					<a asp-action="Edit" asp-route-id="@Model.FotografiaId" class="button btn-primary">Editar</a>
+					<a class="button btn-primary" onclick="document.getElementById('id01').style.display='block'">Apagar</a>
+					<a asp-action="Index"  asp-route-page=0  asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" class="button btn-primary">Lista</a>
+				</div>
+			</footer>
+			<div id="id01" class="modal">
+				<form class="modal-content">
+					<div class="container">
+						<h1>
+							Tem a certeza que pretende <b style="color:red">Apagar</b> esta Fotografia
+						</h1>
+						<br />
+						<div style="margin:20px">
+							<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="1">Sim</a>
+							<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Não</button>
+						</div>
+					</div>
+				</form>
+			</div>
+</body>
 </section>
+
+
+
+@*<div id="id01" class="modal">
+	<form class="modal-content" action="/action_page.php">
+		<div class="container">
+			<h1>
+				Tem a certeza que pretende
+				@if (!Model.Aprovada)
+				{
+					<b style="color:red">Aprovar/Apagar</b>
+				}
+				else
+				{
+					<b style="color:red">Apagar</b>
+				}
+				esta Fotografia
+			</h1>
+			<img src='@imgsrc' height="200">
+			<br />
+			<div style="margin:20px">
+				@if (!@Model.Aprovada)
+				{
+					<a class="button" asp-action="Aprova" asp-route-id="@Model.FotografiaId" asp-route-page="0">Aprovar</a>
+					<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="0">Apagar</a>
+				}
+				else
+				{
+					<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="0">Apagar</a>
+				}
+				<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+			</div>
+		</div>
+	</form>
+</div>*@

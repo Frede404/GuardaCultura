@@ -17,14 +17,15 @@
 						@Html.DisplayNameFor(model => model.Nome)
 					</th>
 					<th>
+						@Html.DisplayNameFor(model => model.Foto)
+					</th>
+					<th>
 						@Html.DisplayNameFor(model => model.Data_imagem)
 					</th>
 					<th>
 						@Html.DisplayNameFor(model => model.Classificacao)
 					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.Foto)
-					</th>
+					
 					<th>
 						@Html.DisplayNameFor(model => model.EstacaoAno)
 					</th>
@@ -45,19 +46,29 @@
 						@Html.DisplayFor(model => model.Nome)
 					</td>
 					<td>
+						@* @Html.DisplayFor(model => model.Foto)*@
+						@{
+							var base64 = Convert.ToBase64String(Model.Foto);
+							var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+						}
+						<div class="dropdown">
+							<img src='@imgsrc' width="50" height="50" />
+							<div class="dropdown-content">
+								<img src='@imgsrc' width="300">
+							</div>
+						</div>
+					</td>
+					<td>
 						@Html.DisplayFor(model => model.Data_imagem)
 					</td>
 					<td>
 						@Html.DisplayFor(model => model.Classificacao)
 					</td>
 					<td>
-						@Html.DisplayFor(model => model.Foto)
-					</td>
-					<td>
 						@Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
 					</td>
 					<td>
-						@Html.DisplayFor(model => model.Pessoa.Email)
+						@Html.DisplayFor(model => model.Pessoa.Nome)
 					</td>
 					<td>
 						@Html.DisplayFor(model => model.Miradouro.Coordenadas_gps)

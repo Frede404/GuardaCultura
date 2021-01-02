@@ -1,96 +1,241 @@
-﻿@model IEnumerable<GuardaCultura.Models.Fotografia>
+﻿@* @model IEnumerable<GuardaCultura.Models.Fotografia>*@
+@model ListaFotografias
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 <section class="wrapper style3 container special">
 	<header class="major">
 		<h1>Fotografias</h1>
-
-		<p class="alinhaBotaoEsquerda">
-			<a asp-action="Create" class="button btn-primary">Create New</a>
-		</p>
+		<div class="divFiltro">
+			<form>
+				<div class="fields">
+					<div class="form-group field half">
+						<label asp-for="ordenar">Ordenar: </label>
+						<select asp-for="ordenar">
+							<option value="FotografiaId">Normal</option>
+							<option value="Aprovada">Aprovacao</option>
+							<option value="Classificacao">Classificacao</option>
+						</select>
+					</div>
+					<div class="form-group field half">
+						<label asp-for="direcaoordena">Ordem: </label>
+						<select asp-for="direcaoordena">
+							<option value="1">Ascendente</option>
+							<option value="2">Descendente</option>
+						</select>
+					</div>
+					<div class="form-group field half">
+						<label asp-for="aprovacao">Mostrar: </label>
+						<select asp-for="aprovacao">
+							<option value="1">Todas</option>
+							<option value="2">Aprovados</option>
+							<option value="3">Não Aprovados</option>
+						</select>
+						<br><br>
+					</div>
+				</div>
+				<input asp-action="Index" type="submit" value="Filtrar">
+			</form>
+		</div>
 	</header>
 	<body>
+		<p class="alinhaBotaoEsquerda">
+			<a asp-action="Create" class="button btn-primary">Inserir Fotografia</a>
+		</p>
+
 		<table class="table" id="tabelaconfig">
 			<thead>
 				<tr>
 					<th>
-						@Html.DisplayNameFor(model => model.Nome)
+						@* @Html.DisplayNameFor(model => model..Nome)*@
+						Nome
 					</th>
 					<th>
-						@Html.DisplayNameFor(model => model.Data_imagem)
+						@* @Html.DisplayNameFor(model => model.Data_imagem)*@
+						Fotografia
 					</th>
 					<th>
-						@Html.DisplayNameFor(model => model.Classificacao)
+						@* @Html.DisplayNameFor(model => model.Classificacao)*@
+						Data
 					</th>
 					<th>
-						@Html.DisplayNameFor(model => model.Foto)
+						@* @Html.DisplayNameFor(model => model.Foto)*@
+						Classificação
+					</th>
+					<!--<th>
+						@* @Html.DisplayNameFor(model => model.EstacaoAno)*@
+						Estação do Ano
 					</th>
 					<th>
-						@Html.DisplayNameFor(model => model.EstacaoAno)
+						@* @Html.DisplayNameFor(model => model.Pessoa)*@
+						Pessoa
 					</th>
 					<th>
-						@Html.DisplayNameFor(model => model.Pessoa)
+						@* @Html.DisplayNameFor(model => model.Miradouro)*@
+						Miradouro
 					</th>
 					<th>
-						@Html.DisplayNameFor(model => model.Miradouro)
-					</th>
+						@* @Html.DisplayNameFor(model => model.TipoImagem)*@
+						Tipo Imagem
+					</th>-->
 					<th>
-						@Html.DisplayNameFor(model => model.TipoImagem)
+						@* @Html.DisplayNameFor(model => model.Aprovada)*@
+						Aprovação
 					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.Aprovada)
-					</th>
+					<th></th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var item in Model)
+				@foreach (var item in Model.Fotografias)
 				{
-					<tr>
-						<td>
-							@Html.DisplayFor(modelItem => item.Nome)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.Data_imagem)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.Classificacao)
-						</td>
-						<td>
-							@*@Html.DisplayFor(modelItem => item.Foto)*@
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.EstacaoAno.Nome_estacao)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.Pessoa.Nome)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.Miradouro.Nome)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.TipoImagem.Descricao)
-						</td>
-						<td>
-							@if (item.Aprovada)
-							{
-								@Html.Encode("Aprovada")
-							}
-							else
-							{
-								@Html.Encode("Nao Aprovada")
-							}
-						</td>
-						<td>
-							<a asp-action="Edit" asp-route-id="@item.FotografiaId">Edit</a> |
-							<a asp-action="Details" asp-route-id="@item.FotografiaId">Details</a> |
-							<a asp-action="Delete" asp-route-id="@item.FotografiaId">Delete</a>
-						</td>
-					</tr>
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Nome)
+					</td>
+					<td>
+						@*@Html.DisplayFor(modelItem => item.Foto)*@
+						@{
+							var base64 = Convert.ToBase64String(item.Foto);
+							var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+						}
+						<div class="dropdown">
+							<img src='@imgsrc' width="50" height="50" />
+							<div class="dropdown-content">
+								<img src='@imgsrc' width="300">
+							</div>
+						</div>
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Data_imagem)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Classificacao)
+					</td>
+					@*<td>
+						@Html.DisplayFor(modelItem => item.EstacaoAno.Nome_estacao)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Pessoa.Nome)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Miradouro.Nome)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.TipoImagem.Descricao)
+					</td>*@
+					<td>
+						@if (item.Aprovada)
+						{
+							@Html.Encode("Aprovada")
+						}
+						else
+						{
+							@Html.Encode("Nao Aprovada")
+						}
+					</td>
+					<td>
+						@if (!item.Aprovada)
+						{
+							<a style="cursor: pointer" onclick="document.getElementById('id+@item.FotografiaId').style.display='block'">Aprovar</a>
+						}
+						else
+						{
+							<a style="cursor: pointer" onclick="document.getElementById('id+@item.FotografiaId').style.display='block'">Apagar</a>
+						}
+
+						<div id="id+@item.FotografiaId" class="modal">
+							<form class="modal-content">
+								<div class="container">
+									<h1>
+										Tem a certeza que pretende
+										@if (!item.Aprovada)
+										{
+											<b style="color:red">Aprovar/Apagar</b>
+										}
+										else
+										{
+											<b style="color:red">Apagar</b>
+										}
+										esta Fotografia
+									</h1>
+									<img src='@imgsrc' height="200">
+									<br />
+									<div style="margin:20px">
+										@if (!item.Aprovada)
+										{
+											<a class="button" asp-action="Aprova" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Aprovar</a>
+											<a class="button" asp-action="Apagar" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Apagar</a>
+										}
+										else
+										{
+											<a class="button" asp-action="Apagar" asp-route-id="@item.FotografiaId" asp-route-page="@Model.pagination.CurrentPage">Apagar</a>
+										}
+										<button type="button" onclick="document.getElementById('id+@item.FotografiaId').style.display='none'" class="cancelbtn">Cancel</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.FotografiaId">Editar</a> |
+						<a asp-action="Details" asp-route-id="@item.FotografiaId">Detailhes</a>
+					</td>
+				</tr>
 				}
 			</tbody>
 		</table>
+		<nav>
+			<ul class="pagination">
+				@{
+					if (Model.pagination.TotalPages > 1)
+					{
+						if (Model.pagination.CurrentPage == 1)
+						{
+							<li class="page-item"><a class="page-link active" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="1">1</a></li>
+						}
+						else
+						{
+							<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="1">1</a></li>
+						}
+
+						int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+						if (primeiraPagina < 1)
+						{
+							primeiraPagina = 1;
+						}
+
+						int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+						if (ultimaPagina > Model.pagination.TotalPages)
+						{
+							ultimaPagina = Model.pagination.TotalPages;
+						}
+
+
+						@for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
+						{
+							if (p == Model.pagination.CurrentPage)
+							{
+								<li class="page-item"><a class="page-link active" href="#">@p</a></li>
+							}
+							else
+							{
+								<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@p">@p</a></li>
+							}
+						}
+
+						if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
+						{
+							<li class="page-item"><a class="page-link active" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+						}
+						else
+						{
+							<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+						}
+					}
+				}
+			</ul>
+		</nav>
 	</body>
 </section>
