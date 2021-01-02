@@ -30,9 +30,28 @@ namespace GuardaCultura.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> MiradourosAsync()
+        public async Task<IActionResult> MiradourosAsync(int page = 1)
         {
-            return View(await _context.Miradouro.ToListAsync());
+            var paginacao = new PagingInfoPaginaMiradouros
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoPaginaMiradouros.TAM_PAGINA,
+                TotalItems = _context.Miradouro
+                .Where(p => p.Ativo == true)
+                .Where(p => p.E_Miradouro == true).Count()
+            };
+            return View(
+                new ListaPaginaMiradouros
+                {
+                    Miradouros = _context.Miradouro
+                    .OrderBy(p => p.MiradouroId)
+                    .Where(p => p.Ativo == true)
+                    .Where(p => p.E_Miradouro == true)
+                    .Skip((page - 1) * paginacao.PageSize),
+                    pagination = paginacao,
+                }
+                );
+            //return View(await _context.Miradouro.ToListAsync());
         }
         public IActionResult Sobre()
         {

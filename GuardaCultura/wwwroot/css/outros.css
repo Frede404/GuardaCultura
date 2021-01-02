@@ -81,6 +81,9 @@ input:checked+#divCheckBox{
 	border-style: outset;
 	border-width: medium;
 }
-.primeiroUltimoNumero{
-	background:red;
+
+.descricao {
+	padding-top: 10px;
+	background-color: black;
+	color: white;
 }

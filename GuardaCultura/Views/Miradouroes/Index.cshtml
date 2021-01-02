@@ -32,18 +32,6 @@
                 <input type="submit" asp-controller="Miradouroes" asp-action="Index" asp-route-page="1" value="Filtrar">
             </form>
         </div>
-        
-        @*<a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="1">Lista de todos</a>
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="2">Lista de todos ativos</a>
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="1" asp-route-estado="3">Lista de todos inativos</a>
-
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="1">Lista de Miradouros</a>
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="2">Lista de Miradouros ativos</a>
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="2" asp-route-estado="3">Lista de Miradouros desativos</a>
-
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="1">Lista de Paisagens</a>
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="2">Lista de Paisagens ativos</a>
-        <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary" asp-route-page="1" asp-route-e_miradouro="3" asp-route-estado="3">Lista de Paisagens desativos</a>*@
     </header>
     <body>
         <p class="alinhaBotaoEsquerda">
@@ -151,27 +139,32 @@
         </table>
         <nav>
             <ul class="pagination">
-               @{ 
-                   if (Model.pagination.TotalPages >1)
-                   {
+                @{
+                    if (Model.pagination.TotalPages > 1)
+                    {
 
-                    <li class="page-item"><a class="page-link primeiroUltimoNumero" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                        if (Model.pagination.CurrentPage == 1)
+                        {
+                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                        }
 
+                        int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+                        if (primeiraPagina < 1)
+                        {
+                            primeiraPagina = 1;
+                        }
 
+                        int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+                        if (ultimaPagina > Model.pagination.TotalPages)
+                        {
+                            ultimaPagina = Model.pagination.TotalPages;
+                        }
 
-                       int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
-                       if (primeiraPagina < 1)
-                       {
-                           primeiraPagina = 1;
-                       }
-
-                       int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
-                       if (ultimaPagina > Model.pagination.TotalPages)
-                       {
-                           ultimaPagina = Model.pagination.TotalPages;
-                       }
-
-                        @for (int p = primeiraPagina+1; p < ultimaPagina; p++)
+                        @for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
                         {
                             if (p == Model.pagination.CurrentPage)
                             {
@@ -182,9 +175,17 @@
                                 <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
                             }
                         }
-                        <li class="page-item"><a class="page-link primeiroUltimoNumero" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
-                   }
-               }
+
+                        if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
+                        {
+                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                        }
+                    }
+                }
             </ul>
         </nav>
     </body>
