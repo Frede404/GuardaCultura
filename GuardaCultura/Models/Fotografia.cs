@@ -23,6 +23,9 @@ namespace GuardaCultura.Models
         [Required]
         public bool Aprovada { get; set; }
 
+        [Required]
+        public int N_Votos { get; set; }
+        
         public int EstacaoAnoId { get; set; }
 
         public EstacaoAno EstacaoAno { get; set; }

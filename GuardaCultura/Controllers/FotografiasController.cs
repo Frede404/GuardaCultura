@@ -20,6 +20,7 @@ namespace GuardaCultura.Controllers
         private static string auxordenar = "";
         private static int auxdirecaoordena = 0;
         private static int auxaprovacao = 0;
+        private static int auxpage = 0;
 
         public FotografiasController(GuardaCulturaContext context)// recebe a bd
         {
@@ -29,6 +30,15 @@ namespace GuardaCultura.Controllers
         // GET: Fotografias
         public async Task<IActionResult> Index(int page = 1, string ordenar= "FotografiaId", int direcaoordena=1, int aprovacao=1)
         {
+            if (page == 0)
+            {
+                page = auxpage;
+            }
+            else
+            {
+                auxpage = page;
+            }
+
             if (direcaoordena == 0)
             {
                 direcaoordena = auxdirecaoordena;
@@ -210,7 +220,8 @@ namespace GuardaCultura.Controllers
                     fotografia.Aprovada = true;
                 }
                 // todo: validacoes adicionais antes de inserir a foto
-                fotografia.Classificacao = 3.5f;
+                fotografia.Classificacao = 5.0f;
+                fotografia.N_Votos = 1;
                 _context.Add(fotografia);
                 await _context.SaveChangesAsync();
 
@@ -250,7 +261,8 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FotografiaId,Nome,Data_imagem,Classificacao,Foto,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId")] Fotografia fotografia)
+        //public async Task<IActionResult> Edit(int id, [Bind("FotografiaId,Nome,Data_imagem,Classificacao,Foto,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId,Aprovacao,N_Votos")] Fotografia fotografia)
+        public async Task<IActionResult> Edit(int id, [Bind("FotografiaId,Nome,Data_imagem,EstacaoAnoId,TipoImagemId")] Fotografia fotografia)
         {
             if (id != fotografia.FotografiaId)
             {
@@ -261,6 +273,12 @@ namespace GuardaCultura.Controllers
             {
                 try
                 {
+                    Fotografia ProtecaoDados = await _context.Fotografia.FindAsync(id);
+                    ProtecaoDados.Nome = fotografia.Nome;
+                    ProtecaoDados.EstacaoAnoId = fotografia.EstacaoAnoId;
+                    ProtecaoDados.Data_imagem = fotografia.Data_imagem;
+                    ProtecaoDados.TipoImagemId = fotografia.TipoImagemId;
+                    fotografia = ProtecaoDados;
                     _context.Update(fotografia);
                     await _context.SaveChangesAsync();
                 }

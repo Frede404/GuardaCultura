@@ -32,7 +32,6 @@ namespace GuardaCultura.Data
 
         public DbSet<GuardaCultura.Models.Funcao> Funcao { get; set; }
 
-
         public DbSet<GuardaCultura.Models.Pessoa> Pessoa { get; set; }
     }
 }

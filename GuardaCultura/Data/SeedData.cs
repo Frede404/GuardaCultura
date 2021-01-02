@@ -263,7 +263,7 @@ namespace GuardaCultura.Data
                         dbContext.Miradouro.Add(
                         new Miradouro
                         {
-                            Nome = "miradouro" + (i + 1),
+                            Nome = "paisagem" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
                             Coordenadas_gps = "coordenada" + (i + 1),
                             Terreno = "Montanha",
@@ -278,7 +278,7 @@ namespace GuardaCultura.Data
                         dbContext.Miradouro.Add(
                         new Miradouro
                         {
-                            Nome = "miradouro" + (i + 1),
+                            Nome = "paisagem" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
                             Coordenadas_gps = "coordenada" + (i + 1),
                             Terreno = "Planicie",
@@ -336,6 +336,7 @@ namespace GuardaCultura.Data
                 int Pessoa_ID = rnd.Next(1, 4);
                 int foto_nome= rnd.Next(50, 61);
                 float classificacao = (float) rnd.Next(0, 1001)/100;
+                int n_votos = rnd.Next(2, 101);
                 byte[] fotogafia= File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
 
                 if (Pessoa_ID == 2)
@@ -363,8 +364,9 @@ namespace GuardaCultura.Data
                             MiradouroId = Miradoruro_ID,
                             TipoImagemId = Tipo_ID,
                             Aprovada = true,
-                            Foto=fotogafia,
-                            Classificacao=classificacao
+                            Foto = fotogafia,
+                            Classificacao = classificacao,
+                            N_Votos = n_votos
                         }
                         );
                     }
@@ -380,7 +382,8 @@ namespace GuardaCultura.Data
                             TipoImagemId = Tipo_ID,
                             Aprovada = false,
                             Foto = fotogafia,
-                            Classificacao = classificacao
+                            Classificacao = classificacao,
+                            N_Votos = n_votos
                         }
                         );
                     }
@@ -397,7 +400,8 @@ namespace GuardaCultura.Data
                             TipoImagemId = Tipo_ID,
                             Aprovada = true,
                             Foto = fotogafia,
-                            Classificacao = classificacao
+                            Classificacao = classificacao,
+                            N_Votos = n_votos
                         }
                         );
                 }
