@@ -86,7 +86,8 @@ input:checked+#divCheckBox{
 	padding-top: 10px;
 	background-color: black;
 	color: white;
-  
+}
+
 .dropdown {
 	position: relative;
 	display: inline-block;
