@@ -328,9 +328,10 @@ namespace GuardaCultura.Data
 
             
             Random rnd = new Random();
+            int Miradoruro_ID = 0;
             for (int i = 0; i < 1000; i++)
             {
-                int Miradoruro_ID = rnd.Next(1, 101);
+                Miradoruro_ID++;
                 int Estacao_ID = rnd.Next(1, 5);
                 int Tipo_ID = rnd.Next(1, 4);
                 int Pessoa_ID = rnd.Next(1, 4);
@@ -407,6 +408,10 @@ namespace GuardaCultura.Data
                 }
                 //ver no inicio da janela as instrucoes
                 dbContext.SaveChanges();//so fica valido se salvarmos
+                if (Miradoruro_ID==100)
+                {
+                    Miradoruro_ID = 0;
+                }
             }
         }
     }
