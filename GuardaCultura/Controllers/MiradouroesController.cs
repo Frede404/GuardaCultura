@@ -14,13 +14,14 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        private static int teste1=0;
-        private static int teste2=0;
+        private static int auxEmiradouro=0;
+        private static int auxEstado=0;
 
         public MiradouroesController(GuardaCulturaContext context)// recebe a bd
         {
             _context = context;
         }
+
 
         // GET: Miradouroes
         public async Task<IActionResult> Index(int page = 1, int e_miradouro = 1, int estado = 1)// lista dos Miradouros
@@ -28,24 +29,24 @@ namespace GuardaCultura.Controllers
             //return View(await _context.Miradouro.ToListAsync());// alteracoes assincronas
             
             Boolean ativo;
-            Boolean teste;
+            Boolean miradouroPaisagem;
 
             if (e_miradouro == 0)
             {
-                e_miradouro = teste1;
+                e_miradouro = auxEmiradouro;
             }
             else
             {
-                teste1 = e_miradouro;
+                auxEmiradouro = e_miradouro;
             }
 
             if (estado == 0)
             {
-                estado = teste2;
+                estado = auxEstado;
             }
             else
             {
-                teste2 = estado;
+                auxEstado = estado;
             }
 
             if (e_miradouro==1)
@@ -60,7 +61,7 @@ namespace GuardaCultura.Controllers
                     };
 
                     return View(
-                        new MiradouroLista
+                        new ListaMiradouro
                         {
                             Miradouros = _context.Miradouro
                             .OrderBy(p => p.MiradouroId)
@@ -91,7 +92,7 @@ namespace GuardaCultura.Controllers
                     };
 
                     return View(
-                        new MiradouroLista
+                        new ListaMiradouro
                         {
                             Miradouros = _context.Miradouro
                             .OrderBy(p => p.MiradouroId)
@@ -108,11 +109,11 @@ namespace GuardaCultura.Controllers
             {
                 if (e_miradouro == 2)
                 {
-                    teste = true;
+                    miradouroPaisagem = true;
                 }
                 else
                 {
-                    teste = false;
+                    miradouroPaisagem = false;
                 }
 
                 if (estado == 1)//ativos e desativos
@@ -123,17 +124,17 @@ namespace GuardaCultura.Controllers
                         PageSize = PagingInfoMiradouro.TAM_PAGINA,
                         TotalItems = _context.Miradouro
                         //.Where(p => p.Ativo ==)
-                        .Where(p => p.E_Miradouro == teste)
+                        .Where(p => p.E_Miradouro == miradouroPaisagem)
                         .Count()
                     };
 
                     return View(
-                        new MiradouroLista
+                        new ListaMiradouro
                         {
                             Miradouros = _context.Miradouro
                             .OrderBy(p => p.MiradouroId)
                             //.Where(p => p.Ativo ==)
-                            .Where(p => p.E_Miradouro == teste)//miradouros
+                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
                             //.Where(p => p.E_Miradouro==false)//so paisagens
                             .Skip((page - 1) * paginacao.PageSize)
                             .Take(paginacao.PageSize),
@@ -158,17 +159,17 @@ namespace GuardaCultura.Controllers
                         PageSize = PagingInfoMiradouro.TAM_PAGINA,
                         TotalItems = _context.Miradouro
                         .Where(p => p.Ativo == ativo)
-                        .Where(p => p.E_Miradouro == teste)
+                        .Where(p => p.E_Miradouro == miradouroPaisagem)
                         .Count()
                     };
 
                     return View(
-                        new MiradouroLista
+                        new ListaMiradouro
                         {
                             Miradouros = _context.Miradouro
                             .OrderBy(p => p.MiradouroId)
                             .Where(p => p.Ativo == ativo)
-                            .Where(p => p.E_Miradouro == teste)//miradouros
+                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
                                                                      //.Where(p => p.E_Miradouro==false)//so paisagens
                             .Skip((page - 1) * paginacao.PageSize)
                             .Take(paginacao.PageSize),
