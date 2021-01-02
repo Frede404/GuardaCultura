@@ -279,6 +279,7 @@ namespace GuardaCultura.Controllers
                     ProtecaoDados.Data_imagem = fotografia.Data_imagem;
                     ProtecaoDados.TipoImagemId = fotografia.TipoImagemId;
                     fotografia = ProtecaoDados;
+
                     _context.Update(fotografia);
                     await _context.SaveChangesAsync();
                 }
@@ -383,6 +384,7 @@ namespace GuardaCultura.Controllers
                     throw;
                 }
             }
+
             //return RedirectToAction(nameof(Index(0,"0",0,0)));
             if (auxaprovacao == 1)
             {
@@ -500,6 +502,57 @@ namespace GuardaCultura.Controllers
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Nome", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             */
+        }
+
+        public async Task<IActionResult> AprovarDetalhes(int? id)// recebe o id
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var fotografia = await _context.Fotografia.FindAsync(id);
+            if (fotografia == null)
+            {
+                // todo: talvez alguem tenha apagado essa Hora. " mostrar uma mensagem apropriada ao utilizador"
+                return NotFound();
+            }
+
+            fotografia.Aprovada = !fotografia.Aprovada;
+
+            try
+            {
+                _context.Update(fotografia);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FotografiaExists(fotografia.FotografiaId))
+                {
+                    // todo: talvez alguem apagou essa Foto
+                    // pergunta ao utilizador se quer criar um novo com os mesmos dados
+                    return NotFound();
+                }
+                else
+                {
+                    // todo: mostrar o erro e perguntar se quer tentar outra vez
+                    throw;
+                }
+            }
+
+            fotografia = await _context.Fotografia
+                .Include(f => f.EstacaoAno)
+                .Include(f => f.Miradouro)
+                .Include(f => f.Pessoa)
+                .Include(f => f.TipoImagem)
+                .FirstOrDefaultAsync(m => m.FotografiaId == id);
+            if (fotografia == null)
+            {
+                // todo: talvez alguem tenha apagado essa fotografia. "Mostrar uma mensagem apropriada ao utilizador"
+                return NotFound();
+            }
+
+            return View("Details", fotografia);
         }
 
         public async Task<IActionResult> Apagar(int? id, int page = 1)
