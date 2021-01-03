@@ -40,6 +40,7 @@ namespace GuardaCultura.Controllers
                 .Where(p => p.Ativo == true)
                 .Where(p => p.E_Miradouro == true).Count()
             };
+
             return View(
                 new ListaPaginaMiradouros
                 {
@@ -47,13 +48,15 @@ namespace GuardaCultura.Controllers
                     .OrderBy(p => p.MiradouroId)
                     .Where(p => p.Ativo == true)
                     .Where(p => p.E_Miradouro == true)
-                    .Skip((page - 1) * paginacao.PageSize),
-                    Fotografias = _context.Fotografia,
+                    .Skip((page - 1) * paginacao.PageSize)
+                    .Take(paginacao.PageSize),
+                    //Fotografias = _context.Fotografia,
                     pagination = paginacao
                 }
                 );
             //return View(await _context.Miradouro.ToListAsync());
         }
+
         public IActionResult Sobre()
         {
             return View();
