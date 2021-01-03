@@ -32,7 +32,14 @@
 							@Html.DisplayFor(model => model.Nome)
 						</td>
 						<td>
-							@Html.DisplayFor(model => model.Data_imagem)
+							@if (Model.Data_imagem != null)
+							{
+								@Html.DisplayFor(model => model.Data_imagem)
+							}
+							else
+							{
+								@Html.Encode("Sem Data definida")
+							}
 						</td>
 						<td>
 							@Html.DisplayFor(model => model.EstacaoAno.Nome_estacao)
@@ -92,9 +99,13 @@
 			</div>
 			<footer class="major">
 				<div>
+					@if (!Model.Aprovada)
+					{
+						<a class="button btn-primary" onclick="document.getElementById('id02').style.display='block'">Aprovar</a>
+					}
 					<a asp-action="Edit" asp-route-id="@Model.FotografiaId" class="button btn-primary">Editar</a>
 					<a class="button btn-primary" onclick="document.getElementById('id01').style.display='block'">Apagar</a>
-					<a asp-action="Index"  asp-route-page=0  asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" class="button btn-primary">Lista</a>
+					<a asp-action="Index" asp-route-page=0 asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" class="button btn-primary">Lista</a>
 				</div>
 			</footer>
 			<div id="id01" class="modalLogin">
@@ -111,40 +122,20 @@
 					</div>
 				</form>
 			</div>
+
+			<div id="id02" class="modal">
+				<form class="modal-content">
+					<div class="container">
+						<h1>
+							Tem a certeza que pretende <b style="color:red">Aprovar</b> esta Fotografia
+						</h1>
+						<br />
+						<div style="margin:20px">
+							<a class="button" asp-action="AprovarDetalhes" asp-route-id="@Model.FotografiaId">Sim</a>
+							<button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Não</button>
+						</div>
+					</div>
+				</form>
+			</div>
 </body>
 </section>
-
-
-
-@*<div id="id01" class="modal">
-	<form class="modal-content" action="/action_page.php">
-		<div class="container">
-			<h1>
-				Tem a certeza que pretende
-				@if (!Model.Aprovada)
-				{
-					<b style="color:red">Aprovar/Apagar</b>
-				}
-				else
-				{
-					<b style="color:red">Apagar</b>
-				}
-				esta Fotografia
-			</h1>
-			<img src='@imgsrc' height="200">
-			<br />
-			<div style="margin:20px">
-				@if (!@Model.Aprovada)
-				{
-					<a class="button" asp-action="Aprova" asp-route-id="@Model.FotografiaId" asp-route-page="0">Aprovar</a>
-					<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="0">Apagar</a>
-				}
-				else
-				{
-					<a class="button" asp-action="Apagar" asp-route-id="@Model.FotografiaId" asp-route-page="0">Apagar</a>
-				}
-				<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-			</div>
-		</div>
-	</form>
-</div>*@
