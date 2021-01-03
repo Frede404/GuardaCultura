@@ -48,7 +48,8 @@ namespace GuardaCultura.Controllers
                     .Where(p => p.Ativo == true)
                     .Where(p => p.E_Miradouro == true)
                     .Skip((page - 1) * paginacao.PageSize),
-                    pagination = paginacao,
+                    Fotografias = _context.Fotografia,
+                    pagination = paginacao
                 }
                 );
             //return View(await _context.Miradouro.ToListAsync());

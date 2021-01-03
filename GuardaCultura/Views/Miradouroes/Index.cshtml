@@ -124,14 +124,59 @@
                                 <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>*@
                         </td>
                         <td>
+
                             @if (!item.Ativo)
                             {
-                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Ativar</a>
+                                <a style="cursor: pointer" onclick="document.getElementById('id+@item.MiradouroId').style.display ='block'">Ativar</a>
+                                
                             }
                             else
                             {
-                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Desativar</a>
+                                <a style="cursor: pointer" onclick="document.getElementById('id+@item.MiradouroId').style.display ='block'">Desativar</a>
+                                
                             }
+                            <div id="id+@item.MiradouroId" class="modalLogin">
+                                <form class="modal-content">
+                                    <div class="container">
+                                        <h1>
+                                            Tem a certeza que pretende
+                                            @if (!item.Ativo)
+                                            {
+                                                <b style="color: red">Ativar</b>
+                                            }
+                                            else
+                                            {
+                                                <b style="color: red">Desativar</b>
+                                            }
+                                            @if (!item.E_Miradouro)
+                                            {
+                                                <b>esta</b>
+                                                <b style="color: red">Paisagem</b>
+                                            }
+                                            else
+                                            {
+                                                <b>este</b>
+                                                <b style="color: red">Miradouro</b>
+                                            }
+                                        </h1>
+                                        <br />
+                                        <div style="margin:20px">
+                                            @if (!item.Ativo)
+                                            {
+                                                <a class="button" asp-action="Ativar" asp-route-id="@item.MiradouroId" asp-route-page="@Model.pagination.CurrentPage">Ativar</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="button" asp-action="Ativar" asp-route-id="@item.MiradouroId" asp-route-page="@Model.pagination.CurrentPage">Desativar</a>
+                                            }
+                                            <button type="button" onclick="document.getElementById('id+@item.MiradouroId').style.display = 'none'" class="cancelbtn">Cancel</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+                            </div>
+
                         </td>
                     </tr>
                 }
