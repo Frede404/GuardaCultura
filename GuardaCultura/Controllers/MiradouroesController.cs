@@ -368,5 +368,229 @@ namespace GuardaCultura.Controllers
         {
             return _context.Miradouro.Any(e => e.MiradouroId == id);
         }
+
+        public async Task<IActionResult> Ativar(int? id, int page=1)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var miradouro = await _context.Miradouro.FindAsync(id);
+            if (miradouro == null)
+            {
+                return NotFound();
+            }
+
+            miradouro.Ativo = !miradouro.Ativo;
+
+            try
+            {
+                _context.Update(miradouro);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MiradouroExists(miradouro.MiradouroId))
+                {
+                    // todo: talvez alguem apagou esse miradouro
+                    // pergunta ao utilizador se quer criar um novo com os mesmos dados
+                    return NotFound();
+                }
+                else
+                {
+                    // todo: mostrar o erro e perguntar se quer tentar outra vez
+                    throw;
+                }
+            }
+            //return RedirectToAction(nameof(Index));
+
+            Boolean ativo;
+            Boolean miradouroPaisagem;
+            if (auxEmiradouro == 1)
+            {
+                if (auxEstado == 1)//mostra tudo
+                {
+                    int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                    int totalitems = _context.Miradouro.Count();
+                    int paginaatual;
+                    if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                    {
+                        paginaatual = page - 1;
+                    }
+                    else
+                    {
+                        paginaatual = page;
+                    }
+
+                    var paginacao = new PagingInfoMiradouro
+                    {
+                        CurrentPage = paginaatual,
+                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
+                        TotalItems = _context.Miradouro.Count()
+                    };
+
+                    return View("Index",
+                        new ListaMiradouro
+                        {
+                            Miradouros = _context.Miradouro
+                            .OrderBy(p => p.MiradouroId)
+                            .Skip((paginaatual - 1) * paginacao.PageSize)
+                            .Take(paginacao.PageSize),
+                            pagination = paginacao
+                        }
+                        );
+                }
+                else
+                {
+                    if (auxEstado == 2)
+                    {
+                        ativo = true;//todos ativos
+                    }
+                    else
+                    {
+                        ativo = false;//todos desativos
+                    }
+
+                    int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                    int totalitems = _context.Miradouro
+                        .Where(p => p.Ativo == ativo).Count();
+                    int paginaatual;
+                    if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                    {
+                        paginaatual = page - 1;
+                    }
+                    else
+                    {
+                        paginaatual = page;
+                    }
+
+                    var paginacao = new PagingInfoMiradouro
+                    {
+                        CurrentPage = paginaatual,
+                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
+                        TotalItems = _context.Miradouro
+                        .Where(p => p.Ativo == ativo)
+                        .Count()
+                    };
+
+                    return View("Index",
+                        new ListaMiradouro
+                        {
+                            Miradouros = _context.Miradouro
+                            .OrderBy(p => p.MiradouroId)
+                            .Where(p => p.Ativo == ativo)
+                            .Skip((paginaatual - 1) * paginacao.PageSize)
+                            .Take(paginacao.PageSize),
+                            pagination = paginacao,
+                        }
+                        );
+
+                }
+            }
+            else//ou miradouro ou paisagem
+            {
+                if (auxEmiradouro == 2)
+                {
+                    miradouroPaisagem = true;
+                }
+                else
+                {
+                    miradouroPaisagem = false;
+                }
+
+
+                if (auxEstado == 1)//ativos e desativos
+                {
+                    int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                    int totalitems = _context.Miradouro
+                        .Where(p => p.E_Miradouro == miradouroPaisagem).Count();
+                    int paginaatual;
+                    if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                    {
+                        paginaatual = page - 1;
+                    }
+                    else
+                    {
+                        paginaatual = page;
+                    }
+
+                    var paginacao = new PagingInfoMiradouro
+                    {
+                        CurrentPage = paginaatual,
+                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
+                        TotalItems = _context.Miradouro
+                        //.Where(p => p.Ativo ==)
+                        .Where(p => p.E_Miradouro == miradouroPaisagem)
+                        .Count()
+                    };
+
+                    return View("Index",
+                        new ListaMiradouro
+                        {
+                            Miradouros = _context.Miradouro
+                            .OrderBy(p => p.MiradouroId)
+                            //.Where(p => p.Ativo ==)
+                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
+                            //.Where(p => p.E_Miradouro==false)//so paisagens
+                            .Skip((paginaatual - 1) * paginacao.PageSize)
+                            .Take(paginacao.PageSize),
+                            pagination = paginacao
+                        }
+                        );
+                }
+                else
+                {
+                    if (auxEstado == 2)
+                    {
+                        ativo = true;//paisagens ou miradouros ativos
+                    }
+                    else
+                    {
+                        ativo = false;//paisagens ou miradouros desativos
+                    }
+
+                    int tamanho = PagingInfoFotografias.TAM_PAGINA;
+                    int totalitems = _context.Miradouro
+                        .Where(p => p.Ativo == ativo)
+                        .Where(p => p.E_Miradouro == miradouroPaisagem).Count();
+                    int paginaatual;
+                    if ((int)Math.Ceiling((double)totalitems / tamanho) < page)
+                    {
+                        paginaatual = page - 1;
+                    }
+                    else
+                    {
+                        paginaatual = page;
+                    }
+
+                    var paginacao = new PagingInfoMiradouro
+                    {
+                        CurrentPage = paginaatual,
+                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
+                        TotalItems = _context.Miradouro
+                        .Where(p => p.Ativo == ativo)
+                        .Where(p => p.E_Miradouro == miradouroPaisagem)
+                        .Count()
+                    };
+
+                    return View("Index",
+                        new ListaMiradouro
+                        {
+                            Miradouros = _context.Miradouro
+                            .OrderBy(p => p.MiradouroId)
+                            .Where(p => p.Ativo == ativo)
+                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
+                                                                           //.Where(p => p.E_Miradouro==false)//so paisagens
+                            .Skip((paginaatual - 1) * paginacao.PageSize)
+                            .Take(paginacao.PageSize),
+                            pagination = paginacao
+                        }
+                        );
+                }
+            }
+
+
+        }
     }
 }
