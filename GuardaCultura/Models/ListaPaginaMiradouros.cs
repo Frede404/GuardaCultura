@@ -10,7 +10,7 @@ namespace GuardaCultura.Models
 
         public IEnumerable<Miradouro> Miradouros { get; set; }
 
-        public IEnumerable<Fotografia> Fotografias { get; set; }
+        //public IEnumerable<Fotografia> Fotografias { get; set; }
 
         public PagingInfoPaginaMiradouros pagination { get; set; }
 
