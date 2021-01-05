@@ -41,6 +41,28 @@ namespace GuardaCultura.Controllers
                 .Where(p => p.E_Miradouro == true).Count()
             };
 
+            var Maxclassificacao = from foto in _context.Fotografia
+                         where foto.Aprovada==true
+                         group foto by foto.MiradouroId into fotogroup
+                         orderby fotogroup.Key
+                         select new
+                         {
+                             miradouroId = fotogroup.Key,
+                             melhorclassificacao = fotogroup.Max(p => p.Classificacao)
+                         };
+
+            var FotosMax = (from foto in _context.Fotografia
+                          join testes in Maxclassificacao on new {a= foto.MiradouroId, b=foto.Classificacao } equals new {a= testes.miradouroId, b=testes.melhorclassificacao }
+                          where foto.Aprovada == true
+                          orderby foto.MiradouroId
+                          select new 
+                          {
+                              Nome=foto.Nome,
+                              MiradoutoId=foto.MiradouroId,
+                              Foto=foto.Foto,
+                              Classificacao=foto.Classificacao
+                          });
+            
             return View(
                 new ListaPaginaMiradouros
                 {
@@ -50,7 +72,20 @@ namespace GuardaCultura.Controllers
                     .Where(p => p.E_Miradouro == true)
                     .Skip((page - 1) * paginacao.PageSize)
                     .Take(paginacao.PageSize),
-                    //Fotografias = _context.Fotografia,
+
+                    fotoapresentacao= FotosMax.Select(p => new Fotografia
+                    {
+                        Nome = p.Nome,
+                        Foto = p.Foto,
+                        MiradouroId = p.MiradoutoId,
+                        Classificacao = p.Classificacao
+                    }),
+
+                    Fotografias= _context.Fotografia
+                    .OrderBy(p => p.MiradouroId)
+                    .OrderByDescending(p => p.Classificacao)
+                    .Where(p => p.Aprovada == true),
+
                     pagination = paginacao
                 }
                 );

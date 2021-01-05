@@ -196,21 +196,21 @@ namespace GuardaCultura.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FotografiaId,Nome,Data_imagem,Classificacao,EstacaoAnoId,PessoaId,MiradouroId,TipoImagemId")] Fotografia fotografia, List<IFormFile> Foto)//serve para evitar alguns ataques, só recebe campos que estejam no Bind
         {
-            if (ModelState.IsValid)
+            //conversao da imagem para binario
+            foreach (var item in Foto)
             {
-                //conversao da imagem para binario
-                foreach (var item in Foto)
+                if (item.Length > 0)
                 {
-                    if (item.Length > 0)
+                    using (var stream = new MemoryStream())
                     {
-                        using (var stream = new MemoryStream())
-                        {
-                            await item.CopyToAsync(stream);
-                            fotografia.Foto = stream.ToArray();
-                        }
+                        await item.CopyToAsync(stream);
+                        fotografia.Foto = stream.ToArray();
                     }
                 }
+            }
 
+            if (ModelState.IsValid)
+            {
                 int funcao = _context.Pessoa
                             .Find(fotografia.PessoaId)
                             .FuncaoId;

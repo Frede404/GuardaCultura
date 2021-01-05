@@ -19,6 +19,100 @@
     width: 25%;/*quantidade de imagens 100/numreo de imagens*/
 }
 
+.rowslide:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 100%;
+    margin: auto;
+}
+
+.columnslide {
+    float: left;
+    width: 16.66%;
+}
+
+/*
+.rowslide+1:after {
+    content: "";
+    display: none;
+    clear: both;
+    width: 16.67%;
+    margin: auto;
+}
+
+.columnslide+1 {
+    float: left;
+    width: 100%; 
+}
+
+.rowslide+2:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 33.33%;
+    margin: auto;
+}
+
+.columnslide+2 {
+    float: left;
+    width: 50%; 
+}
+
+.rowslide+3:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 50%;
+    margin: auto;
+}
+
+.columnslide+3 {
+    float: left;
+    width: 33.33%; 
+}
+
+.rowslide+4:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 66.67%;
+    margin: auto;
+}
+
+.columnslide+4 {
+    float: left;
+    width: 25%; 
+}
+
+.rowslide+5:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 83.33;
+    margin: auto;
+}
+
+.columnslide+5 {
+    float: left;
+    width: 20%;
+}
+
+.rowslide+6:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 100%;
+    margin: auto;
+}
+
+.columnslide+6 {
+    float: left;
+    width: 16.66%; 
+}
+*/
+
+
 /* The Modal (background) */
 .modal {
     display: none;
@@ -36,7 +130,7 @@
 /* Modal Content */
 .modal-content {
     position: relative;
-    background-color: #fefefe;
+    background-color: black; /*#fefefe;*/
     margin: auto;
     padding: 0;
     width: 90%;
@@ -127,7 +221,7 @@ img {
 }
 
 .demo {
-    opacity: 0.6;
+    opacity: 1; /*0.6;*/
 }
 
     .active,
