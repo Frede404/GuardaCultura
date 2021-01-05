@@ -10,15 +10,15 @@ namespace GuardaCultura.Models
     {
         public int FotografiaId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Escreva o nome da Fotografia que pretende inserir!")]
         public string Nome { get; set; }//alt
 
         public string Data_imagem { get; set; }
 
-        public float Classificacao { get; set; }// não é introduzida pelo utilizador, inicializada a 3.5
+        public float Classificacao { get; set; }// não é introduzida pelo utilizador, inicializada a 5
 
-        //[Required]
-        public byte[] Foto { get; set; }// required após erstar feito
+        //[Required(ErrorMessage = "Inserir Foto!")]
+        public byte[] Foto { get; set; }
 
         [Required]
         public bool Aprovada { get; set; }

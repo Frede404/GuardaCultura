@@ -7,23 +7,30 @@ function closeModal() {
 }
 
 var slideIndex = 1;
-showSlides(slideIndex);
+var miradouroindex = 1;
+//showSlides(slideIndex);
 
-function plusSlides(n) {
-    showSlides(slideIndex += n);
+function currentmiradouro(m) {
+    showSlides(slideIndex = m*6-5,miradouroindex = m);
+}
+
+function plusSlides(n,m) {
+    showSlides(slideIndex += n,m);
 }
 
 function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
-function showSlides(n) {
+function showSlides(n,m) {
     var i;
     var slides = document.getElementsByClassName("mySlides");
     var dots = document.getElementsByClassName("demo");
     var captionText = document.getElementById("caption");
-    if (n > slides.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = slides.length }
+    var mirmin = m * 6 - 5;
+    var mirmax = m * 6;
+    if (n > mirmax) { slideIndex = mirmin }
+    if (n < mirmin) { slideIndex = mirmax }
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }

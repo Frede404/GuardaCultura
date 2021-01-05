@@ -52,7 +52,9 @@
 							@*<label asp-for="Fotograf" class="control-label"></label>*@
 							<div class="custom-file">
 								<label class="custom-file-label">Fotografia</label>
-								<input asp-for="Foto" type="file" accept="image/*" class="form-control custom-file-input" />
+								<input asp-for="Foto" type="file" required accept="image/*" class="form-control custom-file-input" title="Insira uma fotografia"/>
+								<br />
+								<span asp-validation-for="Foto" class="textoErro"></span>
 							</div>
 							@*<input asp-for="Foto" class="form-control" />*@
 							@*<span asp-validation-for="Fotograf" class="textoErro"></span>*@

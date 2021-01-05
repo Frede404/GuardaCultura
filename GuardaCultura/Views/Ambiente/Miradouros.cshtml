@@ -3,7 +3,7 @@
 @model ListaPaginaMiradouros
 
 @{
-    ViewData["Title"] = "Miradouros";
+	ViewData["Title"] = "Miradouros";
 }
 
 <header class="special container">
@@ -31,59 +31,150 @@
     <body>
 
         <div class="row centrado">
+            @{
+				int contagem = 0;
+				int contamiradouro = 0;
+            }
             @foreach (var item in Model.Miradouros)
-            {
-            <div class="column" style="margin:1%">
-                <img src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block'" class="hover-shadow cursor">
-                <p>@item.Nome</p>
-                @*@{
-                    float teste = Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Max(p => p.Classificacao);
+			{ 
+			    <div class="column" style="margin:1%">
+				@*<img src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block'" class="hover-shadow cursor">*@
 
-                    byte[] fotografia = Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Where(p => p.Classificacao == teste).Max(p => p.Foto);
-                    //fotografia = (Fotografia)item.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Where(p => p.Classificacao == teste);
+				@{ 
+					byte[] fotobyte = null;
+					bool control = false;
+					String nomefoto = "";
+					foreach (var items in Model.fotoapresentacao.Where(p => p.MiradouroId == item.MiradouroId))
+					{
+						if (items.MiradouroId == item.MiradouroId)
+						{
+                            contamiradouro++;
+							fotobyte = items.Foto;
+							control = true;
+							nomefoto = items.Nome;
+							var base64 = Convert.ToBase64String(fotobyte);
+							var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+							<img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block', currentmiradouro(@contamiradouro)" class="hover-shadow cursor" />
+							@*<p>foto - @nomefoto </p>*@
+						}
+						if (control)
+						{
+							break;
+						}
+					}
+					@*var base64 = Convert.ToBase64String(fotobyte);
+			        var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+			        <img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block'" class="hover-shadow cursor" />
+			        <p>foto - @nomefoto </p>*@
+				}
 
-                    var base64 = Convert.ToBase64String(fotografia);
-                    var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-                }
-                <img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(2);" class="hover-shadow cursor"/>*@
-                <div id="id+@item.MiradouroId" class="modal">
-                    <span class="close cursor" onclick="document.getElementById('id+@item.MiradouroId').style.display='none'">&times;</span>
-                    <form class="modal-content">
-                            <div class="caption-container">
-                                <p>@item.Nome</p>
-                            </div>
+				<p>miradouro - @item.Nome</p>
 
-                            <img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()" />
+				<div id="id+@item.MiradouroId" class="modal">
+					<span class="close cursor" onclick="document.getElementById('id+@item.MiradouroId').style.display='none'">&times;</span>
+					<form class="modal-content">
+						<div class="caption-container">
+							<p>@item.Nome</p>
+						</div>
+						<div class="rowslide">
+							@{
+								string[] fotosslide = new string[6];
+							}
+							@{
+								byte[] fotobyteSlide = null;
+								int controlSlide = 0;
+								String nomefotoSlide = "";
+								int qtdimagens = 0;
 
-                            <div class="descricaoimg">
-                                <p>
-                                    Localização:
-                                    @Html.DisplayFor(modelItem => item.Localizacao)
-                                </p>
-                                <p>
-                                    Coordenadas GPS:
-                                    @Html.DisplayFor(modelItem => item.Coordenadas_gps)
-                                </p>
-                                <p>
-                                    Terreno:
-                                    @Html.DisplayFor(modelItem => item.Terreno)
-                                </p>
-                                <p>
-                                    Condições:
-                                    @Html.DisplayFor(modelItem => item.Condicoes)
-                                </p>
-                                <p>
-                                    Ocupação maxima:
-                                    @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
-                                </p>
-                                <p>
-                                    Descrição:
-                                    @Html.DisplayFor(modelItem => item.Descricao)
-                                </p>
-                            </div>
-                    </form>
-                </div>
-            </div>
+								foreach (var items in Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId))
+								{
+									if (items.MiradouroId == item.MiradouroId && controlSlide < 6)
+									{
+										fotobyteSlide = items.Foto;
+										controlSlide++;
+										nomefotoSlide = items.Nome;
+
+										var base64Slide = Convert.ToBase64String(fotobyteSlide);
+										var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
+
+										fotosslide[qtdimagens] = imgsrcSlide;
+										qtdimagens++;
+
+										contagem++;
+										<div class="columnslide">
+											<img src='@imgsrcSlide' style="width:100%; max-height:110px" alt="@nomefotoSlide" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamiradouro)" />
+										</div>
+									}
+
+									if (items.MiradouroId > item.MiradouroId)
+									{
+										controlSlide++;
+									}
+
+									if (controlSlide == 6)
+									{
+										break;
+									}
+								}
+
+							}
+						</div>
+						<div class="container">
+							@{
+								int controlo = 0;
+								foreach (var items in fotosslide)
+								{
+									/*var base64Slide = Convert.ToBase64String(items);
+									var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);*/
+								    <div class="mySlides">
+								        @*<div class="numbertext">@Html.Encode(controlo) / 5</div>*@
+								        <img src='@items' style="width:100%">
+							        </div>
+									controlo++;
+									if (controlo == 6)
+									{
+                                        break;
+									}
+								}
+							}
+							<a class="prev" onclick="plusSlides(-1, @contamiradouro)">❮</a>
+							<a class="next" onclick="plusSlides(1, @contamiradouro)">❯</a>
+
+							<div class="caption-container">
+								<p id="caption"></p>
+							</div>
+						</div>
+							@*<img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()" />*@
+
+							<div class="descricaoimg">
+								<p>
+									Localização:
+									@Html.DisplayFor(modelItem => item.Localizacao)
+								</p>
+								<p>
+									Coordenadas GPS:
+									@Html.DisplayFor(modelItem => item.Coordenadas_gps)
+								</p>
+								<p>
+									Terreno:
+									@Html.DisplayFor(modelItem => item.Terreno)
+								</p>
+								<p>
+									Condições:
+									@Html.DisplayFor(modelItem => item.Condicoes)
+								</p>
+								<p>
+									Ocupação maxima:
+									@Html.DisplayFor(modelItem => item.Ocupacao_maxima)
+								</p>
+								<p>
+									Descrição:
+									@Html.DisplayFor(modelItem => item.Descricao)
+								</p>
+							</div>
+					</form>
+				</div>
+			</div>
             }
 
         </div>
