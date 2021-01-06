@@ -86,7 +86,7 @@
 								String nomefotoSlide = "";
 								int qtdimagens = 0;
 
-								foreach (var items in Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId))
+								foreach (var items in Model.Fotografiasantigas.Where(p => p.MiradouroId == item.MiradouroId))
 								{
 									if (items.MiradouroId == item.MiradouroId && controlSlide < 6)
 									{

@@ -18,30 +18,99 @@
 	<body>
 		<div class="row centrado">
 			@{
-				int i = 0;
-				@foreach (var item in Model.MiradouroPaisagem)
+				int i = 0;//ver
+				int contagem = 0;
+				int contamiradouro = 0;
+				@foreach (var paisagem in Model.MiradouroPaisagem)
 				{
-					@if (i < item.MiradouroId)
-					{
-						<div class="column" style="margin:1%">
-							@{
-								i = item.MiradouroId;
-								var base64 = Convert.ToBase64String(item.Fotografia1);
-								var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-								<img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
-								@Html.DisplayFor(m => item.Nome);
-								<br />
-							}
+					<div class="column" style="margin:1%">
+						@{
+							contamiradouro++;
+							var base64 = Convert.ToBase64String(paisagem.Fotografia);
+							var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+							<img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@paisagem.MiradouroId').style.display='block', currentmiradouro(@contamiradouro)" class="hover-shadow cursor" />
+							@*<img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">*@
+							@Html.DisplayFor(m => paisagem.Nome);
+						}
+
+						<div id="id+@paisagem.MiradouroId" class="modal">
+							<span class="close cursor" onclick="document.getElementById('id+@paisagem.MiradouroId').style.display='none'">&times;</span>
+							<form class="modal-content">
+								<div class="caption-container">
+									<p>@paisagem.Nome</p>
+								</div>
+								<div class="rowslide">
+									@{
+										foreach (var fotografiasslide in Model.Fotografias.Where(p => p.MiradouroId == paisagem.MiradouroId))
+										{
+											var base64Slide = Convert.ToBase64String(fotografiasslide.Fotografia);
+											var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
+											contagem++;
+											<div class="columnslide">
+												<img src='@imgsrcSlide' style="width:100%; max-height:110px" alt="@fotografiasslide.FotoId" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamiradouro)" />
+												<p>@fotografiasslide.FotoId</p>
+											</div>
+										}
+									}
+								</div>
+								<div class="container">
+									@foreach (var fotografiaAtual in Model.Fotografias.Where(p => p.MiradouroId == paisagem.MiradouroId))
+									{
+										var base64Atual = Convert.ToBase64String(fotografiaAtual.Fotografia);
+										var imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+										<div class="mySlides">
+											@*<div class="numbertext">@Html.Encode(controlo) / 5</div>*@
+											<img src='@imgsrcAtual' style="width:100%">
+											<p>@fotografiaAtual.FotoId</p>
+										</div>
+									}
+									<a class="prev" onclick="plusSlides(-1, @contamiradouro)">❮</a>
+									<a class="next" onclick="plusSlides(1, @contamiradouro)">❯</a>
+
+									<div class="caption-container">
+										<p id="caption"></p>
+									</div>
+								</div>
+
+								<div class="descricaoimg">
+									<p>
+										Localização:
+										@Html.DisplayFor(modelItem => paisagem.Localizacao)
+									</p>
+									<p>
+										Coordenadas GPS:
+										@Html.DisplayFor(modelItem => paisagem.Coordenadas_gps)
+									</p>
+									<p>
+										Terreno:
+										@Html.DisplayFor(modelItem => paisagem.Terreno)
+									</p>
+									<p>
+										Condições:
+										@Html.DisplayFor(modelItem => paisagem.Condicoes)
+									</p>
+									<p>
+										Ocupação maxima:
+										@Html.DisplayFor(modelItem => paisagem.Ocupacao_maxima)
+									</p>
+									<p>
+										Descrição:
+										@Html.DisplayFor(modelItem => paisagem.Descricao)
+									</p>
+								</div>
+							</form>
 						</div>
-					}
+					</div>
 				}
 			}
-			<!--<div class="column" style="margin:1%">
-			<img src="~/apresentacao/imagens/guarda1.jpg" style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
-		</div>-->
 		</div>
 
-		<div id="myModal" class="modal">
+		<!--<div class="column" style="margin:1%">
+		<img src="~/apresentacao/imagens/guarda1.jpg" style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">
+	</div>
+	</div>-->
+
+		@*<div id="myModal" class="modal">
 			<span class="close cursor" onclick="closeModal()">&times;</span>
 			<div class="modal-content">
 
@@ -134,7 +203,7 @@
 			</div>-->
 			</div>
 		</div>
-
+			*@
 		<nav>
 			<ul class="pagination">
 				@{
@@ -191,6 +260,5 @@
 	</body>
 	<footer class="major">
 	</footer>
-
 </section>
 

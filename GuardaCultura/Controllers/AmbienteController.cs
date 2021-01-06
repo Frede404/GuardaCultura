@@ -37,7 +37,7 @@ namespace GuardaCultura.Controllers
             };
 
             var miradouroquery = _context.Miradouro
-                .Join(_context.Fotografia, miradouro => miradouro.MiradouroId, foto => foto.MiradouroId, (miradouro, foto) =>
+                .Join(_context.Fotografia.Where(p=>p.Aprovada==true), miradouro => miradouro.MiradouroId, foto => foto.MiradouroId, (miradouro, foto) =>
                 new
                 {
                     MiradouroId = miradouro.MiradouroId,
@@ -56,9 +56,11 @@ namespace GuardaCultura.Controllers
                 })
                 .Where(p => p.E_Miradouro == false)
                 .Where(p => p.Ativo == true)
-                .OrderBy(p => p.MiradouroId).ThenByDescending(p => p.Classificacao).ToList();
+                .OrderBy(p => p.MiradouroId)
+                .ThenByDescending(p => p.Classificacao).ToList();
 
-            List<MiradouroFoto> miradouroapresentar = new List<MiradouroFoto>();
+            List<MiradouroFoto> FotoApresentar = new List<MiradouroFoto>();
+            List<MiradouroFoto> PaisagemApresentar = new List<MiradouroFoto>();
             int i = 0;
             int j = 1;
             foreach (var item in miradouroquery)
@@ -67,7 +69,7 @@ namespace GuardaCultura.Controllers
                 {
                     i = item.MiradouroId;
                     j = 1;
-                    miradouroapresentar.Add(
+                    PaisagemApresentar.Add(
                         new MiradouroFoto
                         {
                             MiradouroId = item.MiradouroId,
@@ -81,14 +83,34 @@ namespace GuardaCultura.Controllers
                             Ocupacao_maxima = item.Ocupacao_maxima,
                             Descricao = item.Descricao,
                             Ativo = item.Ativo,
-                            Fotografia1 = item.Foto,
-                            Foto1Id = item.FotografiaId,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao
+                        });
+
+                    FotoApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao
                         });
                 }
-                else if (item.MiradouroId == i && j <= 6)
+                else if (item.MiradouroId == i && j < 6)
                 {
                     j++;
-                    miradouroapresentar.Add(
+                    FotoApresentar.Add(
                         new MiradouroFoto
                         {
                             MiradouroId = item.MiradouroId,
@@ -102,8 +124,9 @@ namespace GuardaCultura.Controllers
                             Ocupacao_maxima = item.Ocupacao_maxima,
                             Descricao = item.Descricao,
                             Ativo = item.Ativo,
-                            Fotografia1 = item.Foto,
-                            Foto1Id = item.FotografiaId,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao
                         });
                 }
             }
@@ -111,24 +134,15 @@ namespace GuardaCultura.Controllers
             return View(
                 new ListaPaginaMiradouros
                 {
-                    MiradouroPaisagem = miradouroapresentar
-                    .Where(p => p.ContagemRepetido == 1)
+                    MiradouroPaisagem = PaisagemApresentar
+                    //.Where(p => p.ContagemRepetido == 1)
                     .OrderBy(p=>p.MiradouroId)
                     .Skip((page - 1) * paginacao.PageSize)
                     .Take(paginacao.PageSize),
 
-                    /*fotoapresentacao = FotosMax.Select(p => new Fotografia
-                    {
-                        Nome = p.Nome,
-                        Foto = p.Foto,
-                        MiradouroId = p.MiradoutoId,
-                        Classificacao = p.Classificacao
-                    }),*/
-
-                    Fotografias = _context.Fotografia
+                    Fotografias = FotoApresentar
                     .OrderBy(p => p.MiradouroId)
-                    .OrderByDescending(p => p.Classificacao)
-                    .Where(p => p.Aprovada == true),
+                    .ThenByDescending(p => p.Classificacao),
 
                     pagination = paginacao
                 }
@@ -258,11 +272,11 @@ namespace GuardaCultura.Controllers
                             Ocupacao_maxima = item.Ocupacao_maxima,
                             Descricao = item.Descricao,
                             Ativo = item.Ativo,
-                            Fotografia1 = item.Foto,
-                            Foto1Id = item.FotografiaId,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
                         });
                 }
-                else if (item.MiradouroId == i && j<=6)
+                else if (item.MiradouroId == i && j<6)
                 {
                     j++;
                     tes.Add(
@@ -278,8 +292,8 @@ namespace GuardaCultura.Controllers
                             Ocupacao_maxima = item.Ocupacao_maxima,
                             Descricao = item.Descricao,
                             Ativo = item.Ativo,
-                            Fotografia1 = item.Foto,
-                            Foto1Id = item.FotografiaId,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
                         });
                 }
             }
@@ -304,7 +318,7 @@ namespace GuardaCultura.Controllers
                         Classificacao = p.Classificacao
                     }),
 
-                    Fotografias= _context.Fotografia
+                    Fotografiasantigas= _context.Fotografia
                     .OrderBy(p => p.MiradouroId)
                     .OrderByDescending(p => p.Classificacao)
                     .Where(p => p.Aprovada == true),

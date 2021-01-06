@@ -29,9 +29,11 @@ namespace GuardaCultura.Models
 
         public bool Ativo { get; set; }
 
-        public byte[] Fotografia1 { get; set; }
+        public byte[] Fotografia { get; set; }
 
-        public int Foto1Id { get; set; }
+        public int FotoId { get; set; }
+
+        public float Classificacao { get; set; }
 
         public bool Aprovada { get; set; }
 
