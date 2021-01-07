@@ -7,146 +7,208 @@
 }
 
 <header class="special container">
-    <span class="icon solid fa-chart-bar"></span>
-    <h2>
-        <strong>Para dias turbulentos, é bom apanhar ar puro.</strong>
-    </h2>
-    <p>
-        Num pais naturalmente vocacionado para o turismo,
-        as paisagens naturais que os miradouros, cascatas e parques naturais nos oferecem
-        são um bom chamaris para quem procura tranquilidade.
-    </p>
+	<span class="icon solid fa-chart-bar"></span>
+	<h2>
+		<strong>Para dias turbulentos, é bom apanhar ar puro.</strong>
+	</h2>
+	<p>
+		Num pais naturalmente vocacionado para o turismo,
+		as paisagens naturais que os miradouros, cascatas e parques naturais nos oferecem
+		são um bom chamaris para quem procura tranquilidade.
+	</p>
 </header>
 
 <!-- One -->
 <section class="wrapper style1 container special">
-    <h2>Miradouros</h2>
+	<h2>Miradouros</h2>
 
-    <header class="major">
-        <p>
-            Há paisagens um pouco por todo o mundo que são incriveis e quase totalmente desconhecidas,
-            <br />outras passamos por elas vezes sem conta e nem reparamos.
-        </p>
-    </header>
-    <body>
-
-        <div class="row centrado">
-            @{
+	<header class="major">
+		<p>
+			Há paisagens um pouco por todo o mundo que são incriveis e quase totalmente desconhecidas,
+			<br />outras passamos por elas vezes sem conta e nem reparamos.
+		</p>
+	</header>
+	<body>
+		<div class="row centrado">
+			@{
+				int i = 0;//ver
 				int contagem = 0;
 				int contamiradouro = 0;
-            }
-            @foreach (var item in Model.Miradouros)
-			{ 
-			    <div class="column" style="margin:1%">
-				@*<img src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block'" class="hover-shadow cursor">*@
-
-				@{ 
-					byte[] fotobyte = null;
-					bool control = false;
-					String nomefoto = "";
-					foreach (var items in Model.fotoapresentacao.Where(p => p.MiradouroId == item.MiradouroId))
-					{
-						if (items.MiradouroId == item.MiradouroId)
-						{
-                            contamiradouro++;
-							fotobyte = items.Foto;
-							control = true;
-							nomefoto = items.Nome;
-							var base64 = Convert.ToBase64String(fotobyte);
+				@foreach (var miradouro in Model.MiradouroPaisagem)
+				{
+					<div class="column" style="margin:1%">
+						@{
+							contamiradouro++;
+							var base64 = Convert.ToBase64String(miradouro.Fotografia);
 							var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-							<img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block', currentmiradouro(@contamiradouro)" class="hover-shadow cursor" />
-							@*<p>foto - @nomefoto </p>*@
+							<img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@miradouro.MiradouroId').style.display='block', currentmiradouro(@contamiradouro)" class="hover-shadow cursor" />
+							@*<img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">*@
+							@Html.DisplayFor(m => miradouro.Nome);
 						}
-						if (control)
-						{
-							break;
-						}
-					}
-					@*var base64 = Convert.ToBase64String(fotobyte);
-			        var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-			        <img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@item.MiradouroId').style.display='block'" class="hover-shadow cursor" />
-			        <p>foto - @nomefoto </p>*@
-				}
 
-				<p>miradouro - @item.Nome</p>
-
-				<div id="id+@item.MiradouroId" class="modal">
-					<span class="close cursor" onclick="document.getElementById('id+@item.MiradouroId').style.display='none'">&times;</span>
-					<form class="modal-content">
-						<div class="caption-container">
-							<p>@item.Nome</p>
-						</div>
-						<div class="rowslide">
-							@{
-								string[] fotosslide = new string[6];
-							}
-							@{
-								byte[] fotobyteSlide = null;
-								int controlSlide = 0;
-								String nomefotoSlide = "";
-								int qtdimagens = 0;
-
-								foreach (var items in Model.Fotografiasantigas.Where(p => p.MiradouroId == item.MiradouroId))
-								{
-									if (items.MiradouroId == item.MiradouroId && controlSlide < 6)
+						<div id="id+@miradouro.MiradouroId" class="modal">
+							<span class="close cursor" onclick="document.getElementById('id+@miradouro.MiradouroId').style.display='none'">&times;</span>
+							<form class="modal-content">
+								<div class="caption-container">
+									<p>@miradouro.Nome</p>
+								</div>
+								<div class="rowslide">
+									@{
+										foreach (var fotografiasslide in Model.Fotografias.Where(p => p.MiradouroId == miradouro.MiradouroId))
+										{
+											var base64Slide = Convert.ToBase64String(fotografiasslide.Fotografia);
+											var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
+											contagem++;
+											<div class="columnslide">
+												<img src='@imgsrcSlide' style="width:100%; max-height:110px" alt="@fotografiasslide.FotoId" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamiradouro)" />
+												<p>@fotografiasslide.FotoId</p>
+											</div>
+										}
+									}
+								</div>
+								<div class="container">
+									@foreach (var fotografiaAtual in Model.Fotografias.Where(p => p.MiradouroId == miradouro.MiradouroId))
 									{
-										fotobyteSlide = items.Foto;
-										controlSlide++;
-										nomefotoSlide = items.Nome;
-
-										var base64Slide = Convert.ToBase64String(fotobyteSlide);
-										var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
-
-										fotosslide[qtdimagens] = imgsrcSlide;
-										qtdimagens++;
-
-										contagem++;
-										<div class="columnslide">
-											<img src='@imgsrcSlide' style="width:100%; max-height:110px" alt="@nomefotoSlide" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamiradouro)" />
+										var base64Atual = Convert.ToBase64String(fotografiaAtual.Fotografia);
+										var imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+										<div class="mySlides">
+											@*<div class="numbertext">@Html.Encode(controlo) / 5</div>*@
+											<img src='@imgsrcAtual' style="width:100%">
 										</div>
 									}
+									<a class="prev" onclick="plusSlides(-1, @contamiradouro)">❮</a>
+									<a class="next" onclick="plusSlides(1, @contamiradouro)">❯</a>
 
-									if (items.MiradouroId > item.MiradouroId)
-									{
-										controlSlide++;
-									}
+									<div class="caption-container">
+										<p id="caption"></p>
+									</div>
+								</div>
 
-									if (controlSlide == 6)
-									{
-										break;
-									}
-								}
-
-							}
+								<div class="descricaoimg">
+									<p>
+										Localização:
+										@Html.DisplayFor(modelItem => miradouro.Localizacao)
+									</p>
+									<p>
+										Coordenadas GPS:
+										@Html.DisplayFor(modelItem => miradouro.Coordenadas_gps)
+									</p>
+									<p>
+										Terreno:
+										@Html.DisplayFor(modelItem => miradouro.Terreno)
+									</p>
+									<p>
+										Condições:
+										@Html.DisplayFor(modelItem => miradouro.Condicoes)
+									</p>
+									<p>
+										Ocupação maxima:
+										@Html.DisplayFor(modelItem => miradouro.Ocupacao_maxima)
+									</p>
+									<p>
+										Descrição:
+										@Html.DisplayFor(modelItem => miradouro.Descricao)
+									</p>
+								</div>
+							</form>
 						</div>
-						<div class="container">
-							@{
-								int controlo = 0;
-								foreach (var items in fotosslide)
-								{
-									/*var base64Slide = Convert.ToBase64String(items);
-									var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);*/
-								    <div class="mySlides">
-								        @*<div class="numbertext">@Html.Encode(controlo) / 5</div>*@
-								        <img src='@items' style="width:100%">
-							        </div>
-									controlo++;
-									if (controlo == 6)
-									{
-                                        break;
-									}
-								}
+					</div>
+				}
+			}
+		</div>
+
+		<nav>
+			<ul class="pagination">
+				@{
+					if (Model.pagination.TotalPages > 1)
+					{
+						if (Model.pagination.CurrentPage == 1)
+						{
+							<li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="1">1</a></li>
+						}
+						else
+						{
+							<li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="1">1</a></li>
+						}
+
+
+
+						int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+						if (primeiraPagina < 1)
+						{
+							primeiraPagina = 1;
+						}
+
+						int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+						if (ultimaPagina > Model.pagination.TotalPages)
+						{
+							ultimaPagina = Model.pagination.TotalPages;
+						}
+
+						@for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
+						{
+							if (p == Model.pagination.CurrentPage)
+							{
+								<li class="page-item"><a class="page-link active" href="#">@p</a></li>
 							}
-							<a class="prev" onclick="plusSlides(-1, @contamiradouro)">❮</a>
-							<a class="next" onclick="plusSlides(1, @contamiradouro)">❯</a>
+							else
+							{
+								<li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@p">@p</a></li>
+							}
+						}
 
-							<div class="caption-container">
-								<p id="caption"></p>
-							</div>
-						</div>
-							@*<img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()" />*@
+						if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
+						{
+							<li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+						}
+						else
+						{
+							<li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+						}
 
-							<div class="descricaoimg">
+					}
+				}
+			</ul>
+		</nav>
+	</body>
+</section>
+
+@*<div id="id+@item.MiradouroId" class="modal">
+	<span class="close cursor" onclick="closeModal()">&times;</span>
+	<form class="modal-content">
+		<div class="container">
+			<!--interacao com a funcao titulo-->
+			<div class="caption-container">
+				<p class="tituloimg" id="caption"></p>
+			</div>
+
+			@foreach (var item in Model.Miradouros)
+			{
+				@if (item.E_Miradouro)
+				{
+					<!-- imagens slider -->
+					<div class="mySlides">
+
+					<!--<div class="numbertext">1 / 4</div>-->
+					<img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()">@*Um ponto de vista diferente!*@
+
+@*@{
+	   float teste = Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Max(p => p.Classificacao);
+
+	   byte[] fotografia = Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Where(p => p.Classificacao==teste).Max(p=>p.Foto);
+	   //fotografia = (Fotografia)item.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Where(p => p.Classificacao == teste);
+
+	   var base64 = Convert.ToBase64String(fotografia);
+	   var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+	}
+	   <img src='@imgsrc' style="width:100%" />*@
+
+
+@*<div class="descricaoimg">
+								<p>
+									Nome:
+									@Html.DisplayFor(modelItem => item.Nome)
+								</p>
 								<p>
 									Localização:
 									@Html.DisplayFor(modelItem => item.Localizacao)
@@ -171,139 +233,17 @@
 									Descrição:
 									@Html.DisplayFor(modelItem => item.Descricao)
 								</p>
+
 							</div>
-					</form>
-				</div>
+						</div>
+					}
+				}
+
+				<!--Butoes-->
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+				<a class="next" onclick="plusSlides(1)">&#10095;</a>
 			</div>
-            }
-
-        </div>
-
-        @*<div id="id+@item.MiradouroId" class="modal">
-            <span class="close cursor" onclick="closeModal()">&times;</span>
-            <form class="modal-content">
-                <div class="container">
-                    <!--interacao com a funcao titulo-->
-                    <div class="caption-container">
-                        <p class="tituloimg" id="caption"></p>
-                    </div>
-
-                    @foreach (var item in Model.Miradouros)
-                    {
-                        @if (item.E_Miradouro)
-                        {
-                            <!-- imagens slider -->
-                            <div class="mySlides">
-
-                            <!--<div class="numbertext">1 / 4</div>-->
-                            <img class="demo" src="~/apresentacao/imagens/guarda3.jpg" style="width:100%" alt="@item.Nome.ToString()">@*Um ponto de vista diferente!*@
-
-                            @*@{
-           float teste = Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Max(p => p.Classificacao);
-
-           byte[] fotografia = Model.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Where(p => p.Classificacao==teste).Max(p=>p.Foto);
-           //fotografia = (Fotografia)item.Fotografias.Where(p => p.MiradouroId == item.MiradouroId).Where(p => p.Classificacao == teste);
-
-           var base64 = Convert.ToBase64String(fotografia);
-           var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-        }
-           <img src='@imgsrc' style="width:100%" />*@
+		</form>
+	</div>*@
 
 
-                            @*<div class="descricaoimg">
-                                    <p>
-                                        Nome:
-                                        @Html.DisplayFor(modelItem => item.Nome)
-                                    </p>
-                                    <p>
-                                        Localização:
-                                        @Html.DisplayFor(modelItem => item.Localizacao)
-                                    </p>
-                                    <p>
-                                        Coordenadas GPS:
-                                        @Html.DisplayFor(modelItem => item.Coordenadas_gps)
-                                    </p>
-                                    <p>
-                                        Terreno:
-                                        @Html.DisplayFor(modelItem => item.Terreno)
-                                    </p>
-                                    <p>
-                                        Condições:
-                                        @Html.DisplayFor(modelItem => item.Condicoes)
-                                    </p>
-                                    <p>
-                                        Ocupação maxima:
-                                        @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
-                                    </p>
-                                    <p>
-                                        Descrição:
-                                        @Html.DisplayFor(modelItem => item.Descricao)
-                                    </p>
-
-                                </div>
-                            </div>
-                        }
-                    }
-
-                    <!--Butoes-->
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                </div>
-            </form>
-        </div>*@
-
-                            <nav>
-                                <ul class="pagination">
-                                    @{
-                                        if (Model.pagination.TotalPages > 1)
-                                        {
-                                            if (Model.pagination.CurrentPage == 1)
-                                            {
-                                                <li class="page-item"><a class="page-link active" asp-action="Miradouros" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
-                                            }
-                                            else
-                                            {
-                                                <li class="page-item"><a class="page-link" asp-action="Miradouros" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
-                                            }
-
-
-
-                                            int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
-                                            if (primeiraPagina < 1)
-                                            {
-                                                primeiraPagina = 1;
-                                            }
-
-                                            int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
-                                            if (ultimaPagina > Model.pagination.TotalPages)
-                                            {
-                                                ultimaPagina = Model.pagination.TotalPages;
-                                            }
-
-                                            @for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
-                                            {
-                                                if (p == Model.pagination.CurrentPage)
-                                                {
-                                                    <li class="page-item"><a class="page-link active" href="#">@p</a></li>
-                                                }
-                                                else
-                                                {
-                                                    <li class="page-item"><a class="page-link" asp-action="Miradouros" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
-                                                }
-                                            }
-
-                                            if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
-                                            {
-                                                <li class="page-item"><a class="page-link active" asp-action="Miradouros" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
-                                            }
-                                            else
-                                            {
-                                                <li class="page-item"><a class="page-link" asp-action="Miradouros" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
-                                            }
-
-                                        }
-                                    }
-                                </ul>
-                            </nav>
-</body>
-</section>
