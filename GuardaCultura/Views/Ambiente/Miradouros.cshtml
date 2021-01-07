@@ -84,32 +84,35 @@
 									</div>
 								</div>
 
-								<div class="descricaoimg">
-									<p>
-										Localização:
-										@Html.DisplayFor(modelItem => miradouro.Localizacao)
-									</p>
-									<p>
-										Coordenadas GPS:
-										@Html.DisplayFor(modelItem => miradouro.Coordenadas_gps)
-									</p>
-									<p>
-										Terreno:
-										@Html.DisplayFor(modelItem => miradouro.Terreno)
-									</p>
-									<p>
-										Condições:
-										@Html.DisplayFor(modelItem => miradouro.Condicoes)
-									</p>
-									<p>
-										Ocupação maxima:
-										@Html.DisplayFor(modelItem => miradouro.Ocupacao_maxima)
-									</p>
-									<p>
-										Descrição:
-										@Html.DisplayFor(modelItem => miradouro.Descricao)
-									</p>
-								</div>
+                                <div class="descricaoimg">
+                                    <p>
+                                        Localização:
+                                        @Html.DisplayFor(modelItem => miradouro.Localizacao)
+                                    </p>
+                                    <p>
+                                        @{
+                                            string link = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_gps;
+                                        }
+                                        Coordenadas GPS:
+                                        <a href=@link target="_blank">@miradouro.Coordenadas_gps</a>
+                                    </p>
+                                    <p>
+                                        Terreno:
+                                        @Html.DisplayFor(modelItem => miradouro.Terreno)
+                                    </p>
+                                    <p>
+                                        Condições:
+                                        @Html.DisplayFor(modelItem => miradouro.Condicoes)
+                                    </p>
+                                    <p>
+                                        Ocupação maxima:
+                                        @Html.DisplayFor(modelItem => miradouro.Ocupacao_maxima)
+                                    </p>
+                                    <p>
+                                        Descrição:
+                                        @Html.DisplayFor(modelItem => miradouro.Descricao)
+                                    </p>
+                                </div>
 							</form>
 						</div>
 					</div>

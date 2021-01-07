@@ -76,10 +76,13 @@
 										Localização:
 										@Html.DisplayFor(modelItem => paisagem.Localizacao)
 									</p>
-									<p>
-										Coordenadas GPS:
-										@Html.DisplayFor(modelItem => paisagem.Coordenadas_gps)
-									</p>
+                                    <p>
+                                        @{
+                                            string link = "https://www.google.pt/maps/place/" + paisagem.Coordenadas_gps;
+                                        }
+                                        Coordenadas GPS:
+                                        <a href=@link target="_blank">@paisagem.Coordenadas_gps</a>
+                                    </p>
 									<p>
 										Terreno:
 										@Html.DisplayFor(modelItem => paisagem.Terreno)
