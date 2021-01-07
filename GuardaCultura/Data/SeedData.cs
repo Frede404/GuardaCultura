@@ -25,7 +25,7 @@ namespace GuardaCultura.Data
             PopulateEstacaoAno(dbContext);
             PopulateTipoImagem(dbContext);
             PopulateMiradouro(dbContext);
-            PopulateFotografias(dbContext);
+            PopulateFotografias(dbContext, true);
         }
 
         private static void PopulateHoras(GuardaCulturaContext dbContext)
@@ -239,6 +239,36 @@ namespace GuardaCultura.Data
                             Ativo = true
                         }
                         );
+
+                        dbContext.SaveChanges();//so fica valido se salvarmos
+                        int Miradoruro_ID = dbContext.Miradouro
+                                                .OrderByDescending(p => p.MiradouroId)
+                                                .Select(p => p.MiradouroId).First();
+
+                        for (int j = 0; j < 5; j++)
+                        {
+                            int Estacao_ID = rnd.Next(1, 5);
+                            int Tipo_ID = rnd.Next(1, 4);
+                            int Pessoa_ID = rnd.Next(1, 4);
+                            //int foto_nome = rnd.Next(1, 20);
+                            int foto_nome = rnd.Next(50, 61);
+                            float classificacao = (float)rnd.Next(0, 1001) / 100;
+                            int n_votos = rnd.Next(2, 101);
+                            byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
+                            dbContext.Fotografia.Add(
+                            new Fotografia
+                            {
+                                Nome = "Foto" + (j + 1),
+                                PessoaId = Pessoa_ID,
+                                EstacaoAnoId = Estacao_ID,
+                                MiradouroId = Miradoruro_ID,
+                                TipoImagemId = Tipo_ID,
+                                Aprovada = true,
+                                Foto = fotogafia,
+                                Classificacao = classificacao,
+                                N_Votos = n_votos
+                            });
+                        }
                     }
                     else
                     {
@@ -272,6 +302,36 @@ namespace GuardaCultura.Data
                             Ativo = true
                         }
                         );
+
+                        dbContext.SaveChanges();//so fica valido se salvarmos
+                        int Miradoruro_ID = dbContext.Miradouro
+                                                .OrderByDescending(p => p.MiradouroId)
+                                                .Select(p=>p.MiradouroId).First();
+
+                        for (int j = 0; j < 5; j++)
+                        {
+                            int Estacao_ID = rnd.Next(1, 5);
+                            int Tipo_ID = rnd.Next(1, 4);
+                            int Pessoa_ID = rnd.Next(1, 4);
+                            //int foto_nome = rnd.Next(1, 20);
+                            int foto_nome = rnd.Next(50, 61);
+                            float classificacao = (float)rnd.Next(0, 1001) / 100;
+                            int n_votos = rnd.Next(2, 101);
+                            byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
+                            dbContext.Fotografia.Add(
+                            new Fotografia
+                            {
+                                Nome = "Foto" + (j + 1),
+                                PessoaId = Pessoa_ID,
+                                EstacaoAnoId = Estacao_ID,
+                                MiradouroId = Miradoruro_ID,
+                                TipoImagemId = Tipo_ID,
+                                Aprovada = true,
+                                Foto = fotogafia,
+                                Classificacao = classificacao,
+                                N_Votos = n_votos
+                            });
+                        }
                     }
                     else
                     {
@@ -291,13 +351,17 @@ namespace GuardaCultura.Data
                 }
                 dbContext.SaveChanges();//so fica valido se salvarmos
             }
+            PopulateFotografias(dbContext, false);
         }
 
-        private static async void PopulateFotografias(GuardaCulturaContext dbContext)
+        private static async void PopulateFotografias(GuardaCulturaContext dbContext, bool fonte)
         {
-            if (dbContext.Fotografia.Any())//ve se ja ha Horas na base de dados
+            if (fonte)
             {
-                return;
+                if (dbContext.Fotografia.Any())//ve se ja ha fotografias na base de dados
+                {
+                    return;
+                }
             }
 
             //dbContext.Products.Add//insere 1 unico item
@@ -326,15 +390,17 @@ namespace GuardaCultura.Data
             dbContext.SaveChanges();//so fica valido se salvarmos
             */
 
-            
             Random rnd = new Random();
             int Miradoruro_ID = 0;
-            for (int i = 0; i < 1000; i++)
+            int qntd = 1000 - dbContext.Fotografia.Count();
+            int qntdmiradouro = dbContext.Miradouro.Count();
+            for (int i = 0; i < qntd; i++)
             {
                 Miradoruro_ID++;
                 int Estacao_ID = rnd.Next(1, 5);
                 int Tipo_ID = rnd.Next(1, 4);
                 int Pessoa_ID = rnd.Next(1, 4);
+                //int foto_nome = rnd.Next(1, 20);
                 int foto_nome= rnd.Next(50, 61);
                 float classificacao = (float) rnd.Next(0, 1001)/100;
                 int n_votos = rnd.Next(2, 101);
@@ -408,7 +474,7 @@ namespace GuardaCultura.Data
                 }
                 //ver no inicio da janela as instrucoes
                 dbContext.SaveChanges();//so fica valido se salvarmos
-                if (Miradoruro_ID==100)
+                if (Miradoruro_ID==qntdmiradouro)
                 {
                     Miradoruro_ID = 0;
                 }

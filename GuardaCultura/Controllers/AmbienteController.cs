@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GuardaCultura.Controllers
 {
@@ -26,11 +25,7 @@ namespace GuardaCultura.Controllers
         {
             return View();
         }
-        public IActionResult Paisagens()
-        {
-            return View();
-        }
-        public async Task<IActionResult> MiradourosAsync(int page = 1)
+        public IActionResult Paisagens(int page = 1)
         {
             var paginacao = new PagingInfoPaginaMiradouros
             {
@@ -38,53 +33,251 @@ namespace GuardaCultura.Controllers
                 PageSize = PagingInfoPaginaMiradouros.TAM_PAGINA,
                 TotalItems = _context.Miradouro
                 .Where(p => p.Ativo == true)
-                .Where(p => p.E_Miradouro == true).Count()
+                .Where(p => p.E_Miradouro == false).Count()
             };
 
-            var Maxclassificacao = from foto in _context.Fotografia
-                         where foto.Aprovada==true
-                         group foto by foto.MiradouroId into fotogroup
-                         orderby fotogroup.Key
-                         select new
-                         {
-                             miradouroId = fotogroup.Key,
-                             melhorclassificacao = fotogroup.Max(p => p.Classificacao)
-                         };
+            var paisagemquery = _context.Miradouro
+                .Join(_context.Fotografia, miradouro => miradouro.MiradouroId, foto => foto.MiradouroId, (miradouro, foto) =>
+                new
+                {
+                    MiradouroId = miradouro.MiradouroId,
+                    Nome = miradouro.Nome,
+                    Localizacao = miradouro.Localizacao,
+                    Coordenadas_gps = miradouro.Coordenadas_gps,
+                    Terreno = miradouro.Terreno,
+                    E_Miradouro = miradouro.E_Miradouro,
+                    Condicoes = miradouro.Condicoes,
+                    Ocupacao_maxima = miradouro.Ocupacao_maxima,
+                    Descricao = miradouro.Descricao,
+                    Ativo = miradouro.Ativo,
+                    Foto = foto.Foto,
+                    FotografiaId = foto.FotografiaId,
+                    Classificacao = foto.Classificacao,
+                    Aprovada = foto.Aprovada
+                })
+                .Where(p => p.E_Miradouro == false)
+                .Where(p => p.Ativo == true)
+                .Where(p => p.Aprovada == true)
+                .OrderBy(p => p.MiradouroId)
+                .ThenByDescending(p => p.Classificacao).ToList();
 
-            var FotosMax = (from foto in _context.Fotografia
-                          join testes in Maxclassificacao on new {a= foto.MiradouroId, b=foto.Classificacao } equals new {a= testes.miradouroId, b=testes.melhorclassificacao }
-                          where foto.Aprovada == true
-                          orderby foto.MiradouroId
-                          select new 
-                          {
-                              Nome=foto.Nome,
-                              MiradoutoId=foto.MiradouroId,
-                              Foto=foto.Foto,
-                              Classificacao=foto.Classificacao
-                          });
-            
+            List<MiradouroFoto> FotoApresentar = new List<MiradouroFoto>();
+            List<MiradouroFoto> PaisagemApresentar = new List<MiradouroFoto>();
+            int i = 0;
+            int j = 1;
+            foreach (var item in paisagemquery)
+            {
+                if (item.MiradouroId > i)
+                {
+                    i = item.MiradouroId;
+                    j = 1;
+                    PaisagemApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao,
+                            Aprovada = item.Aprovada
+                        });
+
+                    FotoApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao,
+                            Aprovada = item.Aprovada
+                        });
+                }
+                else if (item.MiradouroId == i && j < 6)
+                {
+                    j++;
+                    FotoApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao,
+                            Aprovada = item.Aprovada
+                        });
+                }
+            }
+
             return View(
                 new ListaPaginaMiradouros
                 {
-                    Miradouros = _context.Miradouro
-                    .OrderBy(p => p.MiradouroId)
-                    .Where(p => p.Ativo == true)
-                    .Where(p => p.E_Miradouro == true)
+                    MiradouroPaisagem = PaisagemApresentar
+                    //.Where(p => p.ContagemRepetido == 1)
+                    .OrderBy(p=>p.MiradouroId)
                     .Skip((page - 1) * paginacao.PageSize)
                     .Take(paginacao.PageSize),
 
-                    fotoapresentacao= FotosMax.Select(p => new Fotografia
-                    {
-                        Nome = p.Nome,
-                        Foto = p.Foto,
-                        MiradouroId = p.MiradoutoId,
-                        Classificacao = p.Classificacao
-                    }),
-
-                    Fotografias= _context.Fotografia
+                    Fotografias = FotoApresentar
                     .OrderBy(p => p.MiradouroId)
-                    .OrderByDescending(p => p.Classificacao)
-                    .Where(p => p.Aprovada == true),
+                    .ThenByDescending(p => p.Classificacao),
+
+                    pagination = paginacao
+                }
+                );
+            //return View();
+        }
+
+        public IActionResult Miradouros(int page = 1)
+        {
+            var paginacao = new PagingInfoPaginaMiradouros
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoPaginaMiradouros.TAM_PAGINA,
+                TotalItems = _context.Miradouro
+                .Where(p => p.Ativo == true)
+                .Where(p => p.E_Miradouro == false).Count()
+            };
+
+            var miradouroquery = _context.Miradouro
+                .Join(_context.Fotografia, miradouro => miradouro.MiradouroId, foto => foto.MiradouroId, (miradouro, foto) =>
+                    new
+                    {
+                        MiradouroId = miradouro.MiradouroId,
+                        Nome = miradouro.Nome,
+                        Localizacao = miradouro.Localizacao,
+                        Coordenadas_gps = miradouro.Coordenadas_gps,
+                        Terreno = miradouro.Terreno,
+                        E_Miradouro = miradouro.E_Miradouro,
+                        Condicoes = miradouro.Condicoes,
+                        Ocupacao_maxima = miradouro.Ocupacao_maxima,
+                        Descricao = miradouro.Descricao,
+                        Ativo = miradouro.Ativo,
+                        Foto = foto.Foto,
+                        FotografiaId = foto.FotografiaId,
+                        Classificacao = foto.Classificacao,
+                        Aprovada = foto.Aprovada,
+                    })
+                .Where(p => p.E_Miradouro == true)
+                .Where(p => p.Ativo == true)
+                .Where(p => p.Aprovada == true)
+                .OrderBy(p => p.MiradouroId)
+                .ThenByDescending(p => p.Classificacao).ToList();
+
+            List<MiradouroFoto> FotoApresentar = new List<MiradouroFoto>();
+            List<MiradouroFoto> miradouroApresentar = new List<MiradouroFoto>();
+            int i = 0;
+            int j = 1;
+            foreach (var item in miradouroquery)
+            {
+                if (item.MiradouroId > i)
+                {
+                    i = item.MiradouroId;
+                    j = 1;
+                    miradouroApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao,
+                            Aprovada = item.Aprovada
+                        });
+
+                    FotoApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao,
+                            Aprovada = item.Aprovada
+                        });
+                }
+                else if (item.MiradouroId == i && j < 6)
+                {
+                    j++;
+                    FotoApresentar.Add(
+                        new MiradouroFoto
+                        {
+                            MiradouroId = item.MiradouroId,
+                            ContagemRepetido = j,
+                            Nome = item.Nome,
+                            Localizacao = item.Localizacao,
+                            Coordenadas_gps = item.Coordenadas_gps,
+                            Terreno = item.Terreno,
+                            E_Miradouro = item.E_Miradouro,
+                            Condicoes = item.Condicoes,
+                            Ocupacao_maxima = item.Ocupacao_maxima,
+                            Descricao = item.Descricao,
+                            Ativo = item.Ativo,
+                            Fotografia = item.Foto,
+                            FotoId = item.FotografiaId,
+                            Classificacao = item.Classificacao,
+                            Aprovada = item.Aprovada
+                        });
+                }
+            }
+
+            return View(
+                new ListaPaginaMiradouros
+                {
+                    MiradouroPaisagem = miradouroApresentar
+                    //.Where(p => p.ContagemRepetido == 1)
+                    .OrderBy(p => p.MiradouroId)
+                    .Skip((page - 1) * paginacao.PageSize)
+                    .Take(paginacao.PageSize),
+
+                    Fotografias = FotoApresentar
+                    .OrderBy(p => p.MiradouroId)
+                    .ThenByDescending(p => p.Classificacao),
 
                     pagination = paginacao
                 }
