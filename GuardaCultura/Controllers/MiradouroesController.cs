@@ -215,6 +215,8 @@ namespace GuardaCultura.Controllers
             if (ModelState.IsValid)
             {
                 // todo: validacoes adicionais antes de inserir o miradouro
+                //var coordenadas = formataCoordenadas(miradouro.Coordenadas_gps);
+
                 if (!miradouro.E_Miradouro)
                 {
                     miradouro.Ocupacao_maxima = -1;
