@@ -28,7 +28,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Fotografias
-        public async Task<IActionResult> Index(int page = 1, string ordenar= "FotografiaId", int direcaoordena=1, int aprovacao=1)
+        public async Task<IActionResult> Index(int page = 1, string ordenacao = "FotografiaId", int direcaoordena=1, int aprovacao=1)
         {
             if (page == 0)
             {
@@ -57,13 +57,13 @@ namespace GuardaCultura.Controllers
                 auxaprovacao = aprovacao;
             }
 
-            if (ordenar == "0" || ordenar == "")
+            if (ordenacao == "0" || ordenacao == "")
             {
-                ordenar = auxordenar;
+                ordenacao = auxordenar;
             }
             else
             {
-                auxordenar = ordenar;
+                auxordenar = ordenacao;
             }
 
             if (aprovacao == 1)
@@ -81,10 +81,13 @@ namespace GuardaCultura.Controllers
                         new ListaFotografias
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
-                                .OrderBy(p => EF.Property<Object>(p, ordenar))
+                                .OrderBy(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -94,10 +97,13 @@ namespace GuardaCultura.Controllers
                         new ListaFotografias
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
-                                .OrderByDescending(p => EF.Property<Object>(p, ordenar))
+                                .OrderByDescending(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -130,10 +136,13 @@ namespace GuardaCultura.Controllers
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
                                 .Where(p => p.Aprovada == auxaprovado)
-                                .OrderBy(p => EF.Property<Object>(p, ordenar))
+                                .OrderBy(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -144,10 +153,13 @@ namespace GuardaCultura.Controllers
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
                                 .Where(p => p.Aprovada == auxaprovado)
-                                .OrderByDescending(p => EF.Property<Object>(p, ordenar))
+                                .OrderByDescending(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }

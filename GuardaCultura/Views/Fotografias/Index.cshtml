@@ -11,14 +11,16 @@
 			<form>
 				<div class="fields">
 					<div class="form-group field half">
-						<label asp-for="ordenar">Ordenar: </label>
-						<select asp-for="ordenar">
-							<option value="FotografiaId">Normal</option>
-							<option value="Aprovada">Aprovacao</option>
-							<option value="Classificacao">Classificacao</option>
+						<label asp-for="ordenacao">Ordenar: </label>
+						<select asp-for="ordenacao">
+							<option value="FotografiaId" selected="@(Model.ordenacao== "FotografiaId" ? "selected" : null)">Normal</option>
+							<option value="Aprovada" selected="@(Model.ordenacao== "Aprovada" ? "selected" : null)">Aprovacao</option>
+							<option value="Classificacao" selected="@(Model.ordenacao== "Classificacao" ? "selected" : null)">Classificacao</option>
 						</select>
-					</div>
-					<div class="form-group field half">
+   
+					   </div>
+   
+					   <div class="form-group field half">
 						<label asp-for="direcaoordena">Ordem: </label>
 						<select asp-for="direcaoordena">
 							<option value="1">Ascendente</option>
