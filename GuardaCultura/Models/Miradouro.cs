@@ -12,10 +12,12 @@ namespace GuardaCultura.Models
 
         [Required(ErrorMessage = " Escreva o nome do miradouro que pretende inserir!")]
         [StringLength(256, MinimumLength = 3, ErrorMessage = "O nome do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
+        [RegularExpression("[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+", ErrorMessage = "O nome só aceita caracteres não numericos nem caracteres especiasis!")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = " Escreva a localização do miradouro que pretende inserir!")]
         [StringLength(256, ErrorMessage = "A localização do miradouro deve ter no minimo 3 caracteres e no maximo 256")]
+        [RegularExpression("[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+", ErrorMessage = "A localização só aceita caracteres não numericos nem caracteres especiasis!")]
         public string Localizacao { get; set; }
 
         [Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas do miradouro!")]
