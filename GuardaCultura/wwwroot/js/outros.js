@@ -50,3 +50,30 @@ function checkMiradouroFunction() {
         text.checked = false;
     }
 }
+
+function CorrigeEspacos(elemento) {
+    var texto = elemento.value;
+    var tamanho = texto.length;
+
+    var auxtamanho = 0;
+    var espacos = 0;
+    var auxtexto = "";
+
+    for (i = 0; i < tamanho; i++) {
+        if (texto.charAt(i) == " ") {
+            espacos++;
+            if (espacos == 1 && i != 0) {
+                auxtamanho++;
+                auxtexto += " ";
+            }
+        } else {
+            auxtamanho++;
+            auxtexto += texto.charAt(i);
+            espacos=0;
+        }
+    }
+    if (auxtexto.charAt(auxtamanho-1) == " ") {
+        auxtexto = auxtexto.slice(0, -1);
+    }
+    elemento.value = auxtexto;
+}
