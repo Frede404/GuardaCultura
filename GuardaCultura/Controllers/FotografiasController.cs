@@ -236,6 +236,40 @@ namespace GuardaCultura.Controllers
                 fotografia.Classificacao = 5.0f;
                 fotografia.N_Votos = 1;
 
+                string data = fotografia.Data_imagem;
+                int tamanho = data.Length;
+                char aux;
+                string datafinal = "";
+                int posicao = 1;
+                string ano = "";
+                string mes = "";
+                string dia = "";
+
+                for (int i = 0; i < tamanho; i++)//poe data no formato dd/mm/yyyy
+                {
+                    aux = data[i];
+
+                    if (aux == '-')
+                    {
+                        posicao++;
+                        datafinal += "/";
+                    }
+                    else
+                    {
+                        if (posicao == 1)
+                        {
+                            ano += aux;
+                        }else if (posicao == 2)
+                        {
+                            mes += aux;
+                        }else{
+                            dia += aux;
+                        }
+                    }
+                }
+                datafinal = dia + "/" + mes + "/" + ano;
+                fotografia.Data_imagem = datafinal;
+
                 _context.Add(fotografia);
                 await _context.SaveChangesAsync();
 

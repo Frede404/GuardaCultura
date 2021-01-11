@@ -62,7 +62,7 @@ function CorrigeEspacos(elemento) {
     for (i = 0; i < tamanho; i++) {
         if (texto.charAt(i) == " ") {
             espacos++;
-            if (espacos == 1 && i != 0) {
+            if (espacos == 1 && i != 0) {//so insere se for o primeiro espaco
                 auxtamanho++;
                 auxtexto += " ";
             }
@@ -72,7 +72,7 @@ function CorrigeEspacos(elemento) {
             espacos=0;
         }
     }
-    if (auxtexto.charAt(auxtamanho-1) == " ") {
+    if (auxtexto.charAt(auxtamanho-1) == " ") {//retira o espaco que possa ter no final
         auxtexto = auxtexto.slice(0, -1);
     }
     elemento.value = auxtexto;
@@ -85,7 +85,7 @@ function ApagaEspacos(elemento) {
 
     for (i = 0; i < tamanho; i++) {
         if (texto.charAt(i) != " ") {
-            auxtexto += texto.charAt(i);
+            auxtexto += texto.charAt(i);//se for diferente de espaco insere na string
         }
     }
     elemento.value = auxtexto;
@@ -107,6 +107,6 @@ function DataMaxima(elemento) {
 
     hoje = ano + '-' + mes + '-' + dia;
     diaerro = dia + "/" + mes + "/" + ano;
-    elemento.setAttribute("max", hoje);
-    elemento.setAttribute("title", "Introduza uma data igual ou inferior a "+diaerro)
+    elemento.setAttribute("max", hoje);//altera a data maxima que pode inserir
+    elemento.setAttribute("title", "Introduza uma data igual ou inferior a "+diaerro)//mensagem de erro
 }

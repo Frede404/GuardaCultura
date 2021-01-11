@@ -92,6 +92,7 @@
 			<tbody>
 				@foreach (var item in Model.Fotografias)
 				{
+					var data = item.Data_imagem;
 				<tr>
 					<td>
 						@Html.DisplayFor(modelItem => item.Nome)
