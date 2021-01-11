@@ -16,7 +16,5 @@ namespace GuardaCultura.Models
         public string ordenacao { get; set; }
 
         public int direcaoordena { get; set; }
-
-        public int MyProperty { get; set; }
     }
 }

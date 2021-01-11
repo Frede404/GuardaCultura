@@ -23,16 +23,16 @@
 					   <div class="form-group field half">
 						<label asp-for="direcaoordena">Ordem: </label>
 						<select asp-for="direcaoordena">
-							<option value="1">Ascendente</option>
-							<option value="2">Descendente</option>
+							<option value="1" selected="@(Model.direcaoordena == 1 ? "selected" : null)">Ascendente</option>
+							<option value="2" selected="@(Model.direcaoordena == 2 ? "selected" : null)">Descendente</option>
 						</select>
 					</div>
 					<div class="form-group field half">
 						<label asp-for="aprovacao">Mostrar: </label>
 						<select asp-for="aprovacao">
-							<option value="1">Todas</option>
-							<option value="2">Aprovados</option>
-							<option value="3">Não Aprovados</option>
+							<option value="1" selected="@(Model.aprovacao == 1 ? "selected" : null)">Todas</option>
+							<option value="2" selected="@(Model.aprovacao == 2 ? "selected" : null)">Aprovados</option>
+							<option value="3" selected="@(Model.aprovacao == 3 ? "selected" : null)">Não Aprovados</option>
 						</select>
 						<br><br>
 					</div>
@@ -195,11 +195,11 @@
 					{
 						if (Model.pagination.CurrentPage == 1)
 						{
-							<li class="page-item"><a class="page-link active" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="1">1</a></li>
+							<li class="page-item"><a class="page-link active" asp-action="Index" asp-route-ordenacao="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="1">1</a></li>
 						}
 						else
 						{
-							<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="1">1</a></li>
+							<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenacao="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="1">1</a></li>
 						}
 
 						int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
@@ -223,17 +223,17 @@
 							}
 							else
 							{
-								<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@p">@p</a></li>
+								<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenacao="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@p">@p</a></li>
 							}
 						}
 
 						if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
 						{
-							<li class="page-item"><a class="page-link active" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+							<li class="page-item"><a class="page-link active" asp-action="Index" asp-route-ordenacao="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
 						}
 						else
 						{
-							<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenar="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+							<li class="page-item"><a class="page-link" asp-action="Index" asp-route-ordenacao="0" asp-route-direcaoordena="0" asp-route-aprovacao="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
 						}
 					}
 				}
