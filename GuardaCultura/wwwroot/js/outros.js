@@ -50,3 +50,63 @@ function checkMiradouroFunction() {
         text.checked = false;
     }
 }
+
+function CorrigeEspacos(elemento) {
+    var texto = elemento.value;
+    var tamanho = texto.length;
+
+    var auxtamanho = 0;
+    var espacos = 0;
+    var auxtexto = "";
+
+    for (i = 0; i < tamanho; i++) {
+        if (texto.charAt(i) == " ") {
+            espacos++;
+            if (espacos == 1 && i != 0) {
+                auxtamanho++;
+                auxtexto += " ";
+            }
+        } else {
+            auxtamanho++;
+            auxtexto += texto.charAt(i);
+            espacos=0;
+        }
+    }
+    if (auxtexto.charAt(auxtamanho-1) == " ") {
+        auxtexto = auxtexto.slice(0, -1);
+    }
+    elemento.value = auxtexto;
+}
+
+function ApagaEspacos(elemento) {
+    var texto = elemento.value;
+    var tamanho = texto.length;
+    var auxtexto = "";
+
+    for (i = 0; i < tamanho; i++) {
+        if (texto.charAt(i) != " ") {
+            auxtexto += texto.charAt(i);
+        }
+    }
+    elemento.value = auxtexto;
+}
+
+function DataMaxima(elemento) {
+    var hoje = new Date();
+    var dia = hoje.getDate();
+    var mes = hoje.getMonth() + 1;
+    var ano = hoje.getFullYear();
+    var diaerro;
+
+    if (dia < 10) {
+        dia = '0' + dia
+    }
+    if (mes < 10) {
+        mes = '0' + mes
+    }
+
+    hoje = ano + '-' + mes + '-' + dia;
+    diaerro = dia + "/" + mes + "/" + ano;
+    elemento.setAttribute("max", hoje);
+    elemento.setAttribute("title", "Introduza uma data igual ou inferior a "+diaerro)
+}

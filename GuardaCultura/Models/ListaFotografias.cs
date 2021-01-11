@@ -13,10 +13,8 @@ namespace GuardaCultura.Models
 
         public int aprovacao { get; set; }
 
-        public string ordenar { get; set; }
+        public string ordenacao { get; set; }
 
         public int direcaoordena { get; set; }
-
-        public int MyProperty { get; set; }
     }
 }
