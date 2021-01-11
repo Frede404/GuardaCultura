@@ -10,7 +10,7 @@
             <form>
                 <div class="fields">
                     <div class="form-group field half">
-                        <label for="e_miradouro">Tipo: </label>
+                        <label asp-for="e_miradouro">Tipo: </label>
                         <select asp-for="e_miradouro">
                             <option value="2">Miradouros</option>
                             <option value="3">Paisagens</option>
@@ -49,10 +49,10 @@
                         @*Localização
                             @Html.DisplayNameFor(model => model.Localizacao)*@
                     </th>
-                    <th>
-                        Coordenadas GPS
+                    @*<th>
+                        Coordenadas GPS*@
                         @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
-                    </th>
+                    @*</th>*@
                     <th>
                         @*@Html.DisplayNameFor(model => model.Terreno)*@
                         Terreno
@@ -85,9 +85,10 @@
                         <td>
                             @*@Html.DisplayFor(modelItem => item.Localizacao)*@
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Coordenadas_gps)
-                        </td>
+                        @*<td>*@
+                            @*@Html.DisplayFor(modelItem => item.Latitude_DD+","+ item.Longitude_DD)*@
+                            @*@Html.Encode(item.Longitude_DD+","+item.Latitude_DD)
+                        </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.Terreno)
                         </td>

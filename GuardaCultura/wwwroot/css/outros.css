@@ -23,6 +23,7 @@
 		transform: scale(1)
 	}
 }
+
 .alinhaBotaoEsquerda {
 	text-align: left;
 }
@@ -31,6 +32,7 @@
 	background-color: #eee;
 	border-bottom: 1px solid black;
 }
+
 #tabelaconfig td {
 	border-bottom: 1px solid black;
 }
@@ -38,6 +40,7 @@
 .textoErro{
 	color:red;
 }
+
 input:checked+#divCheckBox{
 	display:none;
 }
@@ -104,4 +107,16 @@ input:checked+#divCheckBox{
 
 .dropdown:hover .dropdown-content {
 	display: block;
+}
+
+input.linha {
+	display: inline;
+}
+
+textarea {
+	resize: vertical;
+}
+
+.showcoord {
+	display: none;
 }

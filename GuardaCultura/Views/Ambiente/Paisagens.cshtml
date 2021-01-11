@@ -78,10 +78,12 @@
 									</p>
                                     <p>
                                         @{
-                                            string link = "https://www.google.pt/maps/place/" + paisagem.Coordenadas_gps;
+                                            string linkDD = "https://www.google.pt/maps/place/" + paisagem.Coordenadas_DD;
+                                            string linkDMS = "https://www.google.pt/maps/place/" + paisagem.Coordenadas_DMS;
                                         }
                                         Coordenadas GPS:
-                                        <a href=@link target="_blank">@paisagem.Coordenadas_gps</a>
+                                        <a href=@linkDD target="_blank">@paisagem.Coordenadas_DD</a>
+                                        <a href=@linkDMS target="_blank">@paisagem.Coordenadas_DMS</a>
                                     </p>
 									<p>
 										Terreno:

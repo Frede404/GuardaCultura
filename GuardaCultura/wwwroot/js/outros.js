@@ -50,3 +50,16 @@ function checkMiradouroFunction() {
         text.checked = false;
     }
 }
+
+function CoordenadasFunction(elemento) {
+    var tipo = elemento.value;
+
+    if (tipo == "DD") {
+        document.getElementById("coorddd").classList.remove('showcoord')
+        document.getElementById("coorddms").classList.add('showcoord')
+    }
+    if (tipo == "DMS") {
+        document.getElementById("coorddms").classList.remove('showcoord')
+        document.getElementById("coorddd").classList.add('showcoord')
+    }
+}

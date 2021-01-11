@@ -29,7 +29,11 @@
                             @*@Html.DisplayNameFor(model => model.Localizacao)*@
                         </th>
                         <th class="col-sm-2">
-                            Coordenadas GPS
+                            Coordenadas GPS DD
+                            @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
+                        </th>
+                        <th class="col-sm-2">
+                            Coordenadas GPS DMS
                             @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
                         </th>
                         <th class="col-sm-2">
@@ -37,7 +41,7 @@
                         </th>
                         <th class="col-sm-2">
                             @*É miradouro
-                                @Html.DisplayNameFor(model => model.E_Miradouro)*@
+                            @Html.DisplayNameFor(model => model.E_Miradouro)*@
                         </th>
                         <th class="col-sm-2">
                             Ocupação maxima
@@ -54,7 +58,13 @@
                             @Html.DisplayFor(model => model.Localizacao)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => model.Coordenadas_gps)
+                            @*@Html.DisplayFor(model => model.Coordenadas_gps)*@
+                            @*@Html.Encode(Model.Latitude_DD + "," + Model.Longitude_DD)*@
+                            @Html.DisplayFor(model => model.Latitude_DD), @Html.DisplayFor(model => model.Longitude_DD) 
+                        </td>
+                        <td>
+                            @*@Html.Encode(Model.Latitude_DMS + "," + Model.Longitude_DMS)*@
+                            @Html.DisplayFor(model => model.Latitude_DMS) @Html.DisplayFor(model => model.Longitude_DMS)
                         </td>
                         <td>
                             @Html.DisplayFor(model => model.Terreno)

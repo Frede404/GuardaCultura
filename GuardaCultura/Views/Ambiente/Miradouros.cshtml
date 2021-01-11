@@ -91,10 +91,12 @@
                                     </p>
                                     <p>
                                         @{
-                                            string link = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_gps;
+                                            string linkDD = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_DD;
+                                            string linkDMS = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_DMS;
                                         }
                                         Coordenadas GPS:
-                                        <a href=@link target="_blank">@miradouro.Coordenadas_gps</a>
+                                        <a href=@linkDD target="_blank">@miradouro.Coordenadas_DD</a>
+                                        <a href=@linkDMS target="_blank">@miradouro.Coordenadas_DMS</a>
                                     </p>
                                     <p>
                                         Terreno:
