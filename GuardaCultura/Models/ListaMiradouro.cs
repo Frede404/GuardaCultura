@@ -30,5 +30,9 @@ namespace GuardaCultura.Models
         public float segundosLong { get; set; }
 
         public char DirWE { get; set; }
+
+        public double latiDD { get; set; }
+        
+        public double longDD { get; set; }
     }
 }

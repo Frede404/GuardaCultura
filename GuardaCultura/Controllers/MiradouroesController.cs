@@ -210,49 +210,68 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MiradouroId,Nome,Localizacao,Latitude_DD,Longitude_DD,Latitude_DMS,Longitude_DMS,Terreno,E_Miradouro,Condicoes,Ocupacao_maxima,Descricao")] Miradouro miradouro, int grausLat, float minutoLat, float segundosLat, char DirNS, int grausLong, float minutosLong, float segundosLong, char DirWE, string Coordenadas)//serve para evitar alguns ataques, só recebe campos que estejam no Bind
+        public async Task<IActionResult> Create([Bind("MiradouroId,Nome,Localizacao,Latitude_DD,Longitude_DD,Latitude_DMS,Longitude_DMS,Terreno,E_Miradouro,Condicoes,Ocupacao_maxima,Descricao")] Miradouro miradouro,
+                                                        int grausLat, float minutoLat, float segundosLat, char DirNS, int grausLong, float minutosLong, float segundosLong, char DirWE, string Coordenadas, double latiDD, double longDD )//serve para evitar alguns ataques, só recebe campos que estejam no Bind
         {
+
             
             if (Coordenadas == "DMS")
-            {
-
-                //miradouro.Latitude_DMS = "" + grausLat + "º" + minutoLat + "\"" + segundosLat + "" + DirNS;
-                //miradouro.Longitude_DMS = "" + grausLong + "º" + minutosLong + "'" + segundosLong + "''" + DirWE;
-                //miradouro.Latitude_DD = "" + grausLat + minutoLat + segundosLat;
-                //miradouro.Longitude_DD = "" +grausLong + minutosLong + segundosLong;
-                
-                //S= - W = - nas dd
-                
+            {   
                 miradouro.Latitude_DMS = string.Concat(grausLat, "º", minutoLat ,"'", segundosLat ,"''", DirNS);
                 miradouro.Longitude_DMS = string.Concat(grausLong, "º", minutosLong, "'", segundosLong, "''", DirWE);
+                
+                //latitude DD
+                int grausLatitude = (int) grausLat;
+                int minutosLatitude = (int) minutoLat;
+                float segundosLatitude = (float) segundosLat;
+                double LatDD = grausLatitude + (minutosLatitude / 60) + (segundosLatitude / 3600);
+                if (DirNS == 'S')
+                {
+                    LatDD = LatDD * -1;
 
-                if (DirNS.Equals("S") && DirWE.Equals("E"))
-                {
-                    miradouro.Latitude_DD = "-" + grausLat + minutoLat + segundosLat;
-                    //miradouro.Latitude_DD = string.Concat("-", grausLat, ".", minutoLat, segundosLat);
-                    miradouro.Longitude_DD = string.Concat(grausLong, ".", minutosLong, segundosLong);
+                    LatDD = Math.Round(LatDD, 6);
+                    
                 }
-                else if (DirWE.Equals("S") && DirWE.Equals("W"))
+                miradouro.Latitude_DD = "" + LatDD;
+                
+                //longitude DD
+                int grausLongitude = (int)grausLong;
+                int minutosLongitude = (int)minutosLong;
+                float segundosLongitude = (float)segundosLong;
+                double LongDD = grausLongitude + (minutosLongitude / 60) + (segundosLongitude / 3600);
+                if (DirWE == 'W')
                 {
-                    miradouro.Longitude_DD = string.Concat("-", grausLong, ".", minutosLong, segundosLong);
-                    miradouro.Latitude_DD = string.Concat("-", grausLat, ".", minutoLat, segundosLat);
+                    LongDD = LongDD * -1;
+                    LongDD = Math.Round(LongDD, 6);
                 }
-                else if (DirNS.Equals("N") && DirWE.Equals("W"))
+                miradouro.Longitude_DD = "" + LongDD;
+                 
+            }
+
+            
+            if (Coordenadas == "DD")
+            {
+                double latDoubleDMS = (double)latiDD;
+                int grausFinalDMS = (int) Math.Truncate(latiDD);
+                //float auxminutos = (latDoubleDMS - grausFinalDMS) * 60);
+                int minutosFinalDMS = (int) Math.Truncate((latDoubleDMS - grausFinalDMS) * 60);
+                float segundosFinalDMS = (float) ((latDoubleDMS - grausFinalDMS )* 60)  % 100;
+                //segundosFinalDMS = (float)Math.Truncate((latDoubleDMS - grausFinalDMS * 60) - minutosFinalDMS);
+                char dirNS;
+                if(latDoubleDMS < 0)
                 {
-                    miradouro.Latitude_DD = string.Concat(grausLat, ".", minutoLat, segundosLat);
-                    miradouro.Longitude_DD = string.Concat("-", grausLong, ".", minutosLong, segundosLong);
+                    dirNS = 'S';
                 }
                 else
                 {
-                    miradouro.Latitude_DD = string.Concat(grausLat, ".", minutoLat, segundosLat);
-                    miradouro.Longitude_DD = string.Concat(grausLong, ".", minutosLong, segundosLong);
+                    dirNS = 'N';
                 }
-                
+                miradouro.Latitude_DMS = "" + grausFinalDMS + "º" + minutosFinalDMS + "'" + segundosFinalDMS + "''" + dirNS;
 
-                //converteDMS();
-            }
-            if (Coordenadas == "DD")
-            {
+
+                double longDMS = (double) longDD;
+
+
                 //converteDD();
             }
 
@@ -272,8 +291,11 @@ namespace GuardaCultura.Controllers
                 await _context.SaveChangesAsync();
 
                 // todo: informar o utilizador, miradouro criado com sucesso
+                ViewData["sucess"] = "Miradouro criado com sucesso.";
                 return RedirectToAction(nameof(Index));
+                
             }
+            //ViewData["error"] = "Falha ao criar o miradouro!";
             return View(miradouro);
         }
 
