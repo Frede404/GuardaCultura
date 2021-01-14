@@ -110,3 +110,37 @@ function DataMaxima(elemento) {
     elemento.setAttribute("max", hoje);//altera a data maxima que pode inserir
     elemento.setAttribute("title", "Introduza uma data igual ou inferior a "+diaerro)//mensagem de erro
 }
+
+function CorrigeCoordenadasDD(elemento) {
+    var coordenadas = elemento.value;
+    var tamanho = coordenadas.length;
+    
+    var auxtamanho = 0;
+    var ponto = 0;
+    var auxcoordenadas = "";
+    var auxdigito = '';
+
+    for (i = 0; i < tamanho; i++) {
+        if (i == 0 && coordenadas.charAt(i) == "-") {
+            auxcoordenadas += coordenadas.charAt(i);
+        } else {
+            if (coordenadas.charAt(i) != " ") {
+                if ((coordenadas.charAt(i) == "." || coordenadas.charAt(i) == ",") && auxtamanho != 0) {
+                    ponto++;
+                    if (ponto == 1) {
+                        auxtamanho++;
+                        auxcoordenadas += ",";
+                    }
+                } else {
+                    auxdigito = coordenadas.charAt(i);
+                    if (auxdigito >= 0 && auxdigito <= 9) {
+                        auxtamanho++;
+                        auxcoordenadas += auxdigito;//coordenadas.charAt(i);
+                    }
+                }
+            }
+        }
+    }
+    
+    elemento.value = auxcoordenadas;
+}
