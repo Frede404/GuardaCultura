@@ -29,9 +29,29 @@ namespace GuardaCultura//linha 69 apagar
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));// BDContextUsers
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    Configuration.GetConnectionString("GuardaCulturaUserConnection")));// BDContextUsers
+            //vai ser usado esta autorizacao  identityrole(opcoes)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                //sig in
+                options.SignIn.RequireConfirmedAccount = true;
+
+                //password
+                options.Password.RequireDigit = true;//requer numeros
+                options.Password.RequireLowercase = true;//requer letras minusculas
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 6;//6caracteres tem de ser diferentes uns dos outros
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;//requer letras maiusculas
+
+                //lockout
+                options.Lockout.AllowedForNewUsers = true;//bloquiar a conta
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);//bloquiar por 30min//aqui
+                options.Lockout.MaxFailedAccessAttempts = 5;//maximo de tentativas para bloquiar
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI();//interface
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -40,7 +60,10 @@ namespace GuardaCultura//linha 69 apagar
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            GuardaCulturaContext dbContext,
+            UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -72,11 +95,14 @@ namespace GuardaCultura//linha 69 apagar
             endpoints.MapRazorPages();
             });
 
+            SeedData.SeedRolesAsync(roleManager).Wait();
+            SeedData.SeedDefaultAdminAsync(userManager).Wait();//cria sempre
+
             if (env.IsDevelopment())//ver se está em desenvolvimento
             {
                 using (var serviceScope = app.ApplicationServices.CreateScope())//cria uma area de acesso a servicos
                 {
-                    var dbContext = serviceScope.ServiceProvider.GetService<GuardaCulturaContext>();
+                    //var dbContext = serviceScope.ServiceProvider.GetService<GuardaCulturaContext>();
                     SeedData.Populate(dbContext);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using GuardaCultura.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -482,6 +483,51 @@ namespace GuardaCultura.Data
                 {
                     Miradoruro_ID = 0;
                 }
+            }
+        }
+
+        //Update-Database -Context ApplicationDbContext
+        private const string DEFAULT_ADMIN_USER = "admin@ipg.pt";
+        private const string DEFAULT_ADMIN_PASS = "Secret123$";
+        private const string ROLE_ADMIN = "Administrador";
+        private const string ROLE_CONTROLADOR = "Controlador";
+        private const string ROLE_TURISTA = "Turista";
+     
+        internal static async Task SeedDefaultAdminAsync(UserManager<IdentityUser> userManager)
+        {
+            await EnsureUserIsCreated(userManager, DEFAULT_ADMIN_USER, DEFAULT_ADMIN_PASS, ROLE_ADMIN);
+        }
+
+        //verifica se utilizador foi criado
+        private static async Task EnsureUserIsCreated(UserManager<IdentityUser> userManager, string username, string password, string role)
+        {
+            IdentityUser user = await userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                user = new IdentityUser(username);
+                await userManager.CreateAsync(user, password);
+            }
+
+            if (!await userManager.IsInRoleAsync(user, role))
+            {
+                await userManager.AddToRoleAsync(user, role);
+            }
+        }
+
+        internal static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        {
+            await EnsureRoleIsCreated(roleManager, ROLE_ADMIN);
+            await EnsureRoleIsCreated(roleManager, ROLE_CONTROLADOR);
+            await EnsureRoleIsCreated(roleManager, ROLE_TURISTA);
+        }
+        
+        //verifica se o role foi criado
+        private static async Task EnsureRoleIsCreated(RoleManager<IdentityRole> roleManager, string role)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
             }
         }
     }

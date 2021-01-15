@@ -30,7 +30,6 @@ namespace GuardaCultura.Controllers
         // GET: Fotografias
         public async Task<IActionResult> Index(int page = 1, string ordenacao = "FotografiaId", int direcaoordena=1, int aprovacao=1)
         {
-            int teste = 0;
             if (page == 0)
             {
                 page = auxpage;
