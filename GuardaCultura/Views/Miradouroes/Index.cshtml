@@ -37,7 +37,6 @@
         <p class="alinhaBotaoEsquerda">
             <a asp-action="Create" class="button btn-primary">Novo</a>
         </p>
-
         <table class="table" id="tabelaconfig">
             <thead>
                 <tr>
@@ -160,6 +159,17 @@
                                                 <b style="color: red">Miradouro</b>
                                             }
                                         </h1>
+                                        <br />
+                                        <label style="color:red; font-weight: bold">Nome</label>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                        <br />
+                                        <br />
+                                        <label style="color:red; font-weight: bold">Localização</label>
+                                        @Html.DisplayFor(modelItem => item.Localizacao)
+                                        <br />
+                                        <br />
+                                        <label style="color:red; font-weight: bold">Terreno</label>
+                                        @Html.DisplayFor(modelItem => item.Terreno)
                                         <br />
                                         <div style="margin:20px">
                                             @if (!item.Ativo)

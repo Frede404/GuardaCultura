@@ -18,7 +18,7 @@
 	<body>
 		<div class="row centrado">
 			@{
-				int i = 0;//ver
+				
 				int contagem = 0;
 				int contamipaisagem = 0;
 				@foreach (var paisagem in Model.MiradouroPaisagem)
@@ -71,37 +71,41 @@
 									</div>
 								</div>
 
-								<div class="descricaoimg">
-									<p>
-										Localização:
-										@Html.DisplayFor(modelItem => paisagem.Localizacao)
-									</p>
+                                <div class="descricaoimg">
+                                    <p>
+                                        Localização:
+                                        @Html.DisplayFor(modelItem => paisagem.Localizacao)
+                                    </p>
                                     <p>
                                         @{
                                             string linkDD = "https://www.google.pt/maps/place/" + paisagem.Coordenadas_DD;
                                             string linkDMS = "https://www.google.pt/maps/place/" + paisagem.Coordenadas_DMS;
                                         }
-                                        Coordenadas GPS:
+                                        Coordenadas GPS (DD):
                                         <a href=@linkDD target="_blank">@paisagem.Coordenadas_DD</a>
+                                        <br />
+                                        Coordenadas GPS (DMS):
                                         <a href=@linkDMS target="_blank">@paisagem.Coordenadas_DMS</a>
                                     </p>
-									<p>
-										Terreno:
-										@Html.DisplayFor(modelItem => paisagem.Terreno)
-									</p>
-									<p>
-										Condições:
-										@Html.DisplayFor(modelItem => paisagem.Condicoes)
-									</p>
-									<p>
-										Ocupação maxima:
-										@Html.DisplayFor(modelItem => paisagem.Ocupacao_maxima)
-									</p>
-									<p>
-										Descrição:
-										@Html.DisplayFor(modelItem => paisagem.Descricao)
-									</p>
-								</div>
+                                    <p>
+                                        Terreno:
+                                        @Html.DisplayFor(modelItem => paisagem.Terreno)
+                                    </p>
+                                    @if (paisagem.Condicoes != null)
+                                    {
+                                        <p>
+                                            Condições:
+                                            @Html.DisplayFor(modelItem => paisagem.Condicoes)
+                                        </p>
+                                    }
+                                    @if (paisagem.Condicoes != null)
+                                    {
+                                        <p>
+                                            Descrição:
+                                            @Html.DisplayFor(modelItem => paisagem.Descricao)
+                                        </p>
+                                    }
+                                </div>
 							</form>
 						</div>
 					</div>

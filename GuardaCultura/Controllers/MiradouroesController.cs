@@ -214,7 +214,6 @@ namespace GuardaCultura.Controllers
                                                         int grausLat, float minutoLat, float segundosLat, char DirNS, int grausLong, float minutosLong, float segundosLong, char DirWE, string Coordenadas, double latiDD, double longDD )//serve para evitar alguns ataques, só recebe campos que estejam no Bind
         {
 
-            
             if (Coordenadas == "DMS")
             {   
                 miradouro.Latitude_DMS = string.Concat(grausLat, "º", minutoLat ,"'", segundosLat ,"''", DirNS);
@@ -247,32 +246,54 @@ namespace GuardaCultura.Controllers
                 miradouro.Longitude_DD = "" + LongDD;
                  
             }
-
             
             if (Coordenadas == "DD")
             {
-                double latDoubleDMS = (double)latiDD;
-                int grausFinalDMS = (int) Math.Truncate(latiDD);
-                //float auxminutos = (latDoubleDMS - grausFinalDMS) * 60);
-                int minutosFinalDMS = (int) Math.Truncate((latDoubleDMS - grausFinalDMS) * 60);
-                float segundosFinalDMS = (float) ((latDoubleDMS - grausFinalDMS )* 60)  % 100;
-                //segundosFinalDMS = (float)Math.Truncate((latDoubleDMS - grausFinalDMS * 60) - minutosFinalDMS);
+                miradouro.Latitude_DD = "" + latiDD;
+                miradouro.Longitude_DD = "" + longDD;
+
+                double latDoubleDMS = (double) latiDD;
                 char dirNS;
-                if(latDoubleDMS < 0)
+
+                if (latDoubleDMS < 0)
                 {
+                    latDoubleDMS = latDoubleDMS * -1;
                     dirNS = 'S';
                 }
                 else
                 {
                     dirNS = 'N';
                 }
-                miradouro.Latitude_DMS = "" + grausFinalDMS + "º" + minutosFinalDMS + "'" + segundosFinalDMS + "''" + dirNS;
+                
+                int grausFinaLatlDMS = (int)latDoubleDMS;
+                float auxminutosLat = (float) ((latDoubleDMS - grausFinaLatlDMS) * 60);
+                int minutosFinalLatDMS = (int) auxminutosLat;
+                float auxsegundosLat = (float) ((auxminutosLat - minutosFinalLatDMS) * 60);
+                float segundosFinalLatDMS = (float) Math.Round(auxsegundosLat, 3);
+                 
+                miradouro.Latitude_DMS = "" + grausFinaLatlDMS + "º" + minutosFinalLatDMS + "'" + segundosFinalLatDMS + "''" + dirNS;
 
+                double longDoubleDMS = (double) longDD;
+                char dirWE;
 
-                double longDMS = (double) longDD;
+                if (longDoubleDMS < 0)
+                {
+                    longDoubleDMS = longDoubleDMS * -1;
+                    dirWE = 'W';
+                }
+                else
+                {
+                    dirWE = 'E';
+                }
+                
+                int grausFinalLongDMS = (int) longDoubleDMS;
+                float auxminutosLong = (float) ((longDoubleDMS - grausFinalLongDMS) * 60);
+                int minutosFinalLongDMS = (int)auxminutosLong;
+                float auxsegundosLong = (float)((auxminutosLong - minutosFinalLongDMS) * 60);
+                float segundosFinalLongDMS = (float)Math.Round(auxminutosLong, 3);
 
+                miradouro.Longitude_DMS = "" + grausFinalLongDMS + "º" + minutosFinalLongDMS + "'" + segundosFinalLongDMS + "''" + dirWE;
 
-                //converteDD();
             }
 
             if (ModelState.IsValid)
@@ -291,7 +312,7 @@ namespace GuardaCultura.Controllers
                 await _context.SaveChangesAsync();
 
                 // todo: informar o utilizador, miradouro criado com sucesso
-                ViewData["sucess"] = "Miradouro criado com sucesso.";
+                //ViewData["sucess"] = "Miradouro criado com sucesso.";
                 return RedirectToAction(nameof(Index));
                 
             }
