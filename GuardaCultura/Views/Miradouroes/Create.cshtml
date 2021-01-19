@@ -164,10 +164,14 @@
                                 @*<input asp-for="Terreno" class="form-control" />*@
                             </div>
                         </div>
-                        <div class="form-group field half" id="corddd">
+                        <div class="form-group field half">
                             <label asp-for="Terreno" class="control-label"></label>
-                            <input asp-for="Terreno" class="form-control" />
-                            <span asp-validation-for="Terreno" class="textoErro"></span>@*validacao de campo*@
+                            <select name="Terreno">
+                                <option value="Cidade">Cidade</option>
+                                <option value="Campo">Campo</option>
+                                <option value="Montanha">Montanha</option>
+                            </select>
+                            @*<span asp-validation-for="Terreno" class="textoErro"></span>*@
                         </div>
                         <div class="form-group form-check field half campoBox">
                             @*<label>E_Miradouro</label>
