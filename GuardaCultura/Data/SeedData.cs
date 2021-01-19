@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 /*Instrucoes
  * drop-database -Context GuardaCulturaContext
  * update-database -Context GuardaCulturaContext
+ * 
+ * UTILIZADORES
+ * drop-Database -Context ApplicationDbContext
+ * Update-Database -Context ApplicationDbContext
 */
 
 namespace GuardaCultura.Data
@@ -175,7 +179,7 @@ namespace GuardaCultura.Data
                 },
                 new TipoImagem
                 {
-                    Descricao = "Paisagem"
+                    Descricao = "Campo"
                 },
                 new TipoImagem
                 {
@@ -358,7 +362,7 @@ namespace GuardaCultura.Data
             PopulateFotografias(dbContext, false);
         }
 
-        private static async void PopulateFotografias(GuardaCulturaContext dbContext, bool fonte)
+        private static void PopulateFotografias(GuardaCulturaContext dbContext, bool fonte)
         {
             if (fonte)
             {
@@ -406,10 +410,10 @@ namespace GuardaCultura.Data
                 int Tipo_ID = rnd.Next(1, 4);
                 int Pessoa_ID = rnd.Next(1, 4);
                 //int foto_nome = rnd.Next(1, 20);
-                int foto_nome= rnd.Next(50, 61);
-                float classificacao = (float) rnd.Next(0, 1001)/100;
+                int foto_nome = rnd.Next(50, 61);
+                float classificacao = (float)rnd.Next(0, 1001) / 100;
                 int n_votos = rnd.Next(2, 101);
-                byte[] fotogafia= File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
+                byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
 
                 if (Pessoa_ID == 2)
                 {
@@ -479,27 +483,29 @@ namespace GuardaCultura.Data
                 }
                 //ver no inicio da janela as instrucoes
                 dbContext.SaveChanges();//so fica valido se salvarmos
-                if (Miradoruro_ID==qntdmiradouro)
+                if (Miradoruro_ID == qntdmiradouro)
                 {
                     Miradoruro_ID = 0;
                 }
             }
         }
 
+        //utilizadores
+
         //Update-Database -Context ApplicationDbContext
         private const string DEFAULT_ADMIN_USER = "admin@ipg.pt";
-        private const string DEFAULT_ADMIN_PASS = "Secret123$";
+        private const string DEFAULT_ADMIN_PASS = "Admin123!";
         private const string ROLE_ADMIN = "Administrador";
         private const string ROLE_CONTROLADOR = "Controlador";
         private const string ROLE_TURISTA = "Turista";
      
         internal static async Task SeedDefaultAdminAsync(UserManager<IdentityUser> userManager)
         {
-            await EnsureUserIsCreated(userManager, DEFAULT_ADMIN_USER, DEFAULT_ADMIN_PASS, ROLE_ADMIN);
+            await CriarUtilizador(userManager, DEFAULT_ADMIN_USER, DEFAULT_ADMIN_PASS, ROLE_ADMIN);
         }
 
         //verifica se utilizador foi criado
-        private static async Task EnsureUserIsCreated(UserManager<IdentityUser> userManager, string username, string password, string role)
+        private static async Task CriarUtilizador(UserManager<IdentityUser> userManager, string username, string password, string role)
         {
             IdentityUser user = await userManager.FindByNameAsync(username);
 
@@ -508,7 +514,7 @@ namespace GuardaCultura.Data
                 user = new IdentityUser(username);
                 await userManager.CreateAsync(user, password);
             }
-
+            
             if (!await userManager.IsInRoleAsync(user, role))
             {
                 await userManager.AddToRoleAsync(user, role);
@@ -517,13 +523,13 @@ namespace GuardaCultura.Data
 
         internal static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
         {
-            await EnsureRoleIsCreated(roleManager, ROLE_ADMIN);
-            await EnsureRoleIsCreated(roleManager, ROLE_CONTROLADOR);
-            await EnsureRoleIsCreated(roleManager, ROLE_TURISTA);
+            await CriarRole(roleManager, ROLE_ADMIN);
+            await CriarRole(roleManager, ROLE_CONTROLADOR);
+            await CriarRole(roleManager, ROLE_TURISTA);
         }
         
         //verifica se o role foi criado
-        private static async Task EnsureRoleIsCreated(RoleManager<IdentityRole> roleManager, string role)
+        private static async Task CriarRole(RoleManager<IdentityRole> roleManager, string role)
         {
             if (!await roleManager.RoleExistsAsync(role))
             {

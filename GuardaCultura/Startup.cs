@@ -30,24 +30,28 @@ namespace GuardaCultura//linha 69 apagar
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("GuardaCulturaUserConnection")));// BDContextUsers
+            
             //vai ser usado esta autorizacao  identityrole(opcoes)
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 //sig in
                 options.SignIn.RequireConfirmedAccount = true;
 
                 //password
-                options.Password.RequireDigit = true;//requer numeros
+                //options.Password.RequireDigit = true;//requer numeros
                 options.Password.RequireLowercase = true;//requer letras minusculas
-                options.Password.RequiredLength = 8;
+                /*options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 6;//6caracteres tem de ser diferentes uns dos outros
                 options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;//requer letras maiusculas
+                options.Password.RequireUppercase = true;//requer letras maiusculas*/
 
                 //lockout
                 options.Lockout.AllowedForNewUsers = true;//bloquiar a conta
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);//bloquiar por 30min//aqui
                 options.Lockout.MaxFailedAccessAttempts = 5;//maximo de tentativas para bloquiar
+
+                //Utilizador
+                //options.User.RequireUniqueEmail
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI();//interface
