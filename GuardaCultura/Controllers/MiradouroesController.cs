@@ -304,7 +304,6 @@ namespace GuardaCultura.Controllers
                 miradouro.Longitude_DMS = miradouro.Longitude_DMS.Replace(",", ".");
             }
 
-            miradouro.Disponibilidade = true;
             if (ModelState.IsValid)
             {
                 // todo: validacoes adicionais antes de inserir o miradouro
@@ -351,7 +350,7 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MiradouroId,Nome,Localizacao,Coordenadas_gps,Terreno,E_Miradouro,Condicoes,Ocupacao_maxima,Descricao")] Miradouro miradouro)
+        public async Task<IActionResult> Edit(int id, [Bind("MiradouroId,Nome,Localizacao,Terreno,E_Miradouro,Condicoes,Ocupacao_maxima,Descricao")] Miradouro miradouro)
         {
             if (id != miradouro.MiradouroId)
             {

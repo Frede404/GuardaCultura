@@ -46,7 +46,6 @@ namespace GuardaCultura.Models
         [Required]
         public bool Ativo { get; set; }
 
-        [Required]
         public bool Disponibilidade { get; set; }
 
         public ICollection<Atratividade> Atratividades { get; set; }
