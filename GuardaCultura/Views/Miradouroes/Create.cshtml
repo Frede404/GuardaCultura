@@ -166,15 +166,12 @@
                         </div>
                         <div class="form-group field half">
                             <label asp-for="Terreno" class="control-label"></label>
-
                             <select name="Terreno">
-
-                            <select asp-for="Terreno" class="form-control">
-
                                 <option value="Cidade">Cidade</option>
                                 <option value="Campo">Campo</option>
                                 <option value="Montanha">Montanha</option>
                             </select>
+                            @*<span asp-validation-for="Terreno" class="textoErro"></span>*@
                         </div>
                         <div class="form-group form-check field half campoBox">
                             @*<label>E_Miradouro</label>
