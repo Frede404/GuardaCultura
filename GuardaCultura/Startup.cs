@@ -35,7 +35,7 @@ namespace GuardaCultura//linha 69 apagar
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 //sig in
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = false;//requer autenticação
 
                 //password
                 //options.Password.RequireDigit = true;//requer numeros
@@ -108,6 +108,7 @@ namespace GuardaCultura//linha 69 apagar
                 {
                     //var dbContext = serviceScope.ServiceProvider.GetService<GuardaCulturaContext>();
                     SeedData.Populate(dbContext);
+
                 }
             }
         }

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GuardaCultura.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class OcupacaosController : Controller
     {
         private readonly GuardaCulturaContext _context;

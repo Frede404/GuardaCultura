@@ -27,71 +27,71 @@
                 </a>
             </h5>
             <nav id="nav">
-                <ul>
-                    <li class="submenu">
-                        <a href="#" class="fas dropdown"> Ambiente</a>
-                        <ul>
-                            <li>
-                                <a asp-controller="Ambiente" asp-action="QualidadeAr">Qualidade do ar</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Ambiente" asp-action="Paisagens">Paisagens Naturais</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Ambiente" asp-action="Miradouros">Miradouros</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a class="fas" asp-controller="Fotografias" asp-action="Create"> Capital da Cultura</a></li>
-                    <li class="submenu">
-                        <a href="#" class="fas fa-angle-down"> Conhecer a cidade</a>
-                        <ul>
-                            <li><a href="#">História</a></li>
-                            <li><a href="#">Património</a></li>
-                            <li><a href="#">Torismo</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </li>
-                    @*<li><a href="#" class="button primary">Registar</a></li>*@
-                    <li><button class="primary" onclick="document.getElementById('LoginModal').style.display='block'; inicio('BLogGeral')" style="width:auto;">Login</button></li>
-                    <li>
-                        <select style="background-color:transparent">
-                            <option value="PT">PT</option>
-                            <option value="ENG">ENG</option>
-                            <option value="TR">TR</option>
-                        </select>
-                    </li>
-                </ul>
+				<ul>
+					<li class="submenu">
+						<a href="#" class="fas dropdown"> Ambiente</a>
+						<ul>
+							<li>
+								<a asp-controller="Ambiente" asp-action="QualidadeAr">Qualidade do ar</a>
+							</li>
+							<li>
+								<a asp-controller="Ambiente" asp-action="Paisagens">Paisagens Naturais</a>
+							</li>
+							<li>
+								<a asp-controller="Ambiente" asp-action="Miradouros">Miradouros</a>
+							</li>
+						</ul>
+					</li>
+					<li><a class="fas" asp-controller="Fotografias" asp-action="Create"> Capital da Cultura</a></li>
+					<li class="submenu">
+						<a href="#" class="fas fa-angle-down"> Conhecer a cidade</a>
+						<ul>
+							<li><a href="#">História</a></li>
+							<li><a href="#">Património</a></li>
+							<li><a href="#">Torismo</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</li>
+					@*<li><a href="#" class="button primary">Registar</a></li>*@
+					<li><button class="primary" onclick="document.getElementById('LoginModal').style.display='block'; inicio('BLogGeral')" style="width:auto;">Login</button></li>
+					<li>
+						<select style="background-color:transparent">
+							<option value="PT">PT</option>
+							<option value="ENG">ENG</option>
+							<option value="TR">TR</option>
+						</select>
+					</li>
+				</ul>
             </nav>
         </header>
 
         <!-- Banner -->
-        <section id="banner">
+		<section id="banner">
+			<partial name="_LoginPartial" />
+			<!--
+		".inner" is set up as an inline-block so it automatically expands
+		in both directions to fit whatever's inside it. This means it won't
+		automatically wrap lines, so be sure to use line breaks where
+		appropriate (<br />).
+	-->
+			<div class="inner">
 
-            <!--
-                ".inner" is set up as an inline-block so it automatically expands
-                in both directions to fit whatever's inside it. This means it won't
-                automatically wrap lines, so be sure to use line breaks where
-                appropriate (<br />).
-            -->
-            <div class="inner">
+				<header>
+					<h2>Lost in Guarda</h2>
+				</header>
+				<p>
+					<strong>F</strong>orte -
+					<strong>F</strong>arta -
+					<strong>F</strong>ria -
+					<strong>F</strong>iel -
+					<strong>F</strong>ormosa
+				</p>
+				<footer>
+				</footer>
 
-                <header>
-                    <h2>Lost in Guarda</h2>
-                </header>
-                <p>
-                    <strong>F</strong>orte -
-                    <strong>F</strong>arta -
-                    <strong>F</strong>ria -
-                    <strong>F</strong>iel -
-                    <strong>F</strong>ormosa
-                </p>
-                <footer>
-                </footer>
+			</div>
 
-            </div>
-
-        </section>
+		</section>
 
         <!-- Main -->
         <article id="main">
@@ -112,7 +112,8 @@
             <div id="Login" class="tabcontent modal-contentLogin">
                 <article id="entrar">
                     <h2 class="major"></h2>
-                    <form method="post" action="#">
+                    @*<form method="post" action="#">*@
+                    <form id="account" method="post">
                         <div class="fields">
                             <div class="field half">
                                 <label for="email">Email</label>
@@ -125,7 +126,7 @@
                             </div>
                         </div>
                         <ul class="actions">
-                            <li><input type="submit" value="Login" class="primary" asp-controller="Ambiente" asp-action="Ambiente" /></li><!--ir para o home/index-->
+                            <li><input type="submit" value="Login" class="primary" @*asp-controller="Ambiente" asp-action="Ambiente"*@ /></li><!--ir para o home/index-->
                             <li><input type="reset" value="Reset" onclick="resetPass('olhoPLA', 'PasswordLogin')" /></li>
                         </ul>
                     </form>

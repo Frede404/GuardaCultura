@@ -105,9 +105,9 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Fred",
                     Email = "Fred@mail.com",
-                    Password = "123",
+                    //Password = "123",
                     Fiabilidade = 10,
-                    FuncaoId = 1,
+                    //FuncaoId = 1,
                 }
                 );
             dbContext.SaveChanges();//so fica valido se salvarmos
@@ -116,9 +116,9 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Leandro",
                     Email = "Leandro@mail.com",
-                    Password = "321",
+                    //Password = "321",
                     Fiabilidade = 10,
-                    FuncaoId = 2,
+                    //FuncaoId = 2,
                 }
                 );
             dbContext.SaveChanges();//so fica valido se salvarmos
@@ -127,9 +127,9 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Turista",
                     Email = "Turista@mail.com",
-                    Password = "turista",
+                    //Password = "turista",
                     Fiabilidade = 0,
-                    FuncaoId = 3,
+                    //FuncaoId = 3,
                 }
                 );
 

@@ -18,9 +18,9 @@ namespace GuardaCultura.Models
         [StringLength(512)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório ter uma password")]
+        /*[Required(ErrorMessage = "É obrigatório ter uma password")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "Password tem de ter no minimo 8 caracteres e no maximo 20")]
-        public string Password { get; set; }
+        public string Password { get; set; }*/
 
         [StringLength(5)]
         public string Ultima_Lingua { get; set; }
@@ -33,9 +33,9 @@ namespace GuardaCultura.Models
 
         public float Fiabilidade { get; set; }
 
-        public int FuncaoId { get; set; }
+        //public int FuncaoId { get; set; }
 
-        public Funcao Funcao { get; set; }
+        //public Funcao Funcao { get; set; }
 
         public ICollection<Fotografia> Fotografias { get; set; }
     }

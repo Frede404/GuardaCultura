@@ -4,14 +4,16 @@ using GuardaCultura.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GuardaCultura.Migrations
 {
     [DbContext(typeof(GuardaCulturaContext))]
-    partial class GuardaCulturaContextModelSnapshot : ModelSnapshot
+    [Migration("20210122092658_Utilizadores")]
+    partial class Utilizadores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
