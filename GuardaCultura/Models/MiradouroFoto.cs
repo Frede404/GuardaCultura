@@ -15,7 +15,9 @@ namespace GuardaCultura.Models
 
         public string Localizacao { get; set; }
 
-        public string Coordenadas_gps { get; set; }
+        public string Coordenadas_DD { get; set; }
+
+        public string Coordenadas_DMS { get; set; }
 
         public string Terreno { get; set; }
 

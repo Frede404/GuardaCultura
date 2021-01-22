@@ -20,9 +20,18 @@ namespace GuardaCultura.Models
         [RegularExpression("[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+", ErrorMessage = "A localização só aceita caracteres não numericos nem caracteres especiasis!")]
         public string Localizacao { get; set; }
 
-        [Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas do miradouro!")]
-        public string Coordenadas_gps { get; set; }
-        
+        //[Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas da Latitude DD do miradouro !")]
+        public string Latitude_DD { get; set; }
+
+        //[Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas da Longitude DD do miradouro!")]
+        public string Longitude_DD { get; set; }
+
+        //[Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas da Latitude DMS do miradouro!")]
+        public string Latitude_DMS { get; set; }
+
+        //[Required(ErrorMessage = " Campo obrigatório. Insira as Coordenadas da Longitude DMS do miradouro!")]
+        public string Longitude_DMS { get; set; }
+
         [Required(ErrorMessage = " Campo obrigatório. Insira o tipo de terreno do miradouro!")]// campo, cidade...
         public string Terreno { get; set; }
 
@@ -38,6 +47,8 @@ namespace GuardaCultura.Models
 
         [Required]
         public bool Ativo { get; set; }
+
+        public bool Disponibilidade { get; set; }
 
         public ICollection<Atratividade> Atratividades { get; set; }
 

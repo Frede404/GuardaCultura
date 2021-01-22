@@ -257,8 +257,8 @@ textarea {
 	padding: 0.75rem 1rem;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type="checkbox"]/*,//aqui
+input[type="radio"]*/ {
 	/*-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
@@ -272,8 +272,8 @@ input[type="radio"] {
 	z-index: -1;
 }
 
-	input[type="checkbox"] + label,
-	input[type="radio"] + label {
+	input[type="checkbox"] + label /*,//aqui
+	input[type="radio"] + label */ {
 		text-decoration: none;
 		-moz-user-select: none;
 		-webkit-user-select: none;
@@ -290,8 +290,8 @@ input[type="radio"] {
 		position: relative;
 	}
 
-		input[type="checkbox"] + label:before,
-		input[type="radio"] + label:before {
+		input[type="checkbox"] + label:before /*,//aqui
+		input[type="radio"] + label:before */ {
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
 			display: inline-block;
@@ -304,8 +304,8 @@ input[type="radio"] {
 			font-weight: 900;
 		}
 
-		input[type="checkbox"] + label:before,
-		input[type="radio"] + label:before {
+		input[type="checkbox"] + label:before /*,//aqui
+		input[type="radio"] + label:before */ {
 			-moz-transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 			-webkit-transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 			-ms-transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
@@ -323,16 +323,16 @@ input[type="radio"] {
 			width: 1.65rem;
 		}
 
-	input[type="checkbox"]:checked + label:before,
-	input[type="radio"]:checked + label:before {
+	input[type="checkbox"]:checked + label:before /*,//aqui
+	input[type="radio"]:checked + label:before */ {
 		background: #000 !important;
 		border-color: #000 !important;
 		color: #1b1f22;
 		content: '\f00c';
 	}
 
-	input[type="checkbox"]:focus + label:before,
-	input[type="radio"]:focus + label:before {
+	input[type="checkbox"]:focus + label:before/*, //aqui
+	input[type="radio"]:focus + label:before */{
 		background: rgba(0, 0, 0, 0.075);
 		border-color: #000;
 		box-shadow: 0 0 0 1px #000;
@@ -342,9 +342,9 @@ input[type="radio"] {
 		border-radius: 4px;
 	}
 
-	input[type="radio"] + label:before {
+	/*input[type="radio"] + label:before {//aqui
 		border-radius: 100%;
-	}
+	}*/
 
 input.password {
 	display: inline;

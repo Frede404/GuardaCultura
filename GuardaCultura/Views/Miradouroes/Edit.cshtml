@@ -32,15 +32,182 @@
                             <input asp-for="Localizacao" class="form-control" />
                             <span asp-validation-for="Localizacao" class="textoErro"></span>
                         </div>
+
                         <div class="form-group field half">
-                            <label asp-for="Coordenadas_gps" class="control-label">Coordenadas GPS</label>
+                            @*<label asp-for="Coordenadas_gps" class="control-label">Coordenadas GPS</label>
                             <input asp-for="Coordenadas_gps" class="form-control" />
-                            <span asp-validation-for="Coordenadas_gps" class="textoErro"></span>
+                            <span asp-validation-for="Coordenadas_gps" class="textoErro"></span>*@
                         </div>
                         <div class="form-group field half">
                             <label asp-for="Terreno" class="control-label"></label>
-                            <input asp-for="Terreno" class="form-control" />
-                            <span asp-validation-for="Terreno" class="textoErro"></span>
+                            <select name="Terreno">
+                                <option value="Cidade" selected="@(Model.Terreno == "Cidade" ? "selected" : null)">Cidade</option>
+                                <option value="Campo" selected="@(Model.Terreno == "Campo" ? "selected" : null)">Campo</option>
+                                <option value="Montanha" selected="@(Model.Terreno == "Montanha" ? "selected" : null)">Montanha</option>
+                            </select>
+                            @*<span asp-validation-for="Terreno" class="textoErro"></span>*@
+                        </div>
+                        <div class="form-group field ">
+                            Coordenadas <br />
+                            <input type="radio" id="CoordDD" name="Coordenadas" value="DD" onclick="CoordenadasFunction(this)" checked />DD
+                            <input type="radio" id="CoordDMS" name="Coordenadas" value="DMS" onclick="CoordenadasFunction(this)" />DMS <br />
+                            <div>
+                                @*  *@
+                                <!--Latitude:--> @*<input asp-for="Latitude_DD" class="coordenadas" />*@
+                                <!--Longitude:--> @*<input asp-for="Longitude_DD" class="coordenadas" />*@
+                                <table class="table" id="coorddd">
+                                    <thead>
+                                        <tr id="">
+                                            <th>
+                                                latitude
+                                            </th>
+                                            <th>
+                                                longitude
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="">
+                                            <td id="dd">
+                                                @*<p>fazer funcao javaScript para substituir o primeiro "." por uma "," e apagar os proximos caso aja mais chamar a de apagar espaços</p>*@
+                                                <input name="latiDD" asp-for="Latitude_DD" class="coordenadas" style="width:90%; float: left" type="text"/>
+                                                @*<span asp-validation-for="Latitude_DD" class="textoErro"></span>*@
+                                            </td>
+                                            <td id="dd">
+                                                @*<p>fazer funcao javaScript para substituir o primeiro "." por uma "," e apagar os proximos caso aja mais chamar a de apagar espaços</p>*@
+                                                <input name="longDD" asp-for="Longitude_DD" class="coordenadas" style="width:90%; float: right" type="text" />
+                                                @*<span asp-validation-for="Longitude_DD" class="textoErro"></span>*@
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table showcoord" id="coorddms">
+                                    @{
+                                        //latitude
+                                        string s1 = Model.Latitude_DMS;
+                                        int posG = s1.IndexOf('º');
+                                        int posM = s1.IndexOf("'");
+                                        int posS = s1.IndexOf("''");
+                                        string dirlat = "" + s1.Last();
+
+                                        var graulat = s1.Substring(0, posG);
+                                        var minutoslat = s1.Substring(posG + 1,posM - posG - 1);
+                                        var segundoslat = s1.Substring(posM + 1 , posS - posM -1);
+
+                                        //longitude
+                                        string s2 = Model.Longitude_DMS;
+                                        int posG2 = s2.IndexOf('º');
+                                        int posM2 = s2.IndexOf("'");
+                                        int posS2 = s2.IndexOf("''");
+                                        string dirlong = ""+s2.Last();
+
+                                        var graulong = s2.Substring(0, posG2);
+                                        var minutoslong = s2.Substring(posG2 + 1, posM2 - posG2 - 1);
+                                        var segundoslong = s2.Substring(posM2 + 1, posS2 - posM2 - 1);
+                                    }
+                                    <thead>
+                                        <tr id="">
+                                            <th colspan="4">
+                                                latitude
+                                            </th>
+                                        </tr>
+                                        <tr id="">
+                                            <th>
+                                                &deg;
+                                            </th>
+                                            <th>
+                                                '
+                                            </th>
+                                            <th>
+                                                ''
+                                            </th>
+                                            <th>
+                                                N/S
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="">
+                                            @*Latitude*@
+                                            @*graus*@
+                                            <td id="dms">
+                                                <input name="grausLat" asp-for="@graulat" asp- class="coordenadas" />
+                                                @*<span asp-validation-for="@ListaMiradouro.grausLat" class="textoErro"></span>*@
+                                            </td>
+                                            @*minutos*@
+                                            <td id="dms">
+                                                <input name="minutoLat" asp-for="@minutoslat" class="coordenadas" />
+                                                @*<span asp-validation-for="@ListaMiradouro.minutoLat" class="textoErro"></span>*@
+                                            </td>
+                                            @*segundos*@
+                                            <td id="dms">
+                                                <input name="segundosLat" asp-for="@segundoslat" class="coordenadas" />@*fazer funcao javaScript para substituir o primeiro "." por uma "," e apagar os proximos caso aja mais chamar a de apagar espaços*@
+                                                @*<span asp-validation-for="@ListaMiradouro.segundosLat" class="textoErro"></span>*@
+                                            </td>
+                                            @*N/S*@
+                                            <td id="dms">
+                                                <select name="DirNS"  class="coordenadas" style="min-width: 90px">
+                                                    <option value="N" selected="@(dirlat == "N" ? "selected" : null)">N</option>
+                                                    <option value="S" selected="@(dirlat == "S" ? "selected" : null)">S</option>
+                                                    @*<span asp-validation-for="@ListaMiradouro.DirNS" class="textoErro"></span>*@
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    @*</table>
+                                    <table class="table showcoord" id="coorddms">*@
+                                    <thead>
+                                        <tr id="">
+                                            <th colspan="4">
+                                                longitude
+                                            </th>
+                                        </tr>
+                                        <tr id="">
+                                            <th>
+                                                &deg;
+                                            </th>
+                                            <th>
+                                                '
+                                            </th>
+                                            <th>
+                                                ''
+                                            </th>
+                                            <th>
+                                                W/E
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="">
+                                            @*Longitude*@
+                                            @*graus*@
+                                            <td id="dms">
+                                                <input name="grausLong" asp-for="@graulong" class="coordenadas" />
+                                                @*<span asp-validation-for="@ListaMiradouro.grausLong" class="textoErro"></span>*@
+                                            </td>
+                                            @*minutos*@
+                                            <td id="dms">
+                                                <input name="minutosLong" asp-for="@minutoslong" class="coordenadas" />
+                                                @*<span asp-validation-for="@ListaMiradouro.minutosLong" class="textoErro"></span>*@
+                                            </td>
+                                            @*segundos*@
+                                            <td id="dms">
+                                                <input name="segundosLong" asp-for="@segundoslong" class="coordenadas" />@*fazer funcao javaScript para substituir o primeiro "." por uma "," e apagar os proximos caso aja mais chamar a de apagar espaços*@
+                                                @*<span asp-validation-for="@ListaMiradouro.segundosLong" class="textoErro"></span>*@
+                                            </td>
+                                            <td id="dms">
+                                                <select name="DirWE" class="coordenadas" style="min-width: 90px">
+                                                    <option value="E" selected="@(dirlong == "E" ? "selected" : null)">E</option>
+                                                    <option value="W" selected="@(dirlong == "W" ? "selected" : null)">W</option>
+                                                    @*<span asp-validation-for="@ListaMiradouro.DirWE " class="textoErro"></span>*@
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @*<input asp-for="Terreno" class="form-control" />*@
+                                @*<input asp-for="Terreno" class="form-control" />*@
+                            </div>
                         </div>
                         <div class="form-group form-check field half campoBox">
                             @*<label>E_Miradouro</label>

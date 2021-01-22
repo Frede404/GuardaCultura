@@ -1,4 +1,4 @@
-﻿//funcao para meter visivel a password
+//funcao para meter visivel a password
 function show(icon, campo) {
     var x = document.getElementById(campo);
     var c = document.getElementById(icon);
@@ -51,6 +51,19 @@ function checkMiradouroFunction() {
     }
 }
 
+
+function CoordenadasFunction(elemento) {
+    var tipo = elemento.value;
+
+    if (tipo == "DD") {
+        document.getElementById("coorddd").classList.remove('showcoord')
+        document.getElementById("coorddms").classList.add('showcoord')
+    }
+    if (tipo == "DMS") {
+        document.getElementById("coorddms").classList.remove('showcoord')
+        document.getElementById("coorddd").classList.add('showcoord')
+    }
+  
 function CorrigeEspacos(elemento) {
     var texto = elemento.value;
     var tamanho = texto.length;

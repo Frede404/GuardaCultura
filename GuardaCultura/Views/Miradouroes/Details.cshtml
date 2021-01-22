@@ -29,7 +29,11 @@
                             @*@Html.DisplayNameFor(model => model.Localizacao)*@
                         </th>
                         <th class="col-sm-2">
-                            Coordenadas GPS
+                            Coordenadas GPS DD
+                            @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
+                        </th>
+                        <th class="col-sm-2">
+                            Coordenadas GPS DMS
                             @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
                         </th>
                         <th class="col-sm-2">
@@ -37,7 +41,7 @@
                         </th>
                         <th class="col-sm-2">
                             @*É miradouro
-                                @Html.DisplayNameFor(model => model.E_Miradouro)*@
+                            @Html.DisplayNameFor(model => model.E_Miradouro)*@
                         </th>
                         <th class="col-sm-2">
                             Ocupação maxima
@@ -54,7 +58,13 @@
                             @Html.DisplayFor(model => model.Localizacao)
                         </td>
                         <td>
-                            @Html.DisplayFor(model => model.Coordenadas_gps)
+                            @*@Html.DisplayFor(model => model.Coordenadas_gps)*@
+                            @*@Html.Encode(Model.Latitude_DD + "," + Model.Longitude_DD)*@
+                            @Html.DisplayFor(model => model.Latitude_DD), @Html.DisplayFor(model => model.Longitude_DD)
+                        </td>
+                        <td>
+                            @*@Html.Encode(Model.Latitude_DMS + "," + Model.Longitude_DMS)*@
+                            @Html.DisplayFor(model => model.Latitude_DMS) @Html.DisplayFor(model => model.Longitude_DMS)
                         </td>
                         <td>
                             @Html.DisplayFor(model => model.Terreno)
@@ -121,19 +131,71 @@
         <form asp-action="Details">
             <footer class="major">
                 <div class="form-group">
+                    @if (!Model.Ativo)
+                    {
+                        <a class="button" style="cursor: pointer" onclick="document.getElementById('id01').style.display ='block'">Ativar</a>
+                    }
+                    else
+                    {
+                        <a class="button" style="cursor: pointer" onclick="document.getElementById('id01').style.display ='block'">Desativar</a>
+                    }
+                    @*<a asp-action="Delete" asp-route-id="@Model.MiradouroId" class="button btn-primary">Apagar</a>*@
+                    <a asp-action="Edit" asp-route-id="@Model.MiradouroId" class="button btn-primary">Editar</a>
+                    <a asp-action="Index" class="button btn-primary">Voltar</a>
+                </div>
+            </footer>
+        </form>
+        <div id="id01" class="modalLogin">
+            <form class="modal-content">
+                <div class="container">
+                    <h1>
+                        Tem a certeza que pretende
                         @if (!Model.Ativo)
                         {
-                            <a asp-action="Delete" asp-route-id="@Model.MiradouroId" class="button btn-primary">Ativar</a>
+                            <b style="color: red">Ativar</b>
                         }
                         else
                         {
-                            <a asp-action="Delete" asp-route-id="@Model.MiradouroId" class="button btn-primary">Desativar</a>
+                            <b style="color: red">Desativar</b>
                         }
-                        @*<a asp-action="Delete" asp-route-id="@Model.MiradouroId" class="button btn-primary">Apagar</a>*@
-                        <a asp-action="Edit" asp-route-id="@Model.MiradouroId" class="button btn-primary">Editar</a>
-                        <a asp-action="Index" class="button btn-primary">Voltar</a>
-</div>
-            </footer>
-        </form>
+                        @if (!Model.E_Miradouro)
+                        {
+                            <b>esta</b>
+                            <b style="color: red">Paisagem</b>
+                        }
+                        else
+                        {
+                            <b>este</b>
+                            <b style="color: red">Miradouro</b>
+                        }
+                    </h1>
+                    <br />
+                    <label style="color:red; font-weight: bold">Nome</label>
+                    @Html.DisplayFor(modelItem => Model.Nome)
+                    <br />
+                    <br />
+                    <label style="color:red; font-weight: bold">Localização</label>
+                    @Html.DisplayFor(modelItem => Model.Localizacao)
+                    <br />
+                    <br />
+                    <label style="color:red; font-weight: bold">Terreno</label>
+                    @Html.DisplayFor(modelItem => Model.Terreno)
+                    <br />
+                    <div style="margin:20px">
+                        @if (!Model.Ativo)
+                        {
+                            <a class="button" asp-action="Ativar" asp-route-id="@Model.MiradouroId">Ativar</a>
+                        }
+                        else
+                        {
+                            <a class="button" asp-action="Ativar" asp-route-id="@Model.MiradouroId">Desativar</a>
+                        }
+                        <button type="button" onclick="document.getElementById('id01').style.display = 'none'" class="cancelbtn">Cancel</button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
     </body>
 </section>

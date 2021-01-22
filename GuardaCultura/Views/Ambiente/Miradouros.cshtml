@@ -31,7 +31,7 @@
 	<body>
 		<div class="row centrado">
 			@{
-				int i = 0;//ver
+				
 				int contagem = 0;
 				int contamiradouro = 0;
 				@foreach (var miradouro in Model.MiradouroPaisagem)
@@ -91,27 +91,38 @@
                                     </p>
                                     <p>
                                         @{
-                                            string link = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_gps;
+                                            string linkDD = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_DD;
+                                            string linkDMS = "https://www.google.pt/maps/place/" + miradouro.Coordenadas_DMS;
                                         }
-                                        Coordenadas GPS:
-                                        <a href=@link target="_blank">@miradouro.Coordenadas_gps</a>
+                                        Coordenadas GPS (DD):
+                                        <a href=@linkDD target="_blank">@miradouro.Coordenadas_DD</a>
+                                        <br />
+                                        Coordenadas GPS (DMS):
+                                        <a href=@linkDMS target="_blank">@miradouro.Coordenadas_DMS</a>
                                     </p>
                                     <p>
                                         Terreno:
                                         @Html.DisplayFor(modelItem => miradouro.Terreno)
                                     </p>
-                                    <p>
-                                        Condições:
-                                        @Html.DisplayFor(modelItem => miradouro.Condicoes)
-                                    </p>
+                                    @if (miradouro.Condicoes != null)
+                                    {
+										<p>
+											Condições:
+											@Html.DisplayFor(modelItem => miradouro.Condicoes)
+										</p>
+                                    }
+
                                     <p>
                                         Ocupação maxima:
                                         @Html.DisplayFor(modelItem => miradouro.Ocupacao_maxima)
                                     </p>
-                                    <p>
-                                        Descrição:
-                                        @Html.DisplayFor(modelItem => miradouro.Descricao)
-                                    </p>
+									@if (miradouro.Condicoes != null)
+									{
+										<p>
+											Descrição:
+											@Html.DisplayFor(modelItem => miradouro.Descricao)
+										</p>
+									}
                                 </div>
 							</form>
 						</div>
@@ -127,11 +138,11 @@
 					{
 						if (Model.pagination.CurrentPage == 1)
 						{
-							<li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="1">1</a></li>
+							<li class="page-item"><a class="page-link active" asp-action="Miradouros" asp-route-page="1">1</a></li>
 						}
 						else
 						{
-							<li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="1">1</a></li>
+							<li class="page-item"><a class="page-link" asp-action="Miradouros" asp-route-page="1">1</a></li>
 						}
 
 
@@ -156,17 +167,17 @@
 							}
 							else
 							{
-								<li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@p">@p</a></li>
+								<li class="page-item"><a class="page-link" asp-action="Miradouros" asp-route-page="@p">@p</a></li>
 							}
 						}
 
 						if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
 						{
-							<li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+							<li class="page-item"><a class="page-link active" asp-action="Miradouros" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
 						}
 						else
 						{
-							<li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+							<li class="page-item"><a class="page-link" asp-action="Miradouros" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
 						}
 
 					}
