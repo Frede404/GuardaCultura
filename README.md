@@ -1,6 +1,5 @@
-# GuardaCultura
-O projeto GuardaCultural consiste num site que retrata a cidade da Guarda, onde é possivél obter informação sobre a história da cidade, locais de interesse,
-fazendo também o reencaminhamento para sites de reservas de refeições ou dormidas,
-bem como informações importantes sobre os locais sugeridos para serem visitados, como a ocupação do espaço se possivél(Quantas pessoas estão no local), ou o precurso a fazer para lá chegar.
-Tendo este projeto como principal ponto o ambiente, e a divulgação do mesmo na Cidade da Guarda.
-A nossa Aplicação vai ter três idiomas Português, Inglês e Turco.
+# Lost in Guarda
+  O projeto Lost in Guarda consiste num site que dá a conhecer ao utilizador miradouros e paisagens para muitos desconhecidas na cidade da Guarda, bem como as ter acesso a localização, os utilizadores podem contribuir para parte da imagem do site inserindo fotografias de miradouros e /ou paisagens que serão depois avaliadas e aprovadas ou apagadas pelo gestos do site, podem tambem classificar as paisagens e os miradouros, os que tiverem a melhor classificação ficam destacados na pagina principal do site.
+  A informação sobre os miradouros está sempre atualizada, qual a ocupação máxima permitida tendo em conta o contexto pandémico em que nos encontramos, a ocupação é atualizada constantemente por um Responsavel que regista a ocupação atual, caso a ocupação máxima seja atingida o miradouro continua ativo mas indisponivel, o gestor tambem pode desativar um miradouro, por exemplo se um dado miradouro for intervencionado o gestor desativa-o durante o decorrer da intervenção e reativa-o assim que este possa ser novamente visitado.
+  A cidade da Guarda é das cidades Europeias com melhor qualidade do ar, os utilizadores podem aceder a um site fidedigno que faz a avaliação da qualidade do ar, bem como a concentração de poléns no ar.
+  O site pode ser navegado em três idiomas, em Português, Inglês e Turco.

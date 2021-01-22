@@ -28,8 +28,9 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Fotografias
-        public async Task<IActionResult> Index(int page = 1, string ordenar= "FotografiaId", int direcaoordena=1, int aprovacao=1)
+        public async Task<IActionResult> Index(int page = 1, string ordenacao = "FotografiaId", int direcaoordena=1, int aprovacao=1)
         {
+            int teste = 0;
             if (page == 0)
             {
                 page = auxpage;
@@ -57,13 +58,13 @@ namespace GuardaCultura.Controllers
                 auxaprovacao = aprovacao;
             }
 
-            if (ordenar == "0" || ordenar == "")
+            if (ordenacao == "0" || ordenacao == "")
             {
-                ordenar = auxordenar;
+                ordenacao = auxordenar;
             }
             else
             {
-                auxordenar = ordenar;
+                auxordenar = ordenacao;
             }
 
             if (aprovacao == 1)
@@ -81,10 +82,13 @@ namespace GuardaCultura.Controllers
                         new ListaFotografias
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
-                                .OrderBy(p => EF.Property<Object>(p, ordenar))
+                                .OrderBy(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -94,10 +98,13 @@ namespace GuardaCultura.Controllers
                         new ListaFotografias
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
-                                .OrderByDescending(p => EF.Property<Object>(p, ordenar))
+                                .OrderByDescending(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -130,10 +137,13 @@ namespace GuardaCultura.Controllers
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
                                 .Where(p => p.Aprovada == auxaprovado)
-                                .OrderBy(p => EF.Property<Object>(p, ordenar))
+                                .OrderBy(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -144,10 +154,13 @@ namespace GuardaCultura.Controllers
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
                                 .Where(p => p.Aprovada == auxaprovado)
-                                .OrderByDescending(p => EF.Property<Object>(p, ordenar))
+                                .OrderByDescending(p => EF.Property<Object>(p, ordenacao))
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
-                            pagination = pagination
+                            pagination = pagination,
+                            aprovacao = aprovacao,
+                            direcaoordena = direcaoordena,
+                            ordenacao = ordenacao
                         }
                     );
                 }
@@ -208,7 +221,7 @@ namespace GuardaCultura.Controllers
                     }
                 }
             }
-
+            
             if (ModelState.IsValid)
             {
                 int funcao = _context.Pessoa
@@ -222,6 +235,47 @@ namespace GuardaCultura.Controllers
                 // todo: validacoes adicionais antes de inserir a foto
                 fotografia.Classificacao = 5.0f;
                 fotografia.N_Votos = 1;
+
+                if (fotografia.Data_imagem != null)
+                {
+                    string data = fotografia.Data_imagem;
+                    int tamanho = data.Length;
+                    char aux;
+                    string datafinal = "";
+                    int posicao = 1;
+                    string ano = "";
+                    string mes = "";
+                    string dia = "";
+
+                    for (int i = 0; i < tamanho; i++)//poe data no formato dd/mm/yyyy
+                    {
+                        aux = data[i];
+
+                        if (aux == '-')
+                        {
+                            posicao++;
+                            datafinal += "/";
+                        }
+                        else
+                        {
+                            if (posicao == 1)
+                            {
+                                ano += aux;
+                            }
+                            else if (posicao == 2)
+                            {
+                                mes += aux;
+                            }
+                            else
+                            {
+                                dia += aux;
+                            }
+                        }
+                    }
+                    datafinal = dia + "/" + mes + "/" + ano;
+                    fotografia.Data_imagem = datafinal;
+                }
+
                 _context.Add(fotografia);
                 await _context.SaveChangesAsync();
 

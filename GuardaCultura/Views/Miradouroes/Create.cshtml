@@ -1,4 +1,4 @@
-﻿@model GuardaCultura.Models.Miradouro
+@model GuardaCultura.Models.Miradouro
 
 @{
     ViewData["Title"] = "Create";
@@ -17,7 +17,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>@*sumario de erros*@
                         <div class="form-group field half">
                             <label asp-for="Nome" class="control-label"></label>
-                            <input asp-for="Nome" class="form-control" />
+                            <input asp-for="Nome" class="form-control" onchange="CorrigeEspacos(this)" />
                             <span asp-validation-for="Nome" class="textoErro"></span>@*validacao de campo*@
                         </div>
                         <div class="form-group field half">
@@ -166,12 +166,15 @@
                         </div>
                         <div class="form-group field half">
                             <label asp-for="Terreno" class="control-label"></label>
+
                             <select name="Terreno">
+
+                            <select asp-for="Terreno" class="form-control">
+
                                 <option value="Cidade">Cidade</option>
                                 <option value="Campo">Campo</option>
                                 <option value="Montanha">Montanha</option>
                             </select>
-                            @*<span asp-validation-for="Terreno" class="textoErro"></span>*@
                         </div>
                         <div class="form-group form-check field half campoBox">
                             @*<label>E_Miradouro</label>

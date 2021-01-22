@@ -53,7 +53,7 @@
                         </ul>
                     </li>
                     @*<li><a href="#" class="button primary">Registar</a></li>*@
-                    <li><button class="primary" onclick="document.getElementById('id01').style.display='block'; inicio('BLogGeral')" style="width:auto;">Login</button></li>
+                    <li><button class="primary" onclick="document.getElementById('LoginModal').style.display='block'; inicio('BLogGeral')" style="width:auto;">Login</button></li>
                     <li>
                         <select style="background-color:transparent">
                             <option value="PT">PT</option>
@@ -102,8 +102,8 @@
 
 
 
-        <div id="id01" class="modalLogin animate">
-            <span onclick="document.getElementById('id01').style.display='none'" class="closeLogin" title="Close Modal">&times;</span>
+        <div id="LoginModal" class="modalLogin animate">
+            <span onclick="document.getElementById('LoginModal').style.display='none'" class="closeLogin" title="Close Modal">&times;</span>
             <div class="tab modal-contentLogin" style="margin: auto">
                 <button id="BLogGeral" class="tablinks" onclick="openLogin(event, 'Login')">Login</button>
                 <button class="tablinks" onclick="openLogin(event, 'Registar')">Registar</button>

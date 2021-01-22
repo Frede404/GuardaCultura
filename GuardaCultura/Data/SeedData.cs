@@ -16,7 +16,8 @@ namespace GuardaCultura.Data
 {
     public class SeedData//proposito de inserir na base de dados
     {
-        
+        private static int nomefoto=0;
+
         internal static void Populate(GuardaCulturaContext dbContext)
         {
             PopulateHoras(dbContext);
@@ -250,6 +251,7 @@ namespace GuardaCultura.Data
 
                         for (int j = 0; j < 5; j++)
                         {
+                            nomefoto++;
                             int Estacao_ID = rnd.Next(1, 5);
                             int Tipo_ID = rnd.Next(1, 4);
                             int Pessoa_ID = rnd.Next(1, 4);
@@ -261,7 +263,7 @@ namespace GuardaCultura.Data
                             dbContext.Fotografia.Add(
                             new Fotografia
                             {
-                                Nome = "Foto" + (j + 1),
+                                Nome = "Foto" + nomefoto,//(j + 1),
                                 PessoaId = Pessoa_ID,
                                 EstacaoAnoId = Estacao_ID,
                                 MiradouroId = Miradoruro_ID,
@@ -316,9 +318,10 @@ namespace GuardaCultura.Data
                         int Miradoruro_ID = dbContext.Miradouro
                                                 .OrderByDescending(p => p.MiradouroId)
                                                 .Select(p=>p.MiradouroId).First();
-
+                        
                         for (int j = 0; j < 5; j++)
                         {
+                            nomefoto++;
                             int Estacao_ID = rnd.Next(1, 5);
                             int Tipo_ID = rnd.Next(1, 4);
                             int Pessoa_ID = rnd.Next(1, 4);
@@ -330,7 +333,7 @@ namespace GuardaCultura.Data
                             dbContext.Fotografia.Add(
                             new Fotografia
                             {
-                                Nome = "Foto" + (j + 1),
+                                Nome = "Foto" + nomefoto,//(j + 1),
                                 PessoaId = Pessoa_ID,
                                 EstacaoAnoId = Estacao_ID,
                                 MiradouroId = Miradoruro_ID,
@@ -408,6 +411,7 @@ namespace GuardaCultura.Data
             int qntdmiradouro = dbContext.Miradouro.Count();
             for (int i = 0; i < qntd; i++)
             {
+                nomefoto++;
                 Miradoruro_ID++;
                 int Estacao_ID = rnd.Next(1, 5);
                 int Tipo_ID = rnd.Next(1, 4);
@@ -437,7 +441,7 @@ namespace GuardaCultura.Data
                         dbContext.Fotografia.Add(
                         new Fotografia
                         {
-                            Nome = "Foto" + (i + 1),
+                            Nome = "Foto" + nomefoto,//(i + 1),
                             PessoaId = Pessoa_ID,
                             EstacaoAnoId = Estacao_ID,
                             MiradouroId = Miradoruro_ID,
@@ -454,7 +458,7 @@ namespace GuardaCultura.Data
                         dbContext.Fotografia.Add(
                         new Fotografia
                         {
-                            Nome = "Foto" + (i + 1),
+                            Nome = "Foto" + nomefoto,//(i + 1),
                             PessoaId = Pessoa_ID,
                             EstacaoAnoId = Estacao_ID,
                             MiradouroId = Miradoruro_ID,
@@ -472,7 +476,7 @@ namespace GuardaCultura.Data
                     dbContext.Fotografia.Add(
                         new Fotografia
                         {
-                            Nome = "Foto" + (i + 1),
+                            Nome = "Foto" + nomefoto,//(i + 1),
                             PessoaId = Pessoa_ID,
                             EstacaoAnoId = Estacao_ID,
                             MiradouroId = Miradoruro_ID,
