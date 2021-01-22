@@ -2541,7 +2541,7 @@ input::-moz-focus-inner {
 		background-size: 25em, 25em, auto, cover;
 		color: #fff;
 		cursor: default;
-		padding: 6em 0;
+		padding: 4em 0;
 		text-align: center;
 	}
 
@@ -2558,7 +2558,7 @@ input::-moz-focus-inner {
 			color: #fff;
 			display: inline-block;
 			opacity: 0;
-			padding: 3em;
+			padding: 1em;
 			text-align: center;
 		}
 
