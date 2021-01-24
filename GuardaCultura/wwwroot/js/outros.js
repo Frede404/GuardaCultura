@@ -63,6 +63,7 @@ function CoordenadasFunction(elemento) {
         document.getElementById("coorddms").classList.remove('showcoord')
         document.getElementById("coorddd").classList.add('showcoord')
     }
+}
   
 function CorrigeEspacos(elemento) {
     var texto = elemento.value;
