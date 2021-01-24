@@ -107,8 +107,10 @@ namespace GuardaCultura//linha 69 apagar
                 using (var serviceScope = app.ApplicationServices.CreateScope())//cria uma area de acesso a servicos
                 {
                     //var dbContext = serviceScope.ServiceProvider.GetService<GuardaCulturaContext>();
+                    
+                    SeedData.SeedDevData(dbContext);
+                    SeedData.SeedDevUsersAsync(userManager).Wait();//so cria se tiver em desenvolvimento
                     SeedData.Populate(dbContext);
-
                 }
             }
         }

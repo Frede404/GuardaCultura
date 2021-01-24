@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace GuardaCultura.Controllers
 {
     public class PessoasController : Controller
     {
         private readonly GuardaCulturaContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public PessoasController(GuardaCulturaContext context)
+        public PessoasController(GuardaCulturaContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Pessoas
+        [Authorize(Roles="Admin")]
         public async Task<IActionResult> Index()
         {
             //var guardaCulturaContext = _context.Pessoa.Include(p => p.Funcao);
@@ -46,9 +51,8 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Pessoas/Create
-        public IActionResult Create()
+        public IActionResult Registar()
         {
-            ViewData["FuncaoId"] = new SelectList(_context.Funcao, "FuncaoId", "FuncaoDesempenhar");
             return View();
         }
 
@@ -57,16 +61,44 @@ namespace GuardaCultura.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PessoaId,Nome,Email,Ultima_Lingua,Data_Nasc,Sexo,Nacionalidade,Fiabilidade,FuncaoId")] Pessoa pessoa)
+        public async Task<IActionResult> Registar(RegistarPessoaViewModel PessoaInfo)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)//caso haja erro fica na mesma pagina
             {
-                _context.Add(pessoa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(PessoaInfo);
             }
+
+            //cria utilizador
+            string username = PessoaInfo.Email;
+            IdentityUser user = await _userManager.FindByNameAsync(username);
+
+            if (user != null)//se o email ja existe
+            {
+                ModelState.AddModelError("Email", "Este Email ja esta registado");
+                return View(PessoaInfo);
+            }
+            
+            user = new IdentityUser(username);
+            await _userManager.CreateAsync(user, PessoaInfo.Password);
+            await _userManager.CreateAsync(user, "Turista");
+
+            //cria Pessoa
+            Pessoa pessoa = new Pessoa
+            {
+                Nome = PessoaInfo.Nome,
+                Email = PessoaInfo.Email,
+                Data_Nasc = PessoaInfo.Data_Nasc,
+                Sexo = PessoaInfo.Sexo,
+                Nacionalidade = PessoaInfo.Nacionalidade,
+                Fiabilidade = 0
+            };
+            
+            _context.Add(pessoa);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(AmbienteController.Ambiente),"Ambiente");
+            
             //ViewData["FuncaoId"] = new SelectList(_context.Funcao, "FuncaoId", "FuncaoDesempenhar", pessoa.FuncaoId);
-            return View(pessoa);
+            //return View(pessoaInfo);
         }
 
         // GET: Pessoas/Edit/5
@@ -123,7 +155,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Pessoas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        /*public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -150,7 +182,7 @@ namespace GuardaCultura.Controllers
             _context.Pessoa.Remove(pessoa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
         private bool PessoaExists(int id)
         {

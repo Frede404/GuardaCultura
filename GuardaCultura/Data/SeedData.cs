@@ -15,6 +15,8 @@ using System.Threading.Tasks;
  * UTILIZADORES
  * drop-Database -Context ApplicationDbContext
  * Update-Database -Context ApplicationDbContext
+ * 
+ * Add-Migration Nome -Context GuardaCulturaContext
 */
 
 namespace GuardaCultura.Data
@@ -27,7 +29,7 @@ namespace GuardaCultura.Data
         {
             PopulateHoras(dbContext);
             PopulateFuncao(dbContext);
-            PopulatePessoa(dbContext);
+            //PopulatePessoa(dbContext);//linha94
             PopulateEstacaoAno(dbContext);
             PopulateTipoImagem(dbContext);
             PopulateMiradouro(dbContext);
@@ -91,7 +93,7 @@ namespace GuardaCultura.Data
             dbContext.SaveChanges();//so fica valido se salvarmos
         }
 
-        private static void PopulatePessoa(GuardaCulturaContext dbContext)
+        /*private static void PopulatePessoa(GuardaCulturaContext dbContext)
         {
             if (dbContext.Pessoa.Any())//ve se ja ha Horas na base de dados
             {
@@ -107,6 +109,7 @@ namespace GuardaCultura.Data
                     Email = "Fred@mail.com",
                     //Password = "123",
                     Fiabilidade = 10,
+                    bloqueio=false
                     //FuncaoId = 1,
                 }
                 );
@@ -118,6 +121,7 @@ namespace GuardaCultura.Data
                     Email = "Leandro@mail.com",
                     //Password = "321",
                     Fiabilidade = 10,
+                    bloqueio=false
                     //FuncaoId = 2,
                 }
                 );
@@ -129,12 +133,13 @@ namespace GuardaCultura.Data
                     Email = "Turista@mail.com",
                     //Password = "turista",
                     Fiabilidade = 0,
+                    bloqueio=false
                     //FuncaoId = 3,
                 }
                 );
 
             dbContext.SaveChanges();//so fica valido se salvarmos
-        }
+        }*/
 
         private static void PopulateEstacaoAno(GuardaCulturaContext dbContext)
         {
@@ -495,6 +500,10 @@ namespace GuardaCultura.Data
         //Update-Database -Context ApplicationDbContext
         private const string DEFAULT_ADMIN_USER = "admin@ipg.pt";
         private const string DEFAULT_ADMIN_PASS = "Admin123!";
+        private const string DEFAULT_Turista_USER = "turista@ipg.pt";
+        private const string DEFAULT_Turista_PASS = "Turista123!";
+        private const string DEFAULT_Controlador_USER = "controlador@ipg.pt";
+        private const string DEFAULT_Controlador_PASS = "Controlador123!";
         private const string ROLE_ADMIN = "Administrador";
         private const string ROLE_CONTROLADOR = "Controlador";
         private const string ROLE_TURISTA = "Turista";
@@ -535,6 +544,45 @@ namespace GuardaCultura.Data
             {
                 await roleManager.CreateAsync(new IdentityRole(role));
             }
+        }
+
+        internal static async Task SeedDevUsersAsync(UserManager<IdentityUser> userManager)
+        {
+            await CriarUtilizador(userManager, DEFAULT_Turista_USER, DEFAULT_Turista_PASS, ROLE_TURISTA);
+            await CriarUtilizador(userManager, DEFAULT_Controlador_USER, DEFAULT_Controlador_PASS, ROLE_CONTROLADOR);
+        }
+
+        internal static void SeedDevData(GuardaCulturaContext dbContext)
+        {
+            if (dbContext.Pessoa.Any())
+            {
+                return;
+            }
+
+            dbContext.Pessoa.Add(new Pessoa
+            {
+                Nome = "Nome Turista",
+                Email = "turista@ipg.pt",
+                Fiabilidade = 0,
+                Bloqueio = false
+            });
+            dbContext.Pessoa.Add(new Pessoa
+            {
+                Nome = "Nome Turista2",
+                Email = "turista2@ipg.pt",
+                Fiabilidade = 0,
+                Bloqueio = false
+            });
+
+            dbContext.Pessoa.Add(new Pessoa
+            {
+                Nome = "Nome Controlador",
+                Email = "controlador@ipg.pt",
+                Fiabilidade = 0,
+                Bloqueio = false
+            });
+
+            dbContext.SaveChanges();
         }
     }
 }
