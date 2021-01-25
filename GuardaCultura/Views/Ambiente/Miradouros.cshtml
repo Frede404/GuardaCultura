@@ -41,7 +41,7 @@
 							contamiradouro++;
 							var base64 = Convert.ToBase64String(miradouro.Fotografia);
 							var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-							<img src='@imgsrc' style="width:100%" onclick="document.getElementById('id+@miradouro.MiradouroId').style.display='block', currentmiradouro(@contamiradouro)" class="hover-shadow cursor" />
+							<img src='@imgsrc' style="width:100%; min-height: 200px; max-height:200px" onclick="document.getElementById('id+@miradouro.MiradouroId').style.display='block', currentmiradouro(@contamiradouro)" class="hover-shadow cursor" />
 							@*<img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">*@
 							@Html.DisplayFor(m => miradouro.Nome);
 						}
@@ -60,8 +60,8 @@
 											var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
 											contagem++;
 											<div class="columnslide">
-												<img src='@imgsrcSlide' style="width:100%; max-height:110px" alt="@fotografiasslide.FotoId" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamiradouro)" />
-												<p>@fotografiasslide.FotoId</p>
+												<img src='@imgsrcSlide' style="width:100%; min-height:100px; max-height:100px" alt="@fotografiasslide.FotoId" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamiradouro)" />
+												@*<p>@fotografiasslide.FotoId</p>*@
 											</div>
 										}
 									}
