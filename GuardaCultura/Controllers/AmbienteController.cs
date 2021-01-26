@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuardaCultura.Controllers
 {
@@ -25,6 +26,30 @@ namespace GuardaCultura.Controllers
         {
             return View();
         }
+
+        public IActionResult Galeria(int page=1, int id=4)
+        {
+            var pagination = new PagingInfoFotografias
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoFotografias.TAM_PAGINA,
+                TotalItems = _context.Fotografia
+                .Where(p => p.MiradouroId==id).Count()
+            };
+            return View(
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => p.Classificacao)
+                                .Where(p => p.MiradouroId == id)
+                                .Where(p=>p.Aprovada)
+                                .Skip((page - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+        }
+
         public IActionResult Paisagens(int page = 1)
         {
             var paginacao = new PagingInfoPaginaMiradouros

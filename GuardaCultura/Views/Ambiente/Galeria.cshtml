@@ -1,0 +1,90 @@
+﻿@model GuardaCultura.Models.ListaFotografias
+@{
+    ViewData["Title"] = "Galeria";
+}
+
+<section class="wrapper style3 container special">
+
+    <header class="major">
+        <h1>Galeria</h1>
+    </header>
+    <body>
+        <div class="row centrado">
+            @{
+                int contagem = 0;
+                int contamipaisagem = 0;
+                @foreach (var paisagem in Model.Fotografias)
+                {
+                    <div class="column" style="margin:1%">
+                        @{
+                            contamipaisagem++;
+                            var base64 = Convert.ToBase64String(paisagem.Foto);
+                            var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
+                            <img src='@imgsrc' style="width:100%; min-height: 200px; max-height:200px" onclick="document.getElementById('id+@paisagem.MiradouroId').style.display='block', currentmiradouro(@contamipaisagem)" class="hover-shadow cursor" />
+                            @*<img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">*@
+                            @Html.DisplayFor(m => paisagem.Nome);
+                        }
+
+                       
+                    </div>
+                }
+            }
+        </div>
+
+        <nav>
+            <ul class="pagination">
+                @{
+                    if (Model.pagination.TotalPages > 1)
+                    {
+                        if (Model.pagination.CurrentPage == 1)
+                        {
+                            <li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="1">1</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="1">1</a></li>
+                        }
+
+
+
+                        int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+                        if (primeiraPagina < 1)
+                        {
+                            primeiraPagina = 1;
+                        }
+
+                        int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+                        if (ultimaPagina > Model.pagination.TotalPages)
+                        {
+                            ultimaPagina = Model.pagination.TotalPages;
+                        }
+
+                        @for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
+                        {
+                            if (p == Model.pagination.CurrentPage)
+                            {
+                                <li class="page-item"><a class="page-link active" href="#">@p</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@p">@p</a></li>
+                            }
+                        }
+
+                        if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
+                        {
+                            <li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                        }
+
+                    }
+                }
+            </ul>
+        </nav>
+    </body>
+    <footer class="major">
+    </footer>
+</section>
