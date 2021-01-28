@@ -230,6 +230,10 @@ namespace GuardaCultura.Data
             */
 
             Random rnd = new Random();
+            string latitude_dd = "40.531592";
+            string longitude_dd = "-7.330919";
+            string latitude_dms = "40º31'53.7''N";
+            string longitude_dms = "7º19'51.3''W";
             for (int i = 0; i < 100; i++)
             {
                 int ocupacaomax = rnd.Next(0, 10);
@@ -243,10 +247,10 @@ namespace GuardaCultura.Data
                         {
                             Nome = "miradouro" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
-                            Latitude_DD = "latitude_dd" + (i + 1),
-                            Longitude_DD = "longitude_dd" + (i + 1),
-                            Latitude_DMS = "latitude_dms" + (i + 1),
-                            Longitude_DMS = "longitude_dms" + (i + 1),
+                            Latitude_DD = latitude_dd,
+                            Longitude_DD = longitude_dd,
+                            Latitude_DMS = latitude_dms,
+                            Longitude_DMS = longitude_dms,
                             Terreno = "Montanha",
                             E_Miradouro = true,
                             Ocupacao_maxima = ocupacaomax,
@@ -292,10 +296,10 @@ namespace GuardaCultura.Data
                         {
                             Nome = "miradouro" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
-                            Latitude_DD = "latitude_dd" + (i + 1),
-                            Longitude_DD = "longitude_dd" + (i + 1),
-                            Latitude_DMS = "latitude_dms" + (i + 1),
-                            Longitude_DMS = "longitude_dms" + (i + 1),
+                            Latitude_DD = latitude_dd,
+                            Longitude_DD = longitude_dd,
+                            Latitude_DMS = latitude_dms,
+                            Longitude_DMS = longitude_dms,
                             Terreno = "Cidade",
                             E_Miradouro = true,
                             Ocupacao_maxima = ocupacaomax,
@@ -313,10 +317,10 @@ namespace GuardaCultura.Data
                         {
                             Nome = "paisagem" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
-                            Latitude_DD = "latitude_dd" + (i + 1),
-                            Longitude_DD = "longitude_dd" + (i + 1),
-                            Latitude_DMS = "latitude_dms" + (i + 1),
-                            Longitude_DMS = "longitude_dms" + (i + 1),
+                            Latitude_DD = latitude_dd,
+                            Longitude_DD = longitude_dd,
+                            Latitude_DMS = latitude_dms,
+                            Longitude_DMS = longitude_dms,
                             Terreno = "Montanha",
                             E_Miradouro = false,
                             Ocupacao_maxima = -1,
@@ -362,10 +366,10 @@ namespace GuardaCultura.Data
                         {
                             Nome = "paisagem" + (i + 1),
                             Localizacao = "localizacao" + (i + 1),
-                            Latitude_DD = "latitude_dd" + (i + 1),
-                            Longitude_DD = "longitude_dd" + (i + 1),
-                            Latitude_DMS = "latitude_dms" + (i + 1),
-                            Longitude_DMS = "longitude_dms" + (i + 1),
+                            Latitude_DD = latitude_dd,
+                            Longitude_DD = longitude_dd,
+                            Latitude_DMS = latitude_dms,
+                            Longitude_DMS = longitude_dms,
                             Terreno = "Planicie",
                             E_Miradouro = false,
                             Ocupacao_maxima = -1,

@@ -1,0 +1,180 @@
+﻿@model GuardaCultura.Models.ListaFotografias
+@{
+    //Layout = "_LayoutApresentacao";//o index é o unico que fica com este comando
+    ViewData["Title"] = "BackOffice";
+}
+
+
+@*<div>
+        <h1 class="center"><strong> Site meteoblue</strong></h1>
+    </div>*@
+
+<header class="special container">
+    <h2>
+        <strong>Back Office</strong>
+    </h2>
+    <span class="icon solid fa-chart-bar"></span>
+</header>
+
+<!-- One -->
+<section class="wrapper style1 container special">
+    <h1><strong>Fotografias</strong></h1>
+    <div class="row">
+        <div class="col-4 col-12-narrower">
+            @{
+                var fotografiaAtual = Model.Fotografias.Where(p => p.Aprovada == false).OrderBy(p => p.FotografiaId).First();
+
+                var base64Atual = Convert.ToBase64String(fotografiaAtual.Foto);
+                var imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+            }
+            <img src='@imgsrcAtual' style="width:100%; min-height: 200px; max-height:200px" class="hover-shadow cursor" />
+            <section>
+                <a asp-controller="Fotografias" asp-action="Index" asp-route-aprovacao="3" class="button btn-primary">Fotografias Pendentes</a>
+            </section>
+        </div>
+        <div class="col-4 col-12-narrower">
+            @{
+                fotografiaAtual = Model.Fotografias.Where(p => p.Aprovada == true).OrderBy(p => p.FotografiaId).First();
+
+                base64Atual = Convert.ToBase64String(fotografiaAtual.Foto);
+                imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+            }
+            <img src='@imgsrcAtual' style="width:100%; min-height: 200px; max-height:200px" class="hover-shadow cursor" />
+            <section>
+                <a asp-controller="Fotografias" asp-action="Index" asp-route-aprovacao="2" class="button btn-primary">Fotografias Aprovadas</a>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+            @{
+                fotografiaAtual = Model.Fotografias.Where(p => p.Aprovada = true).OrderByDescending(p => p.Classificacao).First();
+
+                base64Atual = Convert.ToBase64String(fotografiaAtual.Foto);
+                imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+            }
+            <img src='@imgsrcAtual' style="width:100%; min-height: 200px; max-height:200px" class="hover-shadow cursor" />
+            <section>
+                <a asp-controller="Fotografias" asp-action="Index" asp-route-aprovacao="1" class="button btn-primary">Fotografias</a>
+            </section>
+
+        </div>
+    </div>
+</section>
+
+<!-- Two -->
+<section class="wrapper style3 container special">
+
+    <header class="major">
+        <h1><strong>Miradouros</strong></h1>
+    </header>
+    <br />
+    <div class="row">
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-e_miradouro="2" class="button btn-primary">Miradouros</a>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" class="button btn-primary">Todos</a>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-e_miradouro="3" class="button btn-primary">Paisagens </a>
+            </section>
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-e_miradouro="2" asp-route-m_ativo="2" class="button btn-primary">Miradouros Ativos</a>
+
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-m_ativo="2" class="button btn-primary">Todos Ativos</a>
+
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-e_miradouro="3" asp-route-m_ativo="2" class="button btn-primary">Paisagens Ativas</a>
+            </section>
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-e_miradouro="2" asp-route-m_ativo="3" class="button btn-primary">Miradouros Inativos</a>
+
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-m_ativo="3" class="button btn-primary">Todos Inativos</a>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="Miradouroes" asp-action="Index" asp-route-e_miradouro="3" asp-route-m_ativo="3" class="button btn-primary">Paisagens Inativas</a>
+            </section>
+
+        </div>
+    </div>
+    <br />
+    <br />
+</section>
+<!-- Three -->
+<section class="wrapper style2 container special">
+    <br />
+    <h1><strong>Utilizadores</strong></h1>
+    <br />
+    <div class="row">
+        <div class="col-4 col-12-narrower">
+            <section>
+                <a asp-controller="" asp-action="" class="button btn-primary">Utilizadores</a>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="" asp-action="" class="button btn-primary">Utilizadores </a>
+            </section>
+
+        </div>
+        <div class="col-4 col-12-narrower">
+
+            <section>
+                <a asp-controller="" asp-action="" class="button btn-primary">Utilizadores qq coisa</a>
+            </section>
+
+        </div>
+    </div>
+    <br />
+</section>
+
+<footer class="major">
+</footer>
+
