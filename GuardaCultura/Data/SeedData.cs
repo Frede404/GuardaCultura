@@ -1,6 +1,7 @@
 ﻿using GuardaCultura.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,12 @@ using System.Threading.Tasks;
 /*Instrucoes
  * drop-database -Context GuardaCulturaContext
  * update-database -Context GuardaCulturaContext
+ * 
+ * UTILIZADORES
+ * drop-Database -Context ApplicationDbContext
+ * Update-Database -Context ApplicationDbContext
+ * 
+ * Add-Migration Nome -Context GuardaCulturaContext
 */
 
 namespace GuardaCultura.Data
@@ -22,7 +29,7 @@ namespace GuardaCultura.Data
         {
             PopulateHoras(dbContext);
             PopulateFuncao(dbContext);
-            PopulatePessoa(dbContext);
+            //PopulatePessoa(dbContext);//linha94
             PopulateEstacaoAno(dbContext);
             PopulateTipoImagem(dbContext);
             PopulateMiradouro(dbContext);
@@ -86,7 +93,7 @@ namespace GuardaCultura.Data
             dbContext.SaveChanges();//so fica valido se salvarmos
         }
 
-        private static void PopulatePessoa(GuardaCulturaContext dbContext)
+        /*private static void PopulatePessoa(GuardaCulturaContext dbContext)
         {
             if (dbContext.Pessoa.Any())//ve se ja ha Horas na base de dados
             {
@@ -100,9 +107,10 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Fred",
                     Email = "Fred@mail.com",
-                    Password = "123",
+                    //Password = "123",
                     Fiabilidade = 10,
-                    FuncaoId = 1,
+                    bloqueio=false
+                    //FuncaoId = 1,
                 }
                 );
             dbContext.SaveChanges();//so fica valido se salvarmos
@@ -111,9 +119,10 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Leandro",
                     Email = "Leandro@mail.com",
-                    Password = "321",
+                    //Password = "321",
                     Fiabilidade = 10,
-                    FuncaoId = 2,
+                    bloqueio=false
+                    //FuncaoId = 2,
                 }
                 );
             dbContext.SaveChanges();//so fica valido se salvarmos
@@ -122,14 +131,15 @@ namespace GuardaCultura.Data
                 {
                     Nome = "Turista",
                     Email = "Turista@mail.com",
-                    Password = "turista",
+                    //Password = "turista",
                     Fiabilidade = 0,
-                    FuncaoId = 3,
+                    bloqueio=false
+                    //FuncaoId = 3,
                 }
                 );
 
             dbContext.SaveChanges();//so fica valido se salvarmos
-        }
+        }*/
 
         private static void PopulateEstacaoAno(GuardaCulturaContext dbContext)
         {
@@ -174,7 +184,7 @@ namespace GuardaCultura.Data
                 },
                 new TipoImagem
                 {
-                    Descricao = "Paisagem"
+                    Descricao = "Campo"
                 },
                 new TipoImagem
                 {
@@ -369,7 +379,7 @@ namespace GuardaCultura.Data
             PopulateFotografias(dbContext, false);
         }
 
-        private static async void PopulateFotografias(GuardaCulturaContext dbContext, bool fonte)
+        private static void PopulateFotografias(GuardaCulturaContext dbContext, bool fonte)
         {
             if (fonte)
             {
@@ -417,10 +427,10 @@ namespace GuardaCultura.Data
                 int Tipo_ID = rnd.Next(1, 4);
                 int Pessoa_ID = rnd.Next(1, 4);
                 //int foto_nome = rnd.Next(1, 20);
-                int foto_nome= rnd.Next(50, 61);
-                float classificacao = (float) rnd.Next(0, 1001)/100;
+                int foto_nome = rnd.Next(50, 61);
+                float classificacao = (float)rnd.Next(0, 1001) / 100;
                 int n_votos = rnd.Next(2, 101);
-                byte[] fotogafia= File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
+                byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
 
                 if (Pessoa_ID == 2)
                 {
@@ -490,11 +500,101 @@ namespace GuardaCultura.Data
                 }
                 //ver no inicio da janela as instrucoes
                 dbContext.SaveChanges();//so fica valido se salvarmos
-                if (Miradoruro_ID==qntdmiradouro)
+                if (Miradoruro_ID == qntdmiradouro)
                 {
                     Miradoruro_ID = 0;
                 }
             }
+        }
+
+        //utilizadores
+
+        //Update-Database -Context ApplicationDbContext
+        private const string DEFAULT_ADMIN_USER = "admin@ipg.pt";
+        private const string DEFAULT_ADMIN_PASS = "Admin123!";
+        private const string DEFAULT_Turista_USER = "turista@ipg.pt";
+        private const string DEFAULT_Turista_PASS = "Turista123!";
+        private const string DEFAULT_Controlador_USER = "controlador@ipg.pt";
+        private const string DEFAULT_Controlador_PASS = "Controlador123!";
+        private const string ROLE_ADMIN = "Administrador";
+        private const string ROLE_CONTROLADOR = "Controlador";
+        private const string ROLE_TURISTA = "Turista";
+     
+        internal static async Task SeedDefaultAdminAsync(UserManager<IdentityUser> userManager)
+        {
+            await CriarUtilizador(userManager, DEFAULT_ADMIN_USER, DEFAULT_ADMIN_PASS, ROLE_ADMIN);
+        }
+
+        //verifica se utilizador foi criado
+        private static async Task CriarUtilizador(UserManager<IdentityUser> userManager, string username, string password, string role)
+        {
+            IdentityUser user = await userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                user = new IdentityUser(username);
+                await userManager.CreateAsync(user, password);
+            }
+            
+            if (!await userManager.IsInRoleAsync(user, role))
+            {
+                await userManager.AddToRoleAsync(user, role);
+            }
+        }
+
+        internal static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        {
+            await CriarRole(roleManager, ROLE_ADMIN);
+            await CriarRole(roleManager, ROLE_CONTROLADOR);
+            await CriarRole(roleManager, ROLE_TURISTA);
+        }
+        
+        //verifica se o role foi criado
+        private static async Task CriarRole(RoleManager<IdentityRole> roleManager, string role)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        internal static async Task SeedDevUsersAsync(UserManager<IdentityUser> userManager)
+        {
+            await CriarUtilizador(userManager, DEFAULT_Turista_USER, DEFAULT_Turista_PASS, ROLE_TURISTA);
+            await CriarUtilizador(userManager, DEFAULT_Controlador_USER, DEFAULT_Controlador_PASS, ROLE_CONTROLADOR);
+        }
+
+        internal static void SeedDevData(GuardaCulturaContext dbContext)
+        {
+            if (dbContext.Pessoa.Any())
+            {
+                return;
+            }
+
+            dbContext.Pessoa.Add(new Pessoa
+            {
+                Nome = "Nome Turista",
+                Email = "turista@ipg.pt",
+                Fiabilidade = 0,
+                Bloqueio = false
+            });
+            dbContext.Pessoa.Add(new Pessoa
+            {
+                Nome = "Nome Turista2",
+                Email = "turista2@ipg.pt",
+                Fiabilidade = 0,
+                Bloqueio = false
+            });
+
+            dbContext.Pessoa.Add(new Pessoa
+            {
+                Nome = "Nome Controlador",
+                Email = "controlador@ipg.pt",
+                Fiabilidade = 0,
+                Bloqueio = false
+            });
+
+            dbContext.SaveChanges();
         }
     }
 }

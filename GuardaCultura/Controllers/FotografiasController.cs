@@ -30,7 +30,6 @@ namespace GuardaCultura.Controllers
         // GET: Fotografias
         public async Task<IActionResult> Index(int page = 1, string ordenacao = "FotografiaId", int direcaoordena=1, int aprovacao=1)
         {
-            int teste = 0;
             if (page == 0)
             {
                 page = auxpage;
@@ -224,14 +223,15 @@ namespace GuardaCultura.Controllers
             
             if (ModelState.IsValid)
             {
-                int funcao = _context.Pessoa
+                //aqui roles
+                /*int funcao = _context.Pessoa
                             .Find(fotografia.PessoaId)
-                            .FuncaoId;
+                            .FuncaoId;*/
 
-                if (funcao==1)
+                /*if (funcao==1)
                 {
                     fotografia.Aprovada = true;
-                }
+                }*/
                 // todo: validacoes adicionais antes de inserir a foto
                 fotografia.Classificacao = 5.0f;
                 fotografia.N_Votos = 1;

@@ -15,7 +15,7 @@ namespace GuardaCultura.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.10")
+                .HasAnnotation("ProductVersion", "3.1.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -262,6 +262,9 @@ namespace GuardaCultura.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Bloqueio")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Data_Nasc")
                         .HasColumnType("nvarchar(max)");
 
@@ -273,7 +276,7 @@ namespace GuardaCultura.Migrations
                     b.Property<float>("Fiabilidade")
                         .HasColumnType("real");
 
-                    b.Property<int>("FuncaoId")
+                    b.Property<int?>("FuncaoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nacionalidade")
@@ -283,11 +286,6 @@ namespace GuardaCultura.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(512)")
                         .HasMaxLength(512);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
 
                     b.Property<string>("Sexo")
                         .HasColumnType("nvarchar(max)");
@@ -384,11 +382,9 @@ namespace GuardaCultura.Migrations
 
             modelBuilder.Entity("GuardaCultura.Models.Pessoa", b =>
                 {
-                    b.HasOne("GuardaCultura.Models.Funcao", "Funcao")
+                    b.HasOne("GuardaCultura.Models.Funcao", null)
                         .WithMany("Pessoas")
-                        .HasForeignKey("FuncaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FuncaoId");
                 });
 #pragma warning restore 612, 618
         }

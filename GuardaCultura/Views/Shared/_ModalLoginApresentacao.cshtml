@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model GuardaCultura.Models.LoginViewModel
+
+<h2 class="major">Entrar</h2>
+<form id="account" method="post" action="#">
+	<div class="fields">
+		<div asp-validation-summary="All" class="text-danger" id="errologin" style="display:none"></div>
+		<div class="field">
+			@*<label for="email">Email</label>
+			<input type="text" name="email" id="email" />*@
+			<label asp-for="Email"></label>
+			<input asp-for="Email" class="form-control" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+		<div class="field">
+			@*<label for="password">Password</label>
+			<input class="password" type="password" name="Password" id="PasswordLogin" placeholder="Password" />*@
+			<label asp-for="Password"></label>
+			<input asp-for="Password" class="password" id="PasswordLogin" placeholder="Password" />
+			<i class="fa fa-eye" onclick="show('olhoPLA','PasswordLogin')" id="olhoPLA"></i>
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+	</div>
+	<ul class="actions">
+		<li><input type="submit" value="Login" class="primary" asp-controller="Ambiente" asp-action="Login" /></li><!--ir para o home/index-->
+		<li><input type="reset" value="Reset" onclick="resetPass('olhoPLA', 'PasswordLogin')" /></li>
+	</ul>
+</form>
