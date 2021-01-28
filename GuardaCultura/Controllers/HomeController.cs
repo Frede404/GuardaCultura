@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GuardaCultura.Models;
+using GuardaCultura.Data;
 
 namespace GuardaCultura.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly GuardaCulturaContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, GuardaCulturaContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -23,9 +26,14 @@ namespace GuardaCultura.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult BackOffice()
         {
-            return View();
+            return View(
+                new ListaFotografias
+                {
+                    Fotografias=_context.Fotografia
+                }
+                );
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

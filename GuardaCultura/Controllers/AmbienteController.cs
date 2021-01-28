@@ -325,6 +325,8 @@ namespace GuardaCultura.Controllers
 
         public async Task<IActionResult> Votar(int page = 1, int fotoId = 4, string classificacao = "")
         {
+            int classFoto = 0;
+
             var pagination = new PagingInfoFotografias
             {
                 CurrentPage = page,
@@ -332,24 +334,49 @@ namespace GuardaCultura.Controllers
                 TotalItems = _context.Fotografia
                 .Where(p => p.MiradouroId == fotoId).Count()
             };
-            int classFoto = Int32.Parse(classificacao);
-            
-            
+
+            try
+            {
+                classFoto = Int32.Parse(classificacao);
+            }
+            catch
+            {
+                ModelState.AddModelError("Longitude_DD", "As coordenadas não são validas, insira apenas valores numericos!");
+
+                return View("Galeria",
+                       new ListaFotografias
+                       {
+                           Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                               .OrderByDescending(p => p.Classificacao)
+                               .Where(p => p.MiradouroId == fotoId)
+                               .Where(p => p.Aprovada)
+                               .Skip((page - 1) * pagination.PageSize)
+                               .Take(pagination.PageSize),
+                           pagination = pagination
+                       }
+                   );
+            }
+                
+
+
             Fotografia foto = await _context.Fotografia.FindAsync(fotoId);
-
+            float classFotoAntiga = foto.Classificacao;
             int nVotos = foto.N_Votos;
-            classFoto = (classFoto * nVotos + 1)/(nVotos +1);
-            foto.Classificacao = classFoto;
-            foto.N_Votos++;
+            float novaclassificacao = 0;
+            int miradouro_id = foto.MiradouroId;
+            novaclassificacao = (classFotoAntiga * nVotos + classFoto) / (nVotos +1);
+            foto.Classificacao = novaclassificacao;
+            foto.N_Votos = nVotos+1;
+            
             _context.Update(foto);
-
             await _context.SaveChangesAsync();
-            return View("Ambiente",
+
+            return View("Galeria",
                         new ListaFotografias
                         {
                             Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
-                                .OrderBy(p => p.Classificacao)
-                                .Where(p => p.MiradouroId == fotoId)
+                                .OrderByDescending(p => p.Classificacao)
+                                .Where(p => p.MiradouroId == miradouro_id)
                                 .Where(p => p.Aprovada)
                                 .Skip((page - 1) * pagination.PageSize)
                                 .Take(pagination.PageSize),
