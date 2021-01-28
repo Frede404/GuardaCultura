@@ -184,6 +184,50 @@ namespace GuardaCultura.Controllers
             return RedirectToAction(nameof(Index));
         }*/
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegistarApresentacao(RegistarPessoaViewModel PessoaInfo)
+        {
+            if (!ModelState.IsValid)//caso haja erro fica na mesma pagina
+            {
+                ModelState.AddModelError("Email", "Este Email ja esta registado");
+                return RedirectToAction("Index", "Home", new { erro = "Registar" });
+            }
+
+            //cria utilizador
+            string username = PessoaInfo.Email;
+            IdentityUser user = await _userManager.FindByNameAsync(username);
+
+            if (user != null)//se o email ja existe
+            {
+                ModelState.AddModelError("Email", "Este Email ja esta registado");
+                return RedirectToAction("Index", "Home", new { erro = "Registar" });
+                //return View(PessoaInfo);
+            }
+
+            user = new IdentityUser(username);
+            await _userManager.CreateAsync(user, PessoaInfo.Password);
+            await _userManager.CreateAsync(user, "Turista");
+
+            //cria Pessoa
+            Pessoa pessoa = new Pessoa
+            {
+                Nome = PessoaInfo.Nome,
+                Email = PessoaInfo.Email,
+                Data_Nasc = PessoaInfo.Data_Nasc,
+                Sexo = PessoaInfo.Sexo,
+                Nacionalidade = PessoaInfo.Nacionalidade,
+                Fiabilidade = 0
+            };
+
+            _context.Add(pessoa);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(AmbienteController.Ambiente), "Ambiente");
+
+            //ViewData["FuncaoId"] = new SelectList(_context.Funcao, "FuncaoId", "FuncaoDesempenhar", pessoa.FuncaoId);
+            //return View(pessoaInfo);
+        }
+
         private bool PessoaExists(int id)
         {
             return _context.Pessoa.Any(e => e.PessoaId == id);

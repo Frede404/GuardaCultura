@@ -18,8 +18,18 @@ namespace GuardaCultura.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string erro="")
         {
+            if (erro == "Login")
+            {
+                ViewBag.Erro = erro;
+                ModelState.AddModelError("errologin", "Login invalido");
+            }
+            if (erro == "Registar")
+            {
+                ViewBag.Erro = erro;
+                ModelState.AddModelError("erroregistar", "Registo invalido");
+            }
             return View();
         }
 

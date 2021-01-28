@@ -108,7 +108,7 @@ function DataMaxima(elemento) {
     hoje = ano + '-' + mes + '-' + dia;
     diaerro = dia + "/" + mes + "/" + ano;
     elemento.setAttribute("max", hoje);//altera a data maxima que pode inserir
-    elemento.setAttribute("title", "Introduza uma data igual ou inferior a "+diaerro)//mensagem de erro
+    elemento.setAttribute("title", "Introduza uma data igual ou inferior a " + diaerro);//mensagem de erro
 }
 
 function CorrigeCoordenadasDD(elemento) {

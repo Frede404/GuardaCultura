@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GuardaCultura.Areas.Identity.Pages.Account;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GuardaCultura.Controllers
 {
@@ -12,9 +16,17 @@ namespace GuardaCultura.Controllers
     {
         private readonly GuardaCulturaContext _context;
 
-        public AmbienteController(GuardaCulturaContext context)// recebe a bd
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
+
+        public AmbienteController(GuardaCulturaContext context,
+            SignInManager<IdentityUser> signInManager,
+            ILogger<LoginModel> logger)// recebe a bd
         {
             _context = context;
+
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
         public IActionResult Ambiente()
@@ -284,7 +296,42 @@ namespace GuardaCultura.Controllers
                 );
             //return View(await _context.Miradouro.ToListAsync());
         }
+        public async Task<IActionResult> Login(LoginViewModel Input,string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
 
+            if (ModelState.IsValid)
+            {
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User logged in.");
+                    /*return LocalRedirect(returnUrl);*/
+                    return RedirectToAction("Ambiente", "Ambiente");
+                }
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                }
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("User account locked out.");
+                    return RedirectToPage("./Lockout");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return PartialView("_ModalLoginApresentacao");
+                }
+            }
+
+            
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("Index","Home",new { erro="Login"});
+            //return RedirectToAction("Miradouros");
+        }
         public IActionResult Sobre()
         {
             return View();
