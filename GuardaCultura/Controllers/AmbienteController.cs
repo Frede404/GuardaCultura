@@ -26,30 +26,7 @@ namespace GuardaCultura.Controllers
         {
             return View();
         }
-
-        public IActionResult Galeria(int page=1, int id=4)
-        {
-            var pagination = new PagingInfoFotografias
-            {
-                CurrentPage = page,
-                PageSize = PagingInfoFotografias.TAM_PAGINA,
-                TotalItems = _context.Fotografia
-                .Where(p => p.MiradouroId==id).Count()
-            };
-            return View(
-                        new ListaFotografias
-                        {
-                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
-                                .OrderBy(p => p.Classificacao)
-                                .Where(p => p.MiradouroId == id)
-                                .Where(p=>p.Aprovada)
-                                .Skip((page - 1) * pagination.PageSize)
-                                .Take(pagination.PageSize),
-                            pagination = pagination
-                        }
-                    );
-        }
-
+     
         public IActionResult Paisagens(int page = 1)
         {
             var paginacao = new PagingInfoPaginaMiradouros
@@ -321,6 +298,64 @@ namespace GuardaCultura.Controllers
         public IActionResult Sobre()
         {
             return View();
+        }
+
+        public IActionResult Galeria(int page = 1, int id = 4)
+        {
+            var pagination = new PagingInfoFotografias
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoFotografias.TAM_PAGINA,
+                TotalItems = _context.Fotografia
+                .Where(p => p.MiradouroId == id).Count()
+            };
+            return View(
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => p.Classificacao)
+                                .Where(p => p.MiradouroId == id)
+                                .Where(p => p.Aprovada)
+                                .Skip((page - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+        }
+
+        public async Task<IActionResult> Votar(int page = 1, int fotoId = 4, string classificacao = "")
+        {
+            var pagination = new PagingInfoFotografias
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoFotografias.TAM_PAGINA,
+                TotalItems = _context.Fotografia
+                .Where(p => p.MiradouroId == fotoId).Count()
+            };
+            int classFoto = Int32.Parse(classificacao);
+            
+            
+            Fotografia foto = await _context.Fotografia.FindAsync(fotoId);
+
+            int nVotos = foto.N_Votos;
+            classFoto = (classFoto * nVotos + 1)/(nVotos +1);
+            foto.Classificacao = classFoto;
+            foto.N_Votos++;
+            _context.Update(foto);
+
+            await _context.SaveChangesAsync();
+            return View("Ambiente",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => p.Classificacao)
+                                .Where(p => p.MiradouroId == fotoId)
+                                .Where(p => p.Aprovada)
+                                .Skip((page - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
         }
     }
 }

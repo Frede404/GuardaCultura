@@ -13,78 +13,111 @@
             @{
                 int contagem = 0;
                 int contamipaisagem = 0;
-                @foreach (var paisagem in Model.Fotografias)
+                @foreach (var Fotografia in Model.Fotografias)
                 {
                     <div class="column" style="margin:1%">
                         @{
                             contamipaisagem++;
-                            var base64 = Convert.ToBase64String(paisagem.Foto);
+                            var base64 = Convert.ToBase64String(Fotografia.Foto);
                             var imgsrc = string.Format("data:image/gif; base64,{0}", base64);
-                            <img src='@imgsrc' style="width:100%; min-height: 200px; max-height:200px" onclick="document.getElementById('id+@paisagem.MiradouroId').style.display='block', currentmiradouro(@contamipaisagem)" class="hover-shadow cursor" />
+                            <img src='@imgsrc' style="width:100%; min-height: 200px; max-height:200px" onclick="document.getElementById('id+@Fotografia.FotografiaId').style.display='block', currentmiradouro(@contamipaisagem)" class="hover-shadow cursor" />
                             @*<img src='@imgsrc' style="width:100%" onclick="openModal();currentSlide(1);" class="hover-shadow cursor">*@
-                            @Html.DisplayFor(m => paisagem.Nome);
                         }
-
-                       
                     </div>
-                }
-            }
-        </div>
-
-        <nav>
-            <ul class="pagination">
-                @{
-                    if (Model.pagination.TotalPages > 1)
-                    {
-                        if (Model.pagination.CurrentPage == 1)
-                        {
-                            <li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="1">1</a></li>
-                        }
-                        else
-                        {
-                            <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="1">1</a></li>
-                        }
-
-
-
-                        int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
-                        if (primeiraPagina < 1)
-                        {
-                            primeiraPagina = 1;
-                        }
-
-                        int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
-                        if (ultimaPagina > Model.pagination.TotalPages)
-                        {
-                            ultimaPagina = Model.pagination.TotalPages;
-                        }
-
-                        @for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
-                        {
-                            if (p == Model.pagination.CurrentPage)
-                            {
-                                <li class="page-item"><a class="page-link active" href="#">@p</a></li>
-                            }
-                            else
-                            {
-                                <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@p">@p</a></li>
-                            }
-                        }
-
-                        if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
-                        {
-                            <li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
-                        }
-                        else
-                        {
-                            <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
-                        }
-
+                    <div id="id+@Fotografia.FotografiaId" class="modal">
+                        <span class="close cursor" onclick="document.getElementById('id+@Fotografia.FotografiaId').style.display='none'">&times;</span>
+                        <form class="modal-content">
+                            <div class="container">
+                                @foreach (var fotografiaAtual in Model.Fotografias.Where(p => p.FotografiaId == Fotografia.FotografiaId))
+                                {
+                                    var base64Atual = Convert.ToBase64String(fotografiaAtual.Foto);
+                                    var imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+                                }
+                                <img src='@imgsrc' style="width:100%" class="hover-shadow cursor" />
+                            </div>
+                            <div>
+                                <br />
+                                <p>Classificação</p>
+                            </div>
+                            <form asp-action="Votar">
+                                <div class="form-group">
+                                    <label>Classificação</label>
+                                    <select required name="classificacao" style="background-color:aliceblue">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    @*<input hiden required name="classificacao" class="form-control" min="0" max="10" />*@
+                                    <input type="hidden" name="fotoId" class="form-control" value="@Fotografia.FotografiaId" />
+                                    <input type="hidden" name="page" class="form-control" value="@Model.pagination.CurrentPage" />
+                                </div>
+                                <br />
+                                <input asp-controller="Ambiente" asp-action="Votar"  asp-route-fotoId="@Fotografia.FotografiaId" type="submit" value="Votar" class="btn btn-primary" />
+                            </form>
+                        </form>
+                    </div>
                     }
-                }
-            </ul>
-        </nav>
-    </body>
+                    }
+
+                    <nav>
+                        <ul class="pagination">
+                            @{
+                                if (Model.pagination.TotalPages > 1)
+                                {
+                                    if (Model.pagination.CurrentPage == 1)
+                                    {
+                                        <li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="1">1</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="1">1</a></li>
+                                    }
+
+                                    int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+                                    if (primeiraPagina < 1)
+                                    {
+                                        primeiraPagina = 1;
+                                    }
+
+                                    int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+                                    if (ultimaPagina > Model.pagination.TotalPages)
+                                    {
+                                        ultimaPagina = Model.pagination.TotalPages;
+                                    }
+
+                                    @for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
+                                    {
+                                        if (p == Model.pagination.CurrentPage)
+                                        {
+                                            <li class="page-item"><a class="page-link active" href="#">@p</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@p">@p</a></li>
+                                        }
+                                    }
+
+                                    if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
+                                    {
+                                        <li class="page-item"><a class="page-link active" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link" asp-action="Paisagens" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                                    }
+
+                                }
+                            }
+                        </ul>
+                    </nav>
+</body>
     <footer class="major">
     </footer>
 </section>

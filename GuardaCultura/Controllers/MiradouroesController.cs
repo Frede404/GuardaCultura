@@ -24,160 +24,38 @@ namespace GuardaCultura.Controllers
 
 
         // GET: Miradouroes
-        public async Task<IActionResult> Index(int page = 1, int e_miradouro = 1, int estado = 1)// lista dos Miradouros
+        public async Task<IActionResult> Index(int page = 1, int e_miradouro = 1, int estado = 1, int m_ativo = 1, string m_nome = null)// lista dos Miradouros
         {
             //return View(await _context.Miradouro.ToListAsync());// alteracoes assincronas
-            
-            Boolean ativo;
-            Boolean miradouroPaisagem;
 
-            if (e_miradouro == 0)
+            var paginacao = new PagingInfoMiradouro
             {
-                e_miradouro = auxEmiradouro;
-            }
-            else
-            {
-                auxEmiradouro = e_miradouro;
-            }
+                CurrentPage = page,
+                PageSize = PagingInfoMiradouro.TAM_PAGINA,
+                TotalItems = _context.Miradouro
+                .Where(m => e_miradouro == 1 || m.E_Miradouro == (e_miradouro == 2))
+                .Where(m => m_ativo == 1 || m.Ativo == (m_ativo == 2))
+                .Where(m => m_nome == null || m.Nome.Contains(m_nome))
+                .Count()
+                
+            };
 
-            if (estado == 0)
-            {
-                estado = auxEstado;
-            }
-            else
-            {
-                auxEstado = estado;
-            }
-
-            if (e_miradouro==1)
-            {
-                if (estado == 1)//mostra tudo
+            return View(
+                new ListaMiradouro
                 {
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro.Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao
-                        }
-                        );
+                    Miradouros = _context.Miradouro
+                    .Where(m => e_miradouro == 1 || m.E_Miradouro == (e_miradouro == 2))
+                    .Where(m => m_ativo == 1 || m.Ativo == (m_ativo == 2))
+                    .Where(m => m_nome == null || m.Nome.Contains(m_nome))
+                    .OrderBy(p => p.MiradouroId)
+                    .Skip((page - 1) * paginacao.PageSize)
+                    .Take(paginacao.PageSize),
+                    pagination = paginacao,
+                    EMiradouro = e_miradouro,
+                    MAtivo = m_ativo,
+                    MNome = m_nome
                 }
-                else
-                {
-                    if (estado == 2)
-                    {
-                        ativo = true;//todos ativos
-                    }
-                    else
-                    {
-                        ativo = false;//todos desativos
-                    }
-
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro
-                        .Where(p => p.Ativo == ativo)
-                        .Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            .Where(p => p.Ativo == ativo)
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao,
-                        }
-                        );
-
-                }
-            }
-            else//ou miradouro ou paisagem
-            {
-                if (e_miradouro == 2)
-                {
-                    miradouroPaisagem = true;
-                }
-                else
-                {
-                    miradouroPaisagem = false;
-                }
-
-                if (estado == 1)//ativos e desativos
-                {
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro
-                        //.Where(p => p.Ativo ==)
-                        .Where(p => p.E_Miradouro == miradouroPaisagem)
-                        .Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            //.Where(p => p.Ativo ==)
-                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
-                            //.Where(p => p.E_Miradouro==false)//so paisagens
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao
-                        }
-                        );
-                }
-                else
-                {
-                    if (estado == 2)
-                    {
-                        ativo = true;//paisagens ou miradouros ativos
-                    }
-                    else
-                    {
-                        ativo = false;//paisagens ou miradouros desativos
-                    }
-
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro
-                        .Where(p => p.Ativo == ativo)
-                        .Where(p => p.E_Miradouro == miradouroPaisagem)
-                        .Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            .Where(p => p.Ativo == ativo)
-                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
-                                                                     //.Where(p => p.E_Miradouro==false)//so paisagens
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao
-                        }
-                        );
-                }
-            }
+                );
         }
 
         // GET: Miradouroes/Details/5
@@ -573,7 +451,6 @@ namespace GuardaCultura.Controllers
                 miradouro.Longitude_DMS = "" + grausFinalLongDMS + "º" + minutosFinalLongDMS + "'" + segundosFinalLongDMS + "''" + dirWE;
                 miradouro.Longitude_DMS = miradouro.Longitude_DMS.Replace(",", ".");
             }
-            //-------------------------------------------------------------------------------------------------------
 
             if (ModelState.IsValid)
             {

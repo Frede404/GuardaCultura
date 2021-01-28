@@ -35,43 +35,45 @@
 
 						<div id="id+@paisagem.MiradouroId" class="modal">
 							<span class="close cursor" onclick="document.getElementById('id+@paisagem.MiradouroId').style.display='none'">&times;</span>
-							<form class="modal-content">
-								<div class="caption-container">
-									<p>@paisagem.Nome</p>
-								</div>
-								<div class="rowslide">
-									@{
-										foreach (var fotografiasslide in Model.Fotografias.Where(p => p.MiradouroId == paisagem.MiradouroId))
-										{
-											var base64Slide = Convert.ToBase64String(fotografiasslide.Fotografia);
-											var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
-											contagem++;
-											<div class="columnslide">
-												<img src='@imgsrcSlide' style="width:100%; min-height:100px; max-height:100px" alt="@fotografiasslide.FotoId" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamipaisagem)" />
-												@*<p>@fotografiasslide.FotoId</p>*@
-											</div>
-										}
-									}
-								</div>
-								<div class="container">
-									@foreach (var fotografiaAtual in Model.Fotografias.Where(p => p.MiradouroId == paisagem.MiradouroId))
-									{
-										var base64Atual = Convert.ToBase64String(fotografiaAtual.Fotografia);
-										var imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
-										<div class="mySlides">
-											@*<div class="numbertext">@Html.Encode(controlo) / 5</div>*@
-											<img src='@imgsrcAtual' style="width:100%">
-										</div>
-									}
-									<a class="prev" onclick="plusSlides(-1, @contamipaisagem)">❮</a>
-									<a class="next" onclick="plusSlides(1, @contamipaisagem)">❯</a>
+                            <form class="modal-content">
+                                <div class="caption-container">
+                                    <p>@paisagem.Nome</p>
+                                </div>
+                                <div class="rowslide">
+                                    @{
+                                        foreach (var fotografiasslide in Model.Fotografias.Where(p => p.MiradouroId == paisagem.MiradouroId))
+                                        {
+                                            var base64Slide = Convert.ToBase64String(fotografiasslide.Fotografia);
+                                            var imgsrcSlide = string.Format("data:image/gif; base64,{0}", base64Slide);
+                                            contagem++;
+                                            <div class="columnslide">
+                                                <img src='@imgsrcSlide' style="width:100%; min-height:100px; max-height:100px" alt="@fotografiasslide.FotoId" class="hover-shadow demo cursor" onclick="currentSlide(@contagem, @contamipaisagem)" />
+                                                @*<p>@fotografiasslide.FotoId</p>*@
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="container">
+                                    @foreach (var fotografiaAtual in Model.Fotografias.Where(p => p.MiradouroId == paisagem.MiradouroId))
+                                    {
+                                        var base64Atual = Convert.ToBase64String(fotografiaAtual.Fotografia);
+                                        var imgsrcAtual = string.Format("data:image/gif; base64,{0}", base64Atual);
+                                        <div class="mySlides">
+                                            @*<div class="numbertext">@Html.Encode(controlo) / 5</div>*@
+                                            <img src='@imgsrcAtual' style="width:100%">
+                                        </div>
+                                    }
+                                    <a class="prev" onclick="plusSlides(-1, @contamipaisagem)">❮</a>
+                                    <a class="next" onclick="plusSlides(1, @contamipaisagem)">❯</a>
 
-									<div class="caption-container">
-										<p id="caption"></p>
-									</div>
-								</div>
+                                    @*<div class="caption-container">
+                                        <p id="caption"></p>
+                                    </div>*@
+                                </div>
 
+                                <a asp-controller="Ambiente" asp-action="Galeria" asp-route-id="@paisagem.MiradouroId" class="button btn-primary">Todas as Fotos</a>
                                 <div class="descricaoimg">
+
                                     <p>
                                         Localização:
                                         @Html.DisplayFor(modelItem => paisagem.Localizacao)
@@ -106,7 +108,7 @@
                                         </p>
                                     }
                                 </div>
-							</form>
+                            </form>
 						</div>
 					</div>
 				}
