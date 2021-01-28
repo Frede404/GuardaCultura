@@ -7,8 +7,8 @@
 <h2 class="major">Registar</h2>
 <form method="post" asp-controller="Pessoas" asp-action="RegistarApresentacao">
 	@*action="#">*@
+	<div asp-validation-summary="All" class="text-danger" id="errologin" style="display:none"></div>
 	<div class="fields">
-		<div asp-validation-summary="All" class="text-danger" id="erroregistar" style="display:none"></div>
 		<div class="field half">
 			<label asp-for="Nome" class="control-label"></label>
 			<input asp-for="Nome" class="form-control" />

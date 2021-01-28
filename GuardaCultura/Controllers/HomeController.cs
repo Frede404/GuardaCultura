@@ -18,7 +18,7 @@ namespace GuardaCultura.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string erro="")
+        public IActionResult Index(string erro="", RegistarPessoaViewModel PessoaInfo=null)
         {
             if (erro == "Login")
             {
