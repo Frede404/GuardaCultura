@@ -24,160 +24,38 @@ namespace GuardaCultura.Controllers
 
 
         // GET: Miradouroes
-        public async Task<IActionResult> Index(int page = 1, int e_miradouro = 1, int estado = 1)// lista dos Miradouros
+        public async Task<IActionResult> Index(int page = 1, int e_miradouro = 1, int estado = 1, int m_ativo = 1, string m_nome = null)// lista dos Miradouros
         {
             //return View(await _context.Miradouro.ToListAsync());// alteracoes assincronas
-            
-            Boolean ativo;
-            Boolean miradouroPaisagem;
 
-            if (e_miradouro == 0)
+            var paginacao = new PagingInfoMiradouro
             {
-                e_miradouro = auxEmiradouro;
-            }
-            else
-            {
-                auxEmiradouro = e_miradouro;
-            }
+                CurrentPage = page,
+                PageSize = PagingInfoMiradouro.TAM_PAGINA,
+                TotalItems = _context.Miradouro
+                .Where(m => e_miradouro == 1 || m.E_Miradouro == (e_miradouro == 2))
+                .Where(m => m_ativo == 1 || m.Ativo == (m_ativo == 2))
+                .Where(m => m_nome == null || m.Nome.Contains(m_nome))
+                .Count()
+                
+            };
 
-            if (estado == 0)
-            {
-                estado = auxEstado;
-            }
-            else
-            {
-                auxEstado = estado;
-            }
-
-            if (e_miradouro==1)
-            {
-                if (estado == 1)//mostra tudo
+            return View(
+                new ListaMiradouro
                 {
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro.Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao
-                        }
-                        );
+                    Miradouros = _context.Miradouro
+                    .Where(m => e_miradouro == 1 || m.E_Miradouro == (e_miradouro == 2))
+                    .Where(m => m_ativo == 1 || m.Ativo == (m_ativo == 2))
+                    .Where(m => m_nome == null || m.Nome.Contains(m_nome))
+                    .OrderBy(p => p.MiradouroId)
+                    .Skip((page - 1) * paginacao.PageSize)
+                    .Take(paginacao.PageSize),
+                    pagination = paginacao,
+                    EMiradouro = e_miradouro,
+                    MAtivo = m_ativo,
+                    MNome = m_nome
                 }
-                else
-                {
-                    if (estado == 2)
-                    {
-                        ativo = true;//todos ativos
-                    }
-                    else
-                    {
-                        ativo = false;//todos desativos
-                    }
-
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro
-                        .Where(p => p.Ativo == ativo)
-                        .Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            .Where(p => p.Ativo == ativo)
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao,
-                        }
-                        );
-
-                }
-            }
-            else//ou miradouro ou paisagem
-            {
-                if (e_miradouro == 2)
-                {
-                    miradouroPaisagem = true;
-                }
-                else
-                {
-                    miradouroPaisagem = false;
-                }
-
-                if (estado == 1)//ativos e desativos
-                {
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro
-                        //.Where(p => p.Ativo ==)
-                        .Where(p => p.E_Miradouro == miradouroPaisagem)
-                        .Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            //.Where(p => p.Ativo ==)
-                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
-                            //.Where(p => p.E_Miradouro==false)//so paisagens
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao
-                        }
-                        );
-                }
-                else
-                {
-                    if (estado == 2)
-                    {
-                        ativo = true;//paisagens ou miradouros ativos
-                    }
-                    else
-                    {
-                        ativo = false;//paisagens ou miradouros desativos
-                    }
-
-                    var paginacao = new PagingInfoMiradouro
-                    {
-                        CurrentPage = page,
-                        PageSize = PagingInfoMiradouro.TAM_PAGINA,
-                        TotalItems = _context.Miradouro
-                        .Where(p => p.Ativo == ativo)
-                        .Where(p => p.E_Miradouro == miradouroPaisagem)
-                        .Count()
-                    };
-
-                    return View(
-                        new ListaMiradouro
-                        {
-                            Miradouros = _context.Miradouro
-                            .OrderBy(p => p.MiradouroId)
-                            .Where(p => p.Ativo == ativo)
-                            .Where(p => p.E_Miradouro == miradouroPaisagem)//miradouros
-                                                                     //.Where(p => p.E_Miradouro==false)//so paisagens
-                            .Skip((page - 1) * paginacao.PageSize)
-                            .Take(paginacao.PageSize),
-                            pagination = paginacao
-                        }
-                        );
-                }
-            }
+                );
         }
 
         // GET: Miradouroes/Details/5
@@ -211,35 +89,152 @@ namespace GuardaCultura.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MiradouroId,Nome,Localizacao,Terreno,E_Miradouro,Condicoes,Ocupacao_maxima,Descricao")] Miradouro miradouro,
-                                                        string grausLat ="0", string minutoLat ="0", string segundosLat ="0", char DirNS='N', string grausLong ="0", string minutosLong ="0", string segundosLong ="0", char DirWE='E', string Coordenadas="DD", string latiDD ="0", string longDD ="0")//serve para evitar alguns ataques, só recebe campos que estejam no Bind
+                                                        string grausLat ="a", string minutoLat = "a", string segundosLat = "a", char DirNS='N', string grausLong = "a", string minutosLong = "a", string segundosLong = "a", char DirWE='E',
+                                                            string Coordenadas="DD", string latiDD ="a", string longDD ="a")//serve para evitar alguns ataques, só recebe campos que estejam no Bind
         {
-            
+            /*
+             * DMS
+             * latitude grau -> 0 - 90
+             * longitude grau -> 0 - 180
+             * minuto -> 0 - 59
+             * segundo -> 0 - 59.9999
+             * 
+             * DD
+             * Latitude -> -90.0000 - 90.0000
+             * Longitude -> -180.0000 - 180.0000
+             */
+
+            int grausLatitude = 0;
+            int minutosLatitude = 0;
+            float segundosLatitude = 0;
+            double LatDD = 0;
+
+            int grausLongitude = 0;
+            int minutosLongitude = 0;
+            float segundosLongitude = 0;
+            double LongDD = 0;
+
+            int grausFinaLatlDMS = 0;
+            float auxminutosLat = 0;
+            int minutosFinalLatDMS = 0;
+            float auxsegundosLat = 0;
+            float segundosFinalLatDMS = 0;
+
+            int grausFinalLongDMS = 0;
+            float auxminutosLong = 0;
+            int minutosFinalLongDMS = 0;
+            float auxsegundosLong = 0;
+            float segundosFinalLongDMS = 0;
+
+            double latDoubleDMS = 0;
+            char dirNS= 'N';
+
+            double longDoubleDMS = 0;
+            char dirWE='W';
+
+            bool Coord_aceites = false;
+
             if (Coordenadas == "DMS")
-            {   
-                miradouro.Latitude_DMS = string.Concat(grausLat, "º", minutoLat ,"'", segundosLat ,"''", DirNS);
+            {
+                try
+                {
+                    //latitude DMS
+                    grausLatitude = Int32.Parse(grausLat);
+                    minutosLatitude = Int32.Parse(minutoLat);
+                    segundosLatitude = Convert.ToSingle(segundosLat);
+                    LatDD = grausLatitude + (minutosLatitude / 60.0) + (segundosLatitude / 3600.0);
+
+                    //longitude DMS
+                    grausLongitude = Int32.Parse(grausLong);
+                    minutosLongitude = Int32.Parse(minutosLong);
+                    segundosLongitude = Convert.ToSingle(segundosLong);
+                    LongDD = grausLongitude + (minutosLongitude / 60.0) + (segundosLongitude / 3600.0);
+
+
+                    if ((grausLatitude >= 0 && grausLatitude <= 90) && (minutosLatitude >= 0 && minutosLatitude <= 60) && (segundosLatitude >= 0 && segundosLatitude <= 60) &&
+                    (grausLongitude >= 0 && grausLongitude <= 90) && (minutosLongitude >= 0 && minutosLongitude <= 60) && (segundosLongitude >= 0 && segundosLongitude <= 60))
+                    {
+                        Coord_aceites = true;
+                    }
+
+
+                }
+                catch
+                {
+                    if ((grausLat == null || minutoLat == null || segundosLat == null) ||
+                            (grausLong == null || minutosLong == null || segundosLong == null))
+                    {
+                        ModelState.AddModelError("Longitude_DD", "As coordenadas é um campo obrigatório!");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Longitude_DD", "As coordenadas não são validas, insira apenas valores numericos!");
+                    }
+
+                    return View(miradouro);
+                }
+            }
+
+            if (Coordenadas == "DD")
+            {
+                try
+                {
+                    //latitude DD
+                    latDoubleDMS = Convert.ToDouble(latiDD);
+
+                    //longitude DD
+                    longDoubleDMS = Convert.ToDouble(longDD);
+                    if (latiDD != null && longDD != null)
+                    {
+                        if ((latDoubleDMS >= -90 && latDoubleDMS <= 90) && (longDoubleDMS >= -180 && longDoubleDMS <= 180))
+                        {
+                            Coord_aceites = true;
+                        }
+                    }
+                }
+                catch
+                {
+                    ModelState.AddModelError("Longitude_DD", "As coordenadas não são validas, insira apenas valores numericos!");
+
+                    return View(miradouro);
+                }
+            }
+           
+             if(!Coord_aceites)
+             {
+                 ModelState.AddModelError("Longitude_DD", "As coordenadas é um campo obrigatório!");
+
+                 return View(miradouro);
+             }
+
+            if (Coordenadas == "DMS")
+            {
+                miradouro.Latitude_DMS = string.Concat(grausLat, "º", minutoLat, "'", segundosLat, "''", DirNS);
                 miradouro.Latitude_DMS = miradouro.Latitude_DMS.Replace(",", ".");
 
                 miradouro.Longitude_DMS = string.Concat(grausLong, "º", minutosLong, "'", segundosLong, "''", DirWE);
                 miradouro.Longitude_DMS = miradouro.Longitude_DMS.Replace(",", ".");
 
                 //latitude DD
-                int grausLatitude = Int32.Parse(grausLat);
-                int minutosLatitude = Int32.Parse(minutoLat);
-                float segundosLatitude = Convert.ToSingle(segundosLat);
-                double LatDD = grausLatitude + (minutosLatitude / 60.0) + (segundosLatitude / 3600.0);
+                /*grausLatitude = Int32.Parse(grausLat);
+                minutosLatitude = Int32.Parse(minutoLat);
+                segundosLatitude = Convert.ToSingle(segundosLat);
+                LatDD = grausLatitude + (minutosLatitude / 60.0) + (segundosLatitude / 3600.0);*/
                 if (DirNS == 'S')
                 {
-                    LatDD = LatDD * -1;                    
+                    LatDD = LatDD * -1;
                 }
                 LatDD = Math.Round(LatDD, 6);
                 miradouro.Latitude_DD = "" + LatDD;
                 miradouro.Latitude_DD = miradouro.Latitude_DD.Replace(",", ".");
 
                 //longitude DD
-                int grausLongitude = Int32.Parse(grausLong);
-                int minutosLongitude = Int32.Parse(minutosLong);
-                float segundosLongitude = Convert.ToSingle(segundosLong);
-                double LongDD = grausLongitude + (minutosLongitude / 60.0) + (segundosLongitude / 3600.0);
+                /*grausLongitude = Int32.Parse(grausLong);
+                minutosLongitude = Int32.Parse(minutosLong);
+                segundosLongitude = Convert.ToSingle(segundosLong);
+                LongDD = grausLongitude + (minutosLongitude / 60.0) + (segundosLongitude / 3600.0);*/
+
+
 
                 if (DirWE == 'W')
                 {
@@ -248,7 +243,7 @@ namespace GuardaCultura.Controllers
                 LongDD = Math.Round(LongDD, 6);
                 miradouro.Longitude_DD = "" + LongDD;
                 miradouro.Longitude_DD = miradouro.Longitude_DD.Replace(",", ".");
-                
+
             }
             
             if (Coordenadas == "DD")
@@ -259,8 +254,7 @@ namespace GuardaCultura.Controllers
                 miradouro.Longitude_DD = "" + longDD;
                 miradouro.Longitude_DD = miradouro.Longitude_DD.Replace(",", ".");
 
-                double latDoubleDMS = Convert.ToDouble(latiDD);
-                char dirNS;
+                //latDoubleDMS = Convert.ToDouble(latiDD);
 
                 if (latDoubleDMS < 0)
                 {
@@ -272,17 +266,16 @@ namespace GuardaCultura.Controllers
                     dirNS = 'N';
                 }
                 
-                int grausFinaLatlDMS = (int)latDoubleDMS;
-                float auxminutosLat = (float) ((latDoubleDMS - grausFinaLatlDMS) * 60.0);
-                int minutosFinalLatDMS = (int) auxminutosLat;
-                float auxsegundosLat = (float) ((auxminutosLat - minutosFinalLatDMS) * 60.0);
-                float segundosFinalLatDMS = (float) Math.Round(auxsegundosLat, 3);
+                grausFinaLatlDMS = (int)latDoubleDMS;
+                auxminutosLat = (float) ((latDoubleDMS - grausFinaLatlDMS) * 60.0);
+                minutosFinalLatDMS = (int) auxminutosLat;
+                auxsegundosLat = (float) ((auxminutosLat - minutosFinalLatDMS) * 60.0);
+                segundosFinalLatDMS = (float) Math.Round(auxsegundosLat, 3);
                  
                 miradouro.Latitude_DMS = "" + grausFinaLatlDMS + "º" + minutosFinalLatDMS + "'" + segundosFinalLatDMS + "''" + dirNS;
                 miradouro.Latitude_DMS = miradouro.Latitude_DMS.Replace(",", ".");
-
-                double longDoubleDMS = Convert.ToDouble(longDD);
-                char dirWE;
+                
+                //longDoubleDMS = Convert.ToDouble(longDD);
 
                 if (longDoubleDMS < 0)
                 {
@@ -294,15 +287,16 @@ namespace GuardaCultura.Controllers
                     dirWE = 'E';
                 }
                 
-                int grausFinalLongDMS = (int) longDoubleDMS;
-                float auxminutosLong = (float) ((longDoubleDMS - grausFinalLongDMS) * 60.0);
-                int minutosFinalLongDMS = (int)auxminutosLong;
-                float auxsegundosLong = (float)((auxminutosLong - minutosFinalLongDMS) * 60.0);
-                float segundosFinalLongDMS = (float)Math.Round(auxsegundosLong, 3);
+                grausFinalLongDMS = (int) longDoubleDMS;
+                auxminutosLong = (float) ((longDoubleDMS - grausFinalLongDMS) * 60.0);
+                minutosFinalLongDMS = (int)auxminutosLong;
+                auxsegundosLong = (float)((auxminutosLong - minutosFinalLongDMS) * 60.0);
+                segundosFinalLongDMS = (float)Math.Round(auxsegundosLong, 3);
 
                 miradouro.Longitude_DMS = "" + grausFinalLongDMS + "º" + minutosFinalLongDMS + "'" + segundosFinalLongDMS + "''" + dirWE;
                 miradouro.Longitude_DMS = miradouro.Longitude_DMS.Replace(",", ".");
             }
+
 
             if (ModelState.IsValid)
             {
@@ -322,11 +316,14 @@ namespace GuardaCultura.Controllers
                 // todo: informar o utilizador, miradouro criado com sucesso
                 //ViewData["sucess"] = "Miradouro criado com sucesso.";
                 return RedirectToAction(nameof(Index));
-                
+
             }
             //ViewData["error"] = "Falha ao criar o miradouro!";
             return View(miradouro);
         }
+        
+
+            
 
         // GET: Miradouroes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -454,7 +451,6 @@ namespace GuardaCultura.Controllers
                 miradouro.Longitude_DMS = "" + grausFinalLongDMS + "º" + minutosFinalLongDMS + "'" + segundosFinalLongDMS + "''" + dirWE;
                 miradouro.Longitude_DMS = miradouro.Longitude_DMS.Replace(",", ".");
             }
-            //-------------------------------------------------------------------------------------------------------
 
             if (ModelState.IsValid)
             {

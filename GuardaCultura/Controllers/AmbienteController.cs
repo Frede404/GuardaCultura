@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GuardaCultura.Data;
 using GuardaCultura.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GuardaCultura.Controllers
 {
@@ -25,6 +26,7 @@ namespace GuardaCultura.Controllers
         {
             return View();
         }
+     
         public IActionResult Paisagens(int page = 1)
         {
             var paginacao = new PagingInfoPaginaMiradouros
@@ -296,6 +298,91 @@ namespace GuardaCultura.Controllers
         public IActionResult Sobre()
         {
             return View();
+        }
+
+        public IActionResult Galeria(int page = 1, int id = 4)
+        {
+            var pagination = new PagingInfoFotografias
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoFotografias.TAM_PAGINA,
+                TotalItems = _context.Fotografia
+                .Where(p => p.MiradouroId == id).Count()
+            };
+            return View(
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderBy(p => p.Classificacao)
+                                .Where(p => p.MiradouroId == id)
+                                .Where(p => p.Aprovada)
+                                .Skip((page - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
+        }
+
+        public async Task<IActionResult> Votar(int page = 1, int fotoId = 4, string classificacao = "")
+        {
+            int classFoto = 0;
+
+            var pagination = new PagingInfoFotografias
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoFotografias.TAM_PAGINA,
+                TotalItems = _context.Fotografia
+                .Where(p => p.MiradouroId == fotoId).Count()
+            };
+
+            try
+            {
+                classFoto = Int32.Parse(classificacao);
+            }
+            catch
+            {
+                ModelState.AddModelError("Longitude_DD", "As coordenadas não são validas, insira apenas valores numericos!");
+
+                return View("Galeria",
+                       new ListaFotografias
+                       {
+                           Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                               .OrderByDescending(p => p.Classificacao)
+                               .Where(p => p.MiradouroId == fotoId)
+                               .Where(p => p.Aprovada)
+                               .Skip((page - 1) * pagination.PageSize)
+                               .Take(pagination.PageSize),
+                           pagination = pagination
+                       }
+                   );
+            }
+                
+
+
+            Fotografia foto = await _context.Fotografia.FindAsync(fotoId);
+            float classFotoAntiga = foto.Classificacao;
+            int nVotos = foto.N_Votos;
+            float novaclassificacao = 0;
+            int miradouro_id = foto.MiradouroId;
+            novaclassificacao = (classFotoAntiga * nVotos + classFoto) / (nVotos +1);
+            foto.Classificacao = novaclassificacao;
+            foto.N_Votos = nVotos+1;
+            
+            _context.Update(foto);
+            await _context.SaveChangesAsync();
+
+            return View("Galeria",
+                        new ListaFotografias
+                        {
+                            Fotografias = _context.Fotografia.Include(f => f.EstacaoAno).Include(f => f.Miradouro).Include(f => f.Pessoa).Include(f => f.TipoImagem)
+                                .OrderByDescending(p => p.Classificacao)
+                                .Where(p => p.MiradouroId == miradouro_id)
+                                .Where(p => p.Aprovada)
+                                .Skip((page - 1) * pagination.PageSize)
+                                .Take(pagination.PageSize),
+                            pagination = pagination
+                        }
+                    );
         }
     }
 }

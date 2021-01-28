@@ -11,7 +11,7 @@ namespace GuardaCultura.Models
 
         public PagingInfoMiradouro pagination { get; set; }
 
-        public int e_miradouro { get; set; }
+        public int EMiradouro { get; set; }
 
         public int estado { get; set; }
 
@@ -34,5 +34,10 @@ namespace GuardaCultura.Models
         public double latiDD { get; set; }
         
         public double longDD { get; set; }
+
+        public int MAtivo { get; set; }
+
+        public string MNome { get; set; }
+
     }
 }
