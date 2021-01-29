@@ -403,8 +403,6 @@ namespace GuardaCultura.Controllers
                        }
                    );
             }
-                
-
 
             Fotografia foto = await _context.Fotografia.FindAsync(fotoId);
             float classFotoAntiga = foto.Classificacao;

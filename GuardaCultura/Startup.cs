@@ -38,12 +38,12 @@ namespace GuardaCultura//linha 69 apagar
                 options.SignIn.RequireConfirmedAccount = false;//requer autenticação
 
                 //password
-                //options.Password.RequireDigit = true;//requer numeros
+                options.Password.RequireDigit = true;//requer numeros
                 options.Password.RequireLowercase = true;//requer letras minusculas
-                /*options.Password.RequiredLength = 8;
+                options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 6;//6caracteres tem de ser diferentes uns dos outros
                 options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;//requer letras maiusculas*/
+                options.Password.RequireUppercase = true;//requer letras maiusculas
 
                 //lockout
                 options.Lockout.AllowedForNewUsers = true;//bloquiar a conta
