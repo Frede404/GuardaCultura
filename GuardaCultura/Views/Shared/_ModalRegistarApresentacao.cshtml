@@ -20,13 +20,13 @@
 		</div>
 		<div class="field half">
 			<label asp-for="Password">Password</label>
-			<input asp-for="Password" class="password" type="password" name="Password" id="PasswordRegistar" placeholder="Password" />
+			<input asp-for="Password" class="password" type="password" name="Password" id="PasswordRegistar" placeholder="Password" min="8" />
 			<i class="fa fa-eye" onclick="show('olhoPRA','PasswordRegistar')" id="olhoPRA"></i>
 			<span asp-validation-for="Password" class="text-danger"></span>
 		</div>
 		<div class="field half">
 			<label asp-for="ConfirmPassword">Confirmar Password</label>
-			<input asp-for="ConfirmPassword" class="password" type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password" />
+			<input asp-for="ConfirmPassword" class="password" type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password"/>
 			<i class="fa fa-eye" onclick="show('olhoCPA','ConfirmPassword')" id="olhoCPA"></i>
 			<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 		</div>

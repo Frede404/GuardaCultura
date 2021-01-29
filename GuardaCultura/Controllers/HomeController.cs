@@ -21,7 +21,7 @@ namespace GuardaCultura.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string erro="", string emaillogin="", string emailregisto = "", string nome = "", string data_nasc = "", string sexo = "", string nacionalidade = "")
+        public IActionResult Index(string erro="",string tipoerro="", string emaillogin="", string emailregisto = "", string nome = "", string data_nasc = "", string sexo = "", string nacionalidade = "")
         {
             if (erro == "Login")
             {
@@ -37,7 +37,22 @@ namespace GuardaCultura.Controllers
                 ViewBag.Data_Nasc = data_nasc;
                 ViewBag.Sexo = sexo;
                 ViewBag.Nacionalidade=nacionalidade;
-                ModelState.AddModelError("erroregistar", "Registo invalido");
+                if (tipoerro == "Email")
+                {
+                    ModelState.AddModelError("erroregistar", "Este Email ja esta registado");
+                }
+                else if (tipoerro == "Pass")
+                {
+                    ModelState.AddModelError("erroregistar", "Passwords tem de ter 8 caracteres, entre maiusculas, minusculas, numeros, caracteres especiais");
+                }
+                else if (tipoerro == "Char")
+                {
+                    ModelState.AddModelError("erroregistar", "Password incorreta tem que ter maiuscula, minuscula, numeros, caracter especial");
+                }
+                else
+                {
+                    ModelState.AddModelError("erroregistar", "Registo invalido");
+                }
             }
             return View();
         }

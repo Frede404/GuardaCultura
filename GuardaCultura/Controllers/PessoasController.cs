@@ -200,8 +200,50 @@ namespace GuardaCultura.Controllers
             if (user != null)//se o email ja existe
             {
                 ModelState.AddModelError("Email", "Este Email ja esta registado");
-                return RedirectToAction("Index", "Home", new { erro = "Registar" , emailregisto = PessoaInfo.Email, nome = PessoaInfo.Nome, data_nasc = PessoaInfo.Data_Nasc, sexo = PessoaInfo.Sexo, nacionalidade=PessoaInfo.Nacionalidade });
+                return RedirectToAction("Index", "Home", new { erro = "Registar" ,tipoerro="Email", emailregisto = PessoaInfo.Email, nome = PessoaInfo.Nome, data_nasc = PessoaInfo.Data_Nasc, sexo = PessoaInfo.Sexo, nacionalidade=PessoaInfo.Nacionalidade });
                 //return View(PessoaInfo);
+            }
+
+            string pass = PessoaInfo.Password;
+            if (pass.Length < 8 )
+            {
+                ModelState.AddModelError("Password", "As passwords nao correspondem");
+                return RedirectToAction("Index", "Home", new { erro = "Registar", tipoerro = "Pass", emailregisto = PessoaInfo.Email, nome = PessoaInfo.Nome, data_nasc = PessoaInfo.Data_Nasc, sexo = PessoaInfo.Sexo, nacionalidade = PessoaInfo.Nacionalidade });
+            }
+
+            int maiuscula = 0;
+            int minuscula = 0;
+            int numero = 0;
+            int especial = 0;
+
+            for (var i = 0; i < pass.Length; i++)
+            {
+                char c = pass[i];
+                if (char.IsDigit(c))
+                {
+                    numero++;
+                }
+                else if (char.IsLetter(c))
+                {
+                    if (char.IsLower(c))
+                    {
+                        minuscula++;
+                    }
+                    else
+                    {
+                        maiuscula++;
+                    }
+                }
+                else
+                {
+                    especial++;
+                }
+            }
+            
+            if(maiuscula == 0 || minuscula == 0 || numero == 0 || especial == 0)
+            {
+                ModelState.AddModelError("Password", "As passwords nao correspondem");
+                return RedirectToAction("Index", "Home", new { erro = "Registar", tipoerro = "Char", emailregisto = PessoaInfo.Email, nome = PessoaInfo.Nome, data_nasc = PessoaInfo.Data_Nasc, sexo = PessoaInfo.Sexo, nacionalidade = PessoaInfo.Nacionalidade });
             }
 
             user = new IdentityUser(username);

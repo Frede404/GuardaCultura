@@ -41,7 +41,7 @@ namespace GuardaCultura//linha 69 apagar
                 options.Password.RequireDigit = true;//requer numeros
                 options.Password.RequireLowercase = true;//requer letras minusculas
                 options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 6;//6caracteres tem de ser diferentes uns dos outros
+                //options.Password.RequiredUniqueChars = 6;//6caracteres tem de ser diferentes uns dos outros
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;//requer letras maiusculas
 
