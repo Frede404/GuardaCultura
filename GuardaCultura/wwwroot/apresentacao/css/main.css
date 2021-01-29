@@ -1694,9 +1694,14 @@ input[type="date"] {
 
 input.password {
 	display: inline;
-	width:96%;
+	width: 96%;
 }
 
 form > .fields > .field.half > input.password{
 	width: 90%;
+}
+
+span.erro {
+	color: orange;
+	font-Weight: bold;
 }

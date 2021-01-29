@@ -190,7 +190,7 @@ namespace GuardaCultura.Controllers
         {
             if (!ModelState.IsValid)//caso haja erro fica na mesma pagina
             {
-                return RedirectToAction("Index", "Home", new { erro = "Registar" , PessoaInfo});
+                return RedirectToAction("Index", "Home", new { erro = "Registar" , emailregisto = PessoaInfo.Email, nome = PessoaInfo.Nome, data_nasc = PessoaInfo.Data_Nasc, sexo=PessoaInfo.Sexo, nacionalidade = PessoaInfo.Nacionalidade });
             }
 
             //cria utilizador
@@ -200,7 +200,7 @@ namespace GuardaCultura.Controllers
             if (user != null)//se o email ja existe
             {
                 ModelState.AddModelError("Email", "Este Email ja esta registado");
-                return RedirectToAction("Index", "Home", new { erro = "Registar" , PessoaInfo});
+                return RedirectToAction("Index", "Home", new { erro = "Registar" , emailregisto = PessoaInfo.Email, nome = PessoaInfo.Nome, data_nasc = PessoaInfo.Data_Nasc, sexo = PessoaInfo.Sexo, nacionalidade=PessoaInfo.Nacionalidade });
                 //return View(PessoaInfo);
             }
 

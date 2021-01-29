@@ -728,9 +728,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 	<script>
 		@if (ViewBag.Erro == "Login") {
 			@:window.location = "#entrar";
-			@:document.getElementById("errologin").style.display = "";
-			@:document.getElementById("errologin").style.color = "Red";
-			@:document.getElementById("errologin").style.fontWeight = "bold";
 		}
 		else if (ViewBag.Erro == "Registar") {
 			@:window.location = "#registar";
@@ -738,7 +735,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			@:document.getElementById("erroregistar").style.color = "Red";
 			@:document.getElementById("erroregistar").style.fontWeight = "bold";
 		}
-
 	</script>
 </body>
 </html>
