@@ -101,6 +101,7 @@ namespace GuardaCultura//linha 69 apagar
 
             SeedData.SeedRolesAsync(roleManager).Wait();
             SeedData.SeedDefaultAdminAsync(userManager).Wait();//cria sempre
+            SeedData.PopulateEssencial(dbContext);
 
             if (env.IsDevelopment())//ver se está em desenvolvimento
             {
