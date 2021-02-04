@@ -1,0 +1,443 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model GuardaCultura.Models.RegistarPessoaViewModel
+
+<h2 class="major">Registar</h2>
+<form method="post" asp-controller="Pessoas" asp-action="RegistarApresentacao">
+	@*action="#">*@
+	<span asp-validation-for="erroregistar" class="erro" id="errologin"></span>
+	<div class="fields">
+		<div class="field half">
+			<label asp-for="Nome" class="control-label"></label>
+			<input asp-for="Nome" class="form-control" value="@ViewBag.Nome" />
+			<span asp-validation-for="Nome" class="text-danger"></span>
+		</div>
+		<div class="field half">
+			<label asp-for="Email" class="control-label"></label>
+			<input asp-for="Email" class="form-control" value="@ViewBag.Email" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+		<div class="field half">
+			<label asp-for="Password">Password</label>
+			<input asp-for="Password" class="password" type="password" name="Password" id="PasswordRegistar" placeholder="Password" min="8" />
+			<i class="fa fa-eye" onclick="show('olhoPRA','PasswordRegistar')" id="olhoPRA"></i>
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+		<div class="field half">
+			<label asp-for="ConfirmPassword">Confirmar Password</label>
+			<input asp-for="ConfirmPassword" class="password" type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password" />
+			<i class="fa fa-eye" onclick="show('olhoCPA','ConfirmPassword')" id="olhoCPA"></i>
+			<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+		</div>
+		<div class="field half">
+			<label asp-for="Data_Nasc">Data Nascimento:</label>
+			<input asp-for="Data_Nasc" type="date" id="Data_Nascimento" name="Data_Nasc" value="@ViewBag.Data_Nasc" onfocus="DataMaxima(this)">
+		</div>
+		<div class="field half">
+			<label asp-for="Sexo">Sexo:</label>
+			<select asp-for="Sexo" id="sexo" name="sexo">
+				<option value="mas" selected="@(ViewBag.Sexo=="mas")">Masculino</option>
+				<option value="fem" selected="@(ViewBag.Sexo=="fem")">Feminino</option>
+			</select>
+		</div>
+		<div class="field half">
+			@*lista de https://gist.github.com/didats/8154290*@
+			<label asp-for="Nacionalidade">Nacionalidade:</label>
+			<select id="country" asp-for="Nacionalidade">
+				@*<option value="afghan" selected="@(ViewBag.Sexo=="mas")">Afghan</option>
+					<option value="albanian">Albanian</option>
+					<option value="algerian">Algerian</option>
+					<option value="american">American</option>
+					<option value="andorran">Andorran</option>
+					<option value="angolan">Angolan</option>
+					<option value="antiguans">Antiguans</option>
+					<option value="argentinean">Argentinean</option>
+					<option value="armenian">Armenian</option>
+					<option value="australian">Australian</option>
+					<option value="austrian">Austrian</option>
+					<option value="azerbaijani">Azerbaijani</option>
+					<option value="bahamian">Bahamian</option>
+					<option value="bahraini">Bahraini</option>
+					<option value="bangladeshi">Bangladeshi</option>
+					<option value="barbadian">Barbadian</option>
+					<option value="barbudans">Barbudans</option>
+					<option value="batswana">Batswana</option>
+					<option value="belarusian">Belarusian</option>
+					<option value="belgian">Belgian</option>
+					<option value="belizean">Belizean</option>
+					<option value="beninese">Beninese</option>
+					<option value="bhutanese">Bhutanese</option>
+					<option value="bolivian">Bolivian</option>
+					<option value="bosnian">Bosnian</option>
+					<option value="brazilian">Brazilian</option>
+					<option value="british">British</option>
+					<option value="bruneian">Bruneian</option>
+					<option value="bulgarian">Bulgarian</option>
+					<option value="burkinabe">Burkinabe</option>
+					<option value="burmese">Burmese</option>
+					<option value="burundian">Burundian</option>
+					<option value="cambodian">Cambodian</option>
+					<option value="cameroonian">Cameroonian</option>
+					<option value="canadian">Canadian</option>
+					<option value="cape verdean">Cape Verdean</option>
+					<option value="central african">Central African</option>
+					<option value="chadian">Chadian</option>
+					<option value="chilean">Chilean</option>
+					<option value="chinese">Chinese</option>
+					<option value="colombian">Colombian</option>
+					<option value="comoran">Comoran</option>
+					<option value="congolese">Congolese</option>
+					<option value="costa rican">Costa Rican</option>
+					<option value="croatian">Croatian</option>
+					<option value="cuban">Cuban</option>
+					<option value="cypriot">Cypriot</option>
+					<option value="czech">Czech</option>
+					<option value="danish">Danish</option>
+					<option value="djibouti">Djibouti</option>
+					<option value="dominican">Dominican</option>
+					<option value="dutch">Dutch</option>
+					<option value="east timorese">East Timorese</option>
+					<option value="ecuadorean">Ecuadorean</option>
+					<option value="egyptian">Egyptian</option>
+					<option value="emirian">Emirian</option>
+					<option value="equatorial guinean">Equatorial Guinean</option>
+					<option value="eritrean">Eritrean</option>
+					<option value="estonian">Estonian</option>
+					<option value="ethiopian">Ethiopian</option>
+					<option value="fijian">Fijian</option>
+					<option value="filipino">Filipino</option>
+					<option value="finnish">Finnish</option>
+					<option value="french">French</option>
+					<option value="gabonese">Gabonese</option>
+					<option value="gambian">Gambian</option>
+					<option value="georgian">Georgian</option>
+					<option value="german">German</option>
+					<option value="ghanaian">Ghanaian</option>
+					<option value="greek">Greek</option>
+					<option value="grenadian">Grenadian</option>
+					<option value="guatemalan">Guatemalan</option>
+					<option value="guinea-bissauan">Guinea-Bissauan</option>
+					<option value="guinean">Guinean</option>
+					<option value="guyanese">Guyanese</option>
+					<option value="haitian">Haitian</option>
+					<option value="herzegovinian">Herzegovinian</option>
+					<option value="honduran">Honduran</option>
+					<option value="hungarian">Hungarian</option>
+					<option value="icelander">Icelander</option>
+					<option value="indian">Indian</option>
+					<option value="indonesian">Indonesian</option>
+					<option value="iranian">Iranian</option>
+					<option value="iraqi">Iraqi</option>
+					<option value="irish">Irish</option>
+					<option value="israeli">Israeli</option>
+					<option value="italian">Italian</option>
+					<option value="ivorian">Ivorian</option>
+					<option value="jamaican">Jamaican</option>
+					<option value="japanese">Japanese</option>
+					<option value="jordanian">Jordanian</option>
+					<option value="kazakhstani">Kazakhstani</option>
+					<option value="kenyan">Kenyan</option>
+					<option value="kittian and nevisian">Kittian and Nevisian</option>
+					<option value="kuwaiti">Kuwaiti</option>
+					<option value="kyrgyz">Kyrgyz</option>
+					<option value="laotian">Laotian</option>
+					<option value="latvian">Latvian</option>
+					<option value="lebanese">Lebanese</option>
+					<option value="liberian">Liberian</option>
+					<option value="libyan">Libyan</option>
+					<option value="liechtensteiner">Liechtensteiner</option>
+					<option value="lithuanian">Lithuanian</option>
+					<option value="luxembourger">Luxembourger</option>
+					<option value="macedonian">Macedonian</option>
+					<option value="malagasy">Malagasy</option>
+					<option value="malawian">Malawian</option>
+					<option value="malaysian">Malaysian</option>
+					<option value="maldivan">Maldivan</option>
+					<option value="malian">Malian</option>
+					<option value="maltese">Maltese</option>
+					<option value="marshallese">Marshallese</option>
+					<option value="mauritanian">Mauritanian</option>
+					<option value="mauritian">Mauritian</option>
+					<option value="mexican">Mexican</option>
+					<option value="micronesian">Micronesian</option>
+					<option value="moldovan">Moldovan</option>
+					<option value="monacan">Monacan</option>
+					<option value="mongolian">Mongolian</option>
+					<option value="moroccan">Moroccan</option>
+					<option value="mosotho">Mosotho</option>
+					<option value="motswana">Motswana</option>
+					<option value="mozambican">Mozambican</option>
+					<option value="namibian">Namibian</option>
+					<option value="nauruan">Nauruan</option>
+					<option value="nepalese">Nepalese</option>
+					<option value="new zealander">New Zealander</option>
+					<option value="ni-vanuatu">Ni-Vanuatu</option>
+					<option value="nicaraguan">Nicaraguan</option>
+					<option value="nigerien">Nigerien</option>
+					<option value="north korean">North Korean</option>
+					<option value="northern irish">Northern Irish</option>
+					<option value="norwegian">Norwegian</option>
+					<option value="omani">Omani</option>
+					<option value="pakistani">Pakistani</option>
+					<option value="palauan">Palauan</option>
+					<option value="panamanian">Panamanian</option>
+					<option value="papua new guinean">Papua New Guinean</option>
+					<option value="paraguayan">Paraguayan</option>
+					<option value="peruvian">Peruvian</option>
+					<option value="polish">Polish</option>
+					<option value="portuguese" selected="selected">Portuguese</option>
+					<option value="qatari">Qatari</option>
+					<option value="romanian">Romanian</option>
+					<option value="russian">Russian</option>
+					<option value="rwandan">Rwandan</option>
+					<option value="saint lucian">Saint Lucian</option>
+					<option value="salvadoran">Salvadoran</option>
+					<option value="samoan">Samoan</option>
+					<option value="san marinese">San Marinese</option>
+					<option value="sao tomean">Sao Tomean</option>
+					<option value="saudi">Saudi</option>
+					<option value="scottish">Scottish</option>
+					<option value="senegalese">Senegalese</option>
+					<option value="serbian">Serbian</option>
+					<option value="seychellois">Seychellois</option>
+					<option value="sierra leonean">Sierra Leonean</option>
+					<option value="singaporean">Singaporean</option>
+					<option value="slovakian">Slovakian</option>
+					<option value="slovenian">Slovenian</option>
+					<option value="solomon islander">Solomon Islander</option>
+					<option value="somali">Somali</option>
+					<option value="south african">South African</option>
+					<option value="south korean">South Korean</option>
+					<option value="spanish">Spanish</option>
+					<option value="sri lankan">Sri Lankan</option>
+					<option value="sudanese">Sudanese</option>
+					<option value="surinamer">Surinamer</option>
+					<option value="swazi">Swazi</option>
+					<option value="swedish">Swedish</option>
+					<option value="swiss">Swiss</option>
+					<option value="syrian">Syrian</option>
+					<option value="taiwanese">Taiwanese</option>
+					<option value="tajik">Tajik</option>
+					<option value="tanzanian">Tanzanian</option>
+					<option value="thai">Thai</option>
+					<option value="togolese">Togolese</option>
+					<option value="tongan">Tongan</option>
+					<option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+					<option value="tunisian">Tunisian</option>
+					<option value="turkish">Turkish</option>
+					<option value="tuvaluan">Tuvaluan</option>
+					<option value="ugandan">Ugandan</option>
+					<option value="ukrainian">Ukrainian</option>
+					<option value="uruguayan">Uruguayan</option>
+					<option value="uzbekistani">Uzbekistani</option>
+					<option value="venezuelan">Venezuelan</option>
+					<option value="vietnamese">Vietnamese</option>
+					<option value="welsh">Welsh</option>
+					<option value="yemenite">Yemenite</option>
+					<option value="zambian">Zambian</option>
+					<option value="zimbabwean">Zimbabwean</option>*@
+
+				<option value="afghan" selected="@(ViewBag.Nacionalidade=="afghan" )">Afghan</option>
+				<option value="albanian" selected="@(ViewBag.Nacionalidade=="albanian")">Albanian</option>
+				<option value="algerian" selected="@(ViewBag.Nacionalidade=="algerian")">Algerian</option>
+				<option value="american" selected="@(ViewBag.Nacionalidade=="american")">American</option>
+				<option value="andorran" selected="@(ViewBag.Nacionalidade=="andorran")">Andorran</option>
+				<option value="angolan" selected="@(ViewBag.Nacionalidade=="angolan")">Angolan</option>
+				<option value="antiguans" selected="@(ViewBag.Nacionalidade=="antiguans")">Antiguans</option>
+				<option value="argentinean" selected="@(ViewBag.Nacionalidade=="argentinean")">Argentinean</option>
+				<option value="armenian" selected="@(ViewBag.Nacionalidade=="armenian")">Armenian</option>
+				<option value="australian" selected="@(ViewBag.Nacionalidade=="australian")">Australian</option>
+				<option value="austrian" selected="@(ViewBag.Nacionalidade=="austrian")">Austrian</option>
+				<option value="azerbaijani" selected="@(ViewBag.Nacionalidade=="azerbaijani")">Azerbaijani</option>
+				<option value="bahamian" selected="@(ViewBag.Nacionalidade=="bahamian")">Bahamian</option>
+				<option value="bahraini" selected="@(ViewBag.Nacionalidade=="bahraini")">Bahraini</option>
+				<option value="bangladeshi" selected="@(ViewBag.Nacionalidade=="bangladeshi")">Bangladeshi</option>
+				<option value="barbadian" selected="@(ViewBag.Nacionalidade=="barbadian")">Barbadian</option>
+				<option value="barbudans" selected="@(ViewBag.Nacionalidade=="barbudans")">Barbudans</option>
+				<option value="batswana" selected="@(ViewBag.Nacionalidade=="batswana")">Batswana</option>
+				<option value="belarusian" selected="@(ViewBag.Nacionalidade=="belarusian")">Belarusian</option>
+				<option value="belgian" selected="@(ViewBag.Nacionalidade=="belgian")">Belgian</option>
+				<option value="belizean" selected="@(ViewBag.Nacionalidade=="belizean")">Belizean</option>
+				<option value="beninese" selected="@(ViewBag.Nacionalidade=="beninese")">Beninese</option>
+				<option value="bhutanese" selected="@(ViewBag.Nacionalidade=="bhutanese")">Bhutanese</option>
+				<option value="bolivian" selected="@(ViewBag.Nacionalidade=="bolivian")">Bolivian</option>
+				<option value="bosnian" selected="@(ViewBag.Nacionalidade=="bosnian")">Bosnian</option>
+				<option value="brazilian" selected="@(ViewBag.Nacionalidade=="brazilian")">Brazilian</option>
+				<option value="british" selected="@(ViewBag.Nacionalidade=="british")">British</option>
+				<option value="bruneian" selected="@(ViewBag.Nacionalidade=="bruneian")">Bruneian</option>
+				<option value="bulgarian" selected="@(ViewBag.Nacionalidade=="bulgarian")">Bulgarian</option>
+				<option value="burkinabe" selected="@(ViewBag.Nacionalidade=="burkinabe")">Burkinabe</option>
+				<option value="burmese" selected="@(ViewBag.Nacionalidade=="burmese")">Burmese</option>
+				<option value="burundian" selected="@(ViewBag.Nacionalidade=="burundian")">Burundian</option>
+				<option value="cambodian" selected="@(ViewBag.Nacionalidade=="cambodian")">Cambodian</option>
+				<option value="cameroonian" selected="@(ViewBag.Nacionalidade=="cameroonian")">Cameroonian</option>
+				<option value="canadian" selected="@(ViewBag.Nacionalidade=="canadian")">Canadian</option>
+				<option value="cape verdean" selected="@(ViewBag.Nacionalidade=="cape verdean")">Cape Verdean</option>
+				<option value="central african" selected="@(ViewBag.Nacionalidade=="central african")">Central African</option>
+				<option value="chadian" selected="@(ViewBag.Nacionalidade=="chadian")">Chadian</option>
+				<option value="chilean" selected="@(ViewBag.Nacionalidade=="chilean")">Chilean</option>
+				<option value="chinese" selected="@(ViewBag.Nacionalidade=="chinese")">Chinese</option>
+				<option value="colombian" selected="@(ViewBag.Nacionalidade=="colombian")">Colombian</option>
+				<option value="comoran" selected="@(ViewBag.Nacionalidade=="comoran")">Comoran</option>
+				<option value="congolese" selected="@(ViewBag.Nacionalidade=="congolese")">Congolese</option>
+				<option value="costa rican" selected="@(ViewBag.Nacionalidade=="costa rican")">Costa Rican</option>
+				<option value="croatian" selected="@(ViewBag.Nacionalidade=="croatian")">Croatian</option>
+				<option value="cuban" selected="@(ViewBag.Nacionalidade=="cuban")">Cuban</option>
+				<option value="cypriot" selected="@(ViewBag.Nacionalidade=="cypriot")">Cypriot</option>
+				<option value="czech" selected="@(ViewBag.Nacionalidade=="czech")">Czech</option>
+				<option value="danish" selected="@(ViewBag.Nacionalidade=="danish")">Danish</option>
+				<option value="djibouti" selected="@(ViewBag.Nacionalidade=="djibouti")">Djibouti</option>
+				<option value="dominican" selected="@(ViewBag.Nacionalidade=="dominican")">Dominican</option>
+				<option value="dutch" selected="@(ViewBag.Nacionalidade=="dutch")">Dutch</option>
+				<option value="east timorese" selected="@(ViewBag.Nacionalidade=="east timorese")">East Timorese</option>
+				<option value="ecuadorean" selected="@(ViewBag.Nacionalidade=="ecuadorean")">Ecuadorean</option>
+				<option value="egyptian" selected="@(ViewBag.Nacionalidade=="egyptian")">Egyptian</option>
+				<option value="emirian" selected="@(ViewBag.Nacionalidade=="emirian")">Emirian</option>
+				<option value="equatorial guinean" selected="@(ViewBag.Nacionalidade=="equatorial guinean")">Equatorial Guinean</option>
+				<option value="eritrean" selected="@(ViewBag.Nacionalidade=="eritrean")">Eritrean</option>
+				<option value="estonian" selected="@(ViewBag.Nacionalidade=="estonian")">Estonian</option>
+				<option value="ethiopian" selected="@(ViewBag.Nacionalidade=="ethiopian")">Ethiopian</option>
+				<option value="fijian" selected="@(ViewBag.Nacionalidade=="fijian")">Fijian</option>
+				<option value="filipino" selected="@(ViewBag.Nacionalidade=="filipino")">Filipino</option>
+				<option value="finnish" selected="@(ViewBag.Nacionalidade=="finnish")">Finnish</option>
+				<option value="french" selected="@(ViewBag.Nacionalidade=="french")">French</option>
+				<option value="gabonese" selected="@(ViewBag.Nacionalidade=="gabonese")">Gabonese</option>
+				<option value="gambian" selected="@(ViewBag.Nacionalidade=="gambian")">Gambian</option>
+				<option value="georgian" selected="@(ViewBag.Nacionalidade=="georgian")">Georgian</option>
+				<option value="german" selected="@(ViewBag.Nacionalidade=="german")">German</option>
+				<option value="ghanaian" selected="@(ViewBag.Nacionalidade=="ghanaian")">Ghanaian</option>
+				<option value="greek" selected="@(ViewBag.Nacionalidade=="greek")">Greek</option>
+				<option value="grenadian" selected="@(ViewBag.Nacionalidade=="grenadian")">Grenadian</option>
+				<option value="guatemalan" selected="@(ViewBag.Nacionalidade=="guatemalan")">Guatemalan</option>
+				<option value="guinea-bissauan" selected="@(ViewBag.Nacionalidade=="guinea-bissauan")">Guinea-Bissauan</option>
+				<option value="guinean" selected="@(ViewBag.Nacionalidade=="guinean")">Guinean</option>
+				<option value="guyanese" selected="@(ViewBag.Nacionalidade=="guyanese")">Guyanese</option>
+				<option value="haitian" selected="@(ViewBag.Nacionalidade=="haitian")">Haitian</option>
+				<option value="herzegovinian" selected="@(ViewBag.Nacionalidade=="herzegovinian")">Herzegovinian</option>
+				<option value="honduran" selected="@(ViewBag.Nacionalidade=="honduran")">Honduran</option>
+				<option value="hungarian" selected="@(ViewBag.Nacionalidade=="hungarian")">Hungarian</option>
+				<option value="icelander" selected="@(ViewBag.Nacionalidade=="icelander")">Icelander</option>
+				<option value="indian" selected="@(ViewBag.Nacionalidade=="indian")">Indian</option>
+				<option value="indonesian" selected="@(ViewBag.Nacionalidade=="indonesian")">Indonesian</option>
+				<option value="iranian" selected="@(ViewBag.Nacionalidade=="iranian")">Iranian</option>
+				<option value="iraqi" selected="@(ViewBag.Nacionalidade=="iraqi")">Iraqi</option>
+				<option value="irish" selected="@(ViewBag.Nacionalidade=="irish")">Irish</option>
+				<option value="israeli" selected="@(ViewBag.Nacionalidade=="israeli")">Israeli</option>
+				<option value="italian" selected="@(ViewBag.Nacionalidade=="italian")">Italian</option>
+				<option value="ivorian" selected="@(ViewBag.Nacionalidade=="ivorian")">Ivorian</option>
+				<option value="jamaican" selected="@(ViewBag.Nacionalidade=="jamaican")">Jamaican</option>
+				<option value="japanese" selected="@(ViewBag.Nacionalidade=="japanese")">Japanese</option>
+				<option value="jordanian" selected="@(ViewBag.Nacionalidade=="jordanian")">Jordanian</option>
+				<option value="kazakhstani" selected="@(ViewBag.Nacionalidade=="kazakhstani")">Kazakhstani</option>
+				<option value="kenyan" selected="@(ViewBag.Nacionalidade=="kenyan")">Kenyan</option>
+				<option value="kittian and nevisian" selected="@(ViewBag.Nacionalidade=="kittian and nevisian")">Kittian and Nevisian</option>
+				<option value="kuwaiti" selected="@(ViewBag.Nacionalidade=="kuwaiti")">Kuwaiti</option>
+				<option value="kyrgyz" selected="@(ViewBag.Nacionalidade=="kyrgyz")">Kyrgyz</option>
+				<option value="laotian" selected="@(ViewBag.Nacionalidade=="laotian")">Laotian</option>
+				<option value="latvian" selected="@(ViewBag.Nacionalidade=="latvian")">Latvian</option>
+				<option value="lebanese" selected="@(ViewBag.Nacionalidade=="lebanese")">Lebanese</option>
+				<option value="liberian" selected="@(ViewBag.Nacionalidade=="liberian")">Liberian</option>
+				<option value="libyan" selected="@(ViewBag.Nacionalidade=="libyan")">Libyan</option>
+				<option value="liechtensteiner" selected="@(ViewBag.Nacionalidade=="liechtensteiner")">Liechtensteiner</option>
+				<option value="lithuanian" selected="@(ViewBag.Nacionalidade=="lithuanian")">Lithuanian</option>
+				<option value="luxembourger" selected="@(ViewBag.Nacionalidade=="luxembourger")">Luxembourger</option>
+				<option value="macedonian" selected="@(ViewBag.Nacionalidade=="macedonian")">Macedonian</option>
+				<option value="malagasy" selected="@(ViewBag.Nacionalidade=="malagasy")">Malagasy</option>
+				<option value="malawian" selected="@(ViewBag.Nacionalidade=="malawian")">Malawian</option>
+				<option value="malaysian" selected="@(ViewBag.Nacionalidade=="malaysian")">Malaysian</option>
+				<option value="maldivan" selected="@(ViewBag.Nacionalidade=="maldivan")">Maldivan</option>
+				<option value="malian" selected="@(ViewBag.Nacionalidade=="malian")">Malian</option>
+				<option value="maltese" selected="@(ViewBag.Nacionalidade=="maltese")">Maltese</option>
+				<option value="marshallese" selected="@(ViewBag.Nacionalidade=="marshallese")">Marshallese</option>
+				<option value="mauritanian" selected="@(ViewBag.Nacionalidade=="mauritanian")">Mauritanian</option>
+				<option value="mauritian" selected="@(ViewBag.Nacionalidade=="mauritian")">Mauritian</option>
+				<option value="mexican" selected="@(ViewBag.Nacionalidade=="mexican")">Mexican</option>
+				<option value="micronesian" selected="@(ViewBag.Nacionalidade=="micronesian")">Micronesian</option>
+				<option value="moldovan" selected="@(ViewBag.Nacionalidade=="moldovan")">Moldovan</option>
+				<option value="monacan" selected="@(ViewBag.Nacionalidade=="monacan")">Monacan</option>
+				<option value="mongolian" selected="@(ViewBag.Nacionalidade=="mongolian")">Mongolian</option>
+				<option value="moroccan" selected="@(ViewBag.Nacionalidade=="moroccan")">Moroccan</option>
+				<option value="mosotho" selected="@(ViewBag.Nacionalidade=="mosotho")">Mosotho</option>
+				<option value="motswana" selected="@(ViewBag.Nacionalidade=="motswana")">Motswana</option>
+				<option value="mozambican" selected="@(ViewBag.Nacionalidade=="mozambican")">Mozambican</option>
+				<option value="namibian" selected="@(ViewBag.Nacionalidade=="namibian")">Namibian</option>
+				<option value="nauruan" selected="@(ViewBag.Nacionalidade=="nauruan")">Nauruan</option>
+				<option value="nepalese" selected="@(ViewBag.Nacionalidade=="nepalese")">Nepalese</option>
+				<option value="new zealander" selected="@(ViewBag.Nacionalidade=="new zealander")">New Zealander</option>
+				<option value="ni-vanuatu" selected="@(ViewBag.Nacionalidade=="ni-vanuatu")">Ni-Vanuatu</option>
+				<option value="nicaraguan" selected="@(ViewBag.Nacionalidade=="nicaraguan")">Nicaraguan</option>
+				<option value="nigerien" selected="@(ViewBag.Nacionalidade=="nigerien")">Nigerien</option>
+				<option value="north korean" selected="@(ViewBag.Nacionalidade=="north korean")">North Korean</option>
+				<option value="northern irish" selected="@(ViewBag.Nacionalidade=="northern irish")">Northern Irish</option>
+				<option value="norwegian" selected="@(ViewBag.Nacionalidade=="norwegian")">Norwegian</option>
+				<option value="omani" selected="@(ViewBag.Nacionalidade=="omani")">Omani</option>
+				<option value="pakistani" selected="@(ViewBag.Nacionalidade=="pakistani")">Pakistani</option>
+				<option value="palauan" selected="@(ViewBag.Nacionalidade=="palauan")">Palauan</option>
+				<option value="panamanian" selected="@(ViewBag.Nacionalidade=="panamanian")">Panamanian</option>
+				<option value="papua new guinean" selected="@(ViewBag.Nacionalidade=="papua new guinean")">Papua New Guinean</option>
+				<option value="paraguayan" selected="@(ViewBag.Nacionalidade=="paraguayan")">Paraguayan</option>
+				<option value="peruvian" selected="@(ViewBag.Nacionalidade=="peruvian")">Peruvian</option>
+				<option value="polish" selected="@(ViewBag.Nacionalidade=="polish")">Polish</option>
+				<option value="portuguese" selected="@(ViewBag.Nacionalidade=="portuguese"||ViewBag.Nacionalidade==null)">Portuguese</option>
+				<option value="qatari" selected="@(ViewBag.Nacionalidade=="qatari")">Qatari</option>
+				<option value="romanian" selected="@(ViewBag.Nacionalidade=="romanian")">Romanian</option>
+				<option value="russian" selected="@(ViewBag.Nacionalidade=="russian")">Russian</option>
+				<option value="rwandan" selected="@(ViewBag.Nacionalidade=="rwandan")">Rwandan</option>
+				<option value="saint lucian" selected="@(ViewBag.Nacionalidade=="saint lucian")">Saint Lucian</option>
+				<option value="salvadoran" selected="@(ViewBag.Nacionalidade=="salvadoran")">Salvadoran</option>
+				<option value="samoan" selected="@(ViewBag.Nacionalidade=="samoan")">Samoan</option>
+				<option value="san marinese" selected="@(ViewBag.Nacionalidade=="san marinese")">San Marinese</option>
+				<option value="sao tomean" selected="@(ViewBag.Nacionalidade=="sao tomean")">Sao Tomean</option>
+				<option value="saudi" selected="@(ViewBag.Nacionalidade=="saudi")">Saudi</option>
+				<option value="scottish" selected="@(ViewBag.Nacionalidade=="scottish")">Scottish</option>
+				<option value="senegalese" selected="@(ViewBag.Nacionalidade=="senegalese")">Senegalese</option>
+				<option value="serbian" selected="@(ViewBag.Nacionalidade=="serbian")">Serbian</option>
+				<option value="seychellois" selected="@(ViewBag.Nacionalidade=="seychellois")">Seychellois</option>
+				<option value="sierra leonean" selected="@(ViewBag.Nacionalidade=="sierra leonean")">Sierra Leonean</option>
+				<option value="singaporean" selected="@(ViewBag.Nacionalidade=="singaporean")">Singaporean</option>
+				<option value="slovakian" selected="@(ViewBag.Nacionalidade=="slovakian")">Slovakian</option>
+				<option value="slovenian" selected="@(ViewBag.Nacionalidade=="slovenian")">Slovenian</option>
+				<option value="solomon islander" selected="@(ViewBag.Nacionalidade=="solomon islander")">Solomon Islander</option>
+				<option value="somali" selected="@(ViewBag.Nacionalidade=="somali")">Somali</option>
+				<option value="south african" selected="@(ViewBag.Nacionalidade=="south african")">South African</option>
+				<option value="south korean" selected="@(ViewBag.Nacionalidade=="south korean")">South Korean</option>
+				<option value="spanish" selected="@(ViewBag.Nacionalidade=="spanish")">Spanish</option>
+				<option value="sri lankan" selected="@(ViewBag.Nacionalidade=="sri lankan")">Sri Lankan</option>
+				<option value="sudanese" selected="@(ViewBag.Nacionalidade=="sudanese")">Sudanese</option>
+				<option value="surinamer" selected="@(ViewBag.Nacionalidade=="surinamer")">Surinamer</option>
+				<option value="swazi" selected="@(ViewBag.Nacionalidade=="swazi")">Swazi</option>
+				<option value="swedish" selected="@(ViewBag.Nacionalidade=="swedish")">Swedish</option>
+				<option value="swiss" selected="@(ViewBag.Nacionalidade=="swiss")">Swiss</option>
+				<option value="syrian" selected="@(ViewBag.Nacionalidade=="syrian")">Syrian</option>
+				<option value="taiwanese" selected="@(ViewBag.Nacionalidade=="taiwanese")">Taiwanese</option>
+				<option value="tajik" selected="@(ViewBag.Nacionalidade=="tajik")">Tajik</option>
+				<option value="tanzanian" selected="@(ViewBag.Nacionalidade=="tanzanian")">Tanzanian</option>
+				<option value="thai" selected="@(ViewBag.Nacionalidade=="thai")">Thai</option>
+				<option value="togolese" selected="@(ViewBag.Nacionalidade=="togolese")">Togolese</option>
+				<option value="tongan" selected="@(ViewBag.Nacionalidade=="tongan")">Tongan</option>
+				<option value="trinidadian or tobagonian" selected="@(ViewBag.Nacionalidade=="trinidadian or tobagonian")">Trinidadian or Tobagonian</option>
+				<option value="tunisian" selected="@(ViewBag.Nacionalidade=="tunisian")">Tunisian</option>
+				<option value="turkish" selected="@(ViewBag.Nacionalidade=="turkish")">Turkish</option>
+				<option value="tuvaluan" selected="@(ViewBag.Nacionalidade=="tuvaluan")">Tuvaluan</option>
+				<option value="ugandan" selected="@(ViewBag.Nacionalidade=="ugandan")">Ugandan</option>
+				<option value="ukrainian" selected="@(ViewBag.Nacionalidade=="ukrainian")">Ukrainian</option>
+				<option value="uruguayan" selected="@(ViewBag.Nacionalidade=="uruguayan")">Uruguayan</option>
+				<option value="uzbekistani" selected="@(ViewBag.Nacionalidade=="uzbekistani")">Uzbekistani</option>
+				<option value="venezuelan" selected="@(ViewBag.Nacionalidade=="venezuelan")">Venezuelan</option>
+				<option value="vietnamese" selected="@(ViewBag.Nacionalidade=="vietnamese")">Vietnamese</option>
+				<option value="welsh" selected="@(ViewBag.Nacionalidade=="welsh")">Welsh</option>
+				<option value="yemenite" selected="@(ViewBag.Nacionalidade=="yemenite")">Yemenite</option>
+				<option value="zambian" selected="@(ViewBag.Nacionalidade=="zambian")">Zambian</option>
+				<option value="zimbabwean" selected="@(ViewBag.Nacionalidade=="zimbabwean")">Zimbabwean</option>
+
+			</select>
+		</div>
+	</div>
+	<footer class="major">
+		<div>
+			<input type="submit" value="Registar" class="primary" /><!--ir para o home/index-->
+			<input type="reset" value="Reset" onclick="resetPass('olhoPRA', 'PasswordRegistar'); resetPass('olhoCPA','ConfirmPassword');" />
+		</div>
+	</footer>
+</form>
