@@ -8,9 +8,8 @@
 	<header class="major">
 	</header>
 	<body>
-		<div class="row">
+		<div class="row centrado">
 			<div class="col-md-4">
-				<section>
 					<form id="account" method="post">
 						<h4>@ViewData["Title"]</h4>
 						<hr />
@@ -26,11 +25,12 @@
 								<input asp-for="Input.Password" class="form-control" />
 								<span asp-validation-for="Input.Password" class="text-danger"></span>
 							</div>
-							<div class="form-group">
+							<div class="field">
 								<div class="checkbox">
-									<label asp-for="Input.RememberMe">
-										<input asp-for="Input.RememberMe" />
-										@Html.DisplayNameFor(m => m.Input.RememberMe)
+									<label asp-for="Input.RememberMe"/>
+										<input asp-for="Input.RememberMe"/>
+											Guardar os meus dados
+										 @*@Html.DisplayNameFor(m => m.Input.RememberMe)*@
 									</label>
 								</div>
 							</div>
@@ -41,27 +41,24 @@
 							</div>
 							<div class="form-group">
 								<p>
-									<a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+									<a id="forgot-password" asp-page="./ForgotPassword">Recuperar password?</a>
 								</p>
 								<p>
-									<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+									<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registar como novo utilizador</a>
 								</p>
 							</div>
 						</div>
 					</form>
-				</section>
 			</div>
 			<div class="col-md-6 col-md-offset-2">
 				<section>
-					<h4>Use another service to log in.</h4>
 					<hr />
 					@{
 						if ((Model.ExternalLogins?.Count ?? 0) == 0)
 						{
 							<div>
 								<p>
-									There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-									for details on setting up this ASP.NET application to support logging in via external services.
+									Não existem serviços de autenticação externa neste site.
 								</p>
 							</div>
 						}
