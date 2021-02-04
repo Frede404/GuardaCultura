@@ -24,7 +24,7 @@ namespace GuardaCultura.Controllers
         }
 
         // GET: Pessoas
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles= "Administrador")]
         public async Task<IActionResult> Index()
         {
             //var guardaCulturaContext = _context.Pessoa.Include(p => p.Funcao);
