@@ -326,8 +326,8 @@ namespace GuardaCultura.Controllers
                     bool admin = this.User.IsInRole("Administrador");
 
                     
-                        //var testes=User.r
-                        if (User.IsInRole("Controlador"))
+                    //var testes=User.r
+                    if (User.IsInRole("Controlador"))
                     {
                         return RedirectToAction("IndexOcupacao", "Ocupacaos");
                     }
