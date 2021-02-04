@@ -228,10 +228,10 @@ namespace GuardaCultura.Controllers
                             .Find(fotografia.PessoaId)
                             .FuncaoId;*/
 
-                /*if (funcao==1)
+                if (User.IsInRole("Administrador"))
                 {
                     fotografia.Aprovada = true;
-                }*/
+                }
                 // todo: validacoes adicionais antes de inserir a foto
                 fotografia.Classificacao = 5.0f;
                 fotografia.N_Votos = 1;

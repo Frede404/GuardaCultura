@@ -1,0 +1,253 @@
+﻿@*@model IEnumerable<GuardaCultura.Models.Miradouro>*@
+
+@model ListaMiradouro
+
+<section class="wrapper style3 container special">
+    <header class="major">
+        <h1>Lista de Miradouros</h1>
+        <h1>Filtros</h1>
+        @*<div class="divFiltro">
+            <form>
+                <div class="fields">
+                    <div class="form-group field half">
+                        <label for="e_miradouro">Tipo: </label>
+                        <select name="e_miradouro">                            
+                            <option value="1" selected="@(Model.EMiradouro==1)">Miradouros e paisagens</option>
+                            <option value="2" selected="@(Model.EMiradouro==2)">Miradouros</option>
+                            <option value="3" selected="@(Model.EMiradouro==3)">Paisagens</option>
+                        </select>
+                        <br><br>
+                    </div>
+
+                    <div class="form-group field half">
+                        <label for="m_ativo">Estado: </label>
+                        <select name="m_ativo">
+                            <option value="1" selected="@(Model.MAtivo==1)">Ativos e inativos</option>
+                            <option value="2" selected="@(Model.MAtivo==2)">Ativos</option>
+                            <option value="3" selected="@(Model.MAtivo==3)">Inativos</option>
+                        </select>
+                        <br><br>
+                    </div>
+                    <div class="form-group field">
+                        <label for="m_nome">Nome do miradouro: </label>
+                        <input name="m_nome" value="@(Model.MNome)" class="form-control" onchange="CorrigeEspacos(this)" />
+                        <br><br>
+                    </div>
+                </div>
+                <input type="submit" asp-controller="Miradouroes" asp-action="Index" asp-route-page="1" value="Filtrar">
+            </form>
+        </div>*@
+    </header>
+    <body>
+        <p class="alinhaBotaoEsquerda">
+            <a asp-action="Create" class="button btn-primary">Novo</a>
+        </p>
+        <table class="table" id="tabelaconfig">
+            <thead>
+                <tr>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.Nome)*@
+                        Nome
+                    </th>
+                    @*<th>
+                        Localização
+                        @Html.DisplayNameFor(model => model.Localizacao)
+                    </th>*@
+                    @*<th>
+                        Coordenadas GPS*@
+                        @*@Html.DisplayNameFor(model => model.Coordenadas_gps)*@
+                    @*</th>*@
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Terreno)
+                        Terreno
+                    </th>*@
+                    @*<th>
+                        É miradouro
+                        @Html.DisplayNameFor(model => model.E_Miradouro)
+                    </th>*@
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.Condicoes)
+                        </th>*@
+                    <th>
+                        Ocupação maxima
+                        @*@Html.DisplayNameFor(model => model.Ocupacao_maxima)*@
+                    </th>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Descricao)
+                    </th>*@
+                    <th>Opções</th>
+                    <th>Ativar/Desativar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Miradouros)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Localizacao)*@
+                        </td>
+                        @*<td>*@
+                            @*@Html.DisplayFor(modelItem => item.Latitude_DD+","+ item.Longitude_DD)*@
+                            @*@Html.Encode(item.Longitude_DD+","+item.Latitude_DD)
+                        </td>*@
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Terreno)
+                        </td>*@
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.E_Miradouro)*@
+                            @if (item.E_Miradouro)
+                            {
+                                @Html.Encode("Miradouro")
+                            }
+                            else
+                            {
+                                @Html.Encode("Paisagem")
+                            }
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Condicoes)
+                            </td>*@
+                        <td>
+                            @if (item.Ocupacao_maxima == -1)
+                            {
+                                @Html.Encode("-")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Ocupacao_maxima)
+                            }
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Descricao)
+                            </td>*@
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.MiradouroId">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.MiradouroId">Detalhes</a> @*|
+                                <a asp-action="Delete" asp-route-id="@item.MiradouroId">Apagar</a>*@
+                        </td>
+                        <td>
+
+                            @if (!item.Ativo)
+                            {
+                                <a style="cursor: pointer" onclick="document.getElementById('id+@item.MiradouroId').style.display ='block'">Ativar</a>
+                                
+                            }
+                            else
+                            {
+                                <a style="cursor: pointer" onclick="document.getElementById('id+@item.MiradouroId').style.display ='block'">Desativar</a>
+                                
+                            }
+                            <div id="id+@item.MiradouroId" class="modalLogin">
+                                <form class="modal-content">
+                                    <div class="container">
+                                        <h1>
+                                            Tem a certeza que pretende
+                                            @if (!item.Ativo)
+                                            {
+                                                <b style="color: red">Ativar</b>
+                                            }
+                                            else
+                                            {
+                                                <b style="color: red">Desativar</b>
+                                            }
+                                            @if (!item.E_Miradouro)
+                                            {
+                                                <b>esta</b>
+                                                <b style="color: red">Paisagem</b>
+                                            }
+                                            else
+                                            {
+                                                <b>este</b>
+                                                <b style="color: red">Miradouro</b>
+                                            }
+                                        </h1>
+                                        <br />
+                                        <label style="color:red; font-weight: bold">Nome</label>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                        <br />
+                                        <br />
+                                        <label style="color:red; font-weight: bold">Localização</label>
+                                        @Html.DisplayFor(modelItem => item.Localizacao)
+                                        <br />
+                                        <br />
+                                        <label style="color:red; font-weight: bold">Terreno</label>
+                                        @Html.DisplayFor(modelItem => item.Terreno)
+                                        <br />
+                                        @*<div style="margin:20px">
+                                            @if (!item.Ativo)
+                                            {
+                                                <a class="button" asp-action="Ativar" asp-route-id="@item.MiradouroId" asp-route-page="@Model.pagination.CurrentPage">Ativar</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="button" asp-action="Ativar" asp-route-id="@item.MiradouroId" asp-route-page="@Model.pagination.CurrentPage">Desativar</a>
+                                            }
+                                            <button type="button" onclick="document.getElementById('id+@item.MiradouroId').style.display = 'none'" class="cancelbtn">Cancel</button>
+                                        </div>*@
+
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination">
+                @{
+                    if (Model.pagination.TotalPages > 1)
+                    {
+
+                        if (Model.pagination.CurrentPage == 1)
+                        {
+                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                        }
+
+                        int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
+                        if (primeiraPagina < 1)
+                        {
+                            primeiraPagina = 1;
+                        }
+
+                        int ultimaPagina = Model.pagination.CurrentPage + PagingInfoMiradouro.NUMERO_ANTES;
+                        if (ultimaPagina > Model.pagination.TotalPages)
+                        {
+                            ultimaPagina = Model.pagination.TotalPages;
+                        }
+
+                        @for (int p = primeiraPagina + 1; p < ultimaPagina; p++)
+                        {
+                            if (p == Model.pagination.CurrentPage)
+                            {
+                                <li class="page-item"><a class="page-link active" href="#">@p</a></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
+                            }
+                        }
+
+                        if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
+                        {
+                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                        }
+                    }
+                }
+            </ul>
+        </nav>
+    </body>
+</section>

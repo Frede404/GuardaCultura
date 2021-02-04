@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GuardaCultura.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Controlador")]
     public class OcupacaosController : Controller
     {
         private readonly GuardaCulturaContext _context;
@@ -24,7 +24,9 @@ namespace GuardaCultura.Controllers
         // GET: Ocupacaos
         public async Task<IActionResult> Index()
         {
+
             var guardaCulturaContext = _context.Ocupacao.Include(o => o.Hora).Include(o => o.Miradouro);
+           
             return View(await guardaCulturaContext.ToListAsync());
         }
 
@@ -51,8 +53,8 @@ namespace GuardaCultura.Controllers
         // GET: Ocupacaos/Create
         public IActionResult Create()
         {
-            ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "HoraId");
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps");
+            ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "Horas");
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome");
             return View();
         }
 
@@ -72,8 +74,8 @@ namespace GuardaCultura.Controllers
                 // todo: informar o utilizador, ocupacao criada com sucesso
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "HoraId", ocupacao.HoraId);
-            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Coordenadas_gps", ocupacao.MiradouroId);
+            ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "Horas", ocupacao.HoraId);
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", ocupacao.MiradouroId);
             return View(ocupacao);
         }
 
@@ -173,6 +175,43 @@ namespace GuardaCultura.Controllers
         private bool OcupacaoExists(int id)
         {
             return _context.Ocupacao.Any(e => e.OcupacaoId == id);
+        }
+
+        public async Task<IActionResult> IndexOcupacao(int page)
+        {
+            ViewData["HoraId"] = new SelectList(_context.Hora, "HoraId", "Horas");
+            ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome");
+            return View();
+            var paginacao = new PagingInfoOcupacao
+            {
+                CurrentPage = page,
+                PageSize = PagingInfoOcupacao.TAM_PAGINA,
+                TotalItems = _context.Miradouro
+                .Where(m => m.E_Miradouro == true)
+                .Where(m => m.Ativo == true).Count()
+
+            };
+
+            var ocupa = _context.Ocupacao;
+            //.Include(o => o.Hora)
+            //.Include(o => o.Miradouro)
+            //.Where(m => m.Miradouro == )
+            //.Where(m => m. );
+
+            //select Miradouro.MiradouroId, Nome, Ocupacao_maxima, Numero_pessoas, Hora.HoraId from Miradouro, Ocupacao, Hora
+            //where Ocupacao.MiradouroId = Miradouro.MiradouroId and
+            //Ocupacao.HoraId = Hora.HoraId
+
+            return View(
+                new ListaOcupacao 
+                {
+                    ocupacao = _context.Ocupacao
+                    .Where(m => m.MiradouroId == m.Miradouro.MiradouroId)
+                    .Where(m => m.HoraId == m.Hora.HoraId),
+
+                    //.Where(m => m.Ativo == true),
+
+        });
         }
     }
 }
