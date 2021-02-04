@@ -350,13 +350,13 @@ namespace GuardaCultura.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return PartialView("_ModalLoginApresentacao");
+                    return RedirectToAction("Index", "Home", new { erro = "Login", emaillogin = Input.Email });
                 }
             }
 
             
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("Index","Home",new { erro="Login"});
+            return RedirectToAction("Index","Home",new { erro="Login", emaillogin = Input.Email});
             //return RedirectToAction("Miradouros");
         }
         public IActionResult Sobre()

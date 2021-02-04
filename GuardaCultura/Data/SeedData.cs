@@ -36,6 +36,14 @@ namespace GuardaCultura.Data
             PopulateFotografias(dbContext, true);
         }
 
+        internal static void PopulateEssencial(GuardaCulturaContext dbContext)
+        {
+            PopulateHoras(dbContext);
+            PopulateFuncao(dbContext);
+            PopulateEstacaoAno(dbContext);
+            PopulateTipoImagem(dbContext);
+        }
+
         private static void PopulateHoras(GuardaCulturaContext dbContext)
         {
             if (dbContext.Hora.Any())//ve se ja ha Horas na base de dados

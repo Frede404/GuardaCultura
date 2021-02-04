@@ -6,12 +6,14 @@
 <h2 class="major">Entrar</h2>
 <form id="account" method="post" action="#">
 	<div class="fields">
-		<div asp-validation-summary="All" class="text-danger" id="errologin" style="display:none"></div>
+		<div>
+			<span asp-validation-for="errologin" class="erro" id="errologin"></span>
+		</div>
 		<div class="field">
 			@*<label for="email">Email</label>
 			<input type="text" name="email" id="email" />*@
 			<label asp-for="Email"></label>
-			<input asp-for="Email" class="form-control" />
+			<input asp-for="Email" class="form-control" value="@ViewBag.Email"/>
 			<span asp-validation-for="Email" class="text-danger"></span>
 		</div>
 		<div class="field">

@@ -36,5 +36,7 @@ namespace GuardaCultura.Models
         public float Fiabilidade { get; set; }
 
         public bool Bloqueio { get; set; }
+
+        public string erroregistar { get; set; }
     }
 }
