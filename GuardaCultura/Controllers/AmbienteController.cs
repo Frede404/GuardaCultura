@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using System.Net;
 
 namespace GuardaCultura.Controllers
 {
@@ -319,7 +321,22 @@ namespace GuardaCultura.Controllers
                 {
                     _logger.LogInformation("User logged in.");
                     /*return LocalRedirect(returnUrl);*/
-                    return RedirectToAction("Ambiente", "Ambiente");
+                    bool controlador = this.User.IsInRole("Controlador");
+                    bool turista = this.User.IsInRole("Turista");
+                    bool admin = this.User.IsInRole("Administrador");
+
+                    
+                        //var testes=User.r
+                        if (User.IsInRole("Controlador"))
+                    {
+                        return RedirectToAction("IndexOcupacao", "Ocupacaos");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Ambiente", "Ambiente");
+                    }
+
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {

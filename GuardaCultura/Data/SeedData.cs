@@ -269,8 +269,8 @@ namespace GuardaCultura.Data
                             int Estacao_ID = rnd.Next(1, 5);
                             int Tipo_ID = rnd.Next(1, 4);
                             int Pessoa_ID = rnd.Next(1, 4);
-                            //int foto_nome = rnd.Next(1, 20);
-                            int foto_nome = rnd.Next(50, 61);
+                            int foto_nome = rnd.Next(1, 20);
+                            //int foto_nome = rnd.Next(50, 61);
                             float classificacao = (float)rnd.Next(0, 1001) / 100;
                             int n_votos = rnd.Next(2, 101);
                             byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
@@ -339,8 +339,8 @@ namespace GuardaCultura.Data
                             int Estacao_ID = rnd.Next(1, 5);
                             int Tipo_ID = rnd.Next(1, 4);
                             int Pessoa_ID = rnd.Next(1, 4);
-                            //int foto_nome = rnd.Next(1, 20);
-                            int foto_nome = rnd.Next(50, 61);
+                            int foto_nome = rnd.Next(1, 20);
+                            //int foto_nome = rnd.Next(50, 61);
                             float classificacao = (float)rnd.Next(0, 1001) / 100;
                             int n_votos = rnd.Next(2, 101);
                             byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");
@@ -430,8 +430,8 @@ namespace GuardaCultura.Data
                 int Estacao_ID = rnd.Next(1, 5);
                 int Tipo_ID = rnd.Next(1, 4);
                 int Pessoa_ID = rnd.Next(1, 4);
-                //int foto_nome = rnd.Next(1, 20);
-                int foto_nome = rnd.Next(50, 61);
+                int foto_nome = rnd.Next(1, 20);
+                //int foto_nome = rnd.Next(50, 61);
                 float classificacao = (float)rnd.Next(0, 1001) / 100;
                 int n_votos = rnd.Next(2, 101);
                 byte[] fotogafia = File.ReadAllBytes("./Fotos_FCMusic/" + foto_nome + ".jpg");

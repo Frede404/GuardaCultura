@@ -396,27 +396,31 @@
 
 	</section>-->
 		<!-- Footer -->
-		<footer id="footer">
-			<ul>
-				<a asp-controller="Ambiente" asp-action="Sobre" class="button btn-primary">Sobre nós</a>
-			</ul>
-			<ul class="icons">
-				<li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
-				<li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon brands circle fa-google-plus-g"><span class="label">Google+</span></a></li>
-				<li><a href="#" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
-				<li><a href="#" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
-			</ul>
+    <footer id="footer">
+        <ul>
+            <a asp-controller="Ambiente" asp-action="Sobre" class="button btn-primary">Sobre nós</a>
+        </ul>
+        <ul class="icons">
+            <li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands circle fa-google-plus-g"><span class="label">Google+</span></a></li>
+            <li><a href="#" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+            <li><a href="#" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+        </ul>
 
-            <ul class="copyright">
-                <li>&copy; Template: <a href="https://html5up.net/twenty">TWENTY</a></li>
-                <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            </ul>
-            <div>
-                <a asp-controller="Home" asp-action="BackOffice" class="button btn-primary">Back Office</a>
-            </div>
+        <ul class="copyright">
+            <li>&copy; Template: <a href="https://html5up.net/twenty">TWENTY</a></li>
+            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
 
-		</footer>
+        @if (User.IsInRole("Administrador"))
+        {
+		<div>
+			<a asp-controller="Home" asp-action="BackOffice" class="button btn-primary">Back Office</a>
+		</div>
+        }
+
+    </footer>
 
 	</div>
 
