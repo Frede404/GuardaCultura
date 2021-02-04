@@ -40,7 +40,13 @@ namespace GuardaCultura.Controllers
         {
             return View();
         }
-     
+
+        public IActionResult CapitalCultura() 
+        {
+            return View();
+        }
+
+
         public IActionResult Paisagens(int page = 1)
         {
             var paginacao = new PagingInfoPaginaMiradouros
