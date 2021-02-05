@@ -13,7 +13,7 @@
 					<form id="account" method="post">
 						<h4>@ViewData["Title"]</h4>
 						<hr />
-						<div asp-validation-summary="All" class="text-danger"></div>
+						@*<div asp-validation-summary="All" class="text-danger"></div>*@
 						<div class="fields">
 							<div class="field half">
 								<label asp-for="Input.Email"></label>
@@ -29,8 +29,7 @@
 								<div class="checkbox">
 									<label asp-for="Input.RememberMe"/>
 										<input asp-for="Input.RememberMe"/>
-											Guardar os meus dados
-										 @*@Html.DisplayNameFor(m => m.Input.RememberMe)*@
+										 @Html.DisplayNameFor(m => m.Input.RememberMe)
 									</label>
 								</div>
 							</div>

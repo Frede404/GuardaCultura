@@ -42,15 +42,15 @@ namespace GuardaCultura.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage ="E-mail óbrigatório")]
             [EmailAddress]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage ="Password óbrigatória")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Guardar os meus dados")]
             public bool RememberMe { get; set; }
         }
 

@@ -17,10 +17,10 @@ namespace GuardaCultura.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório ter uma password")]
+        [Required(ErrorMessage = "Password óbrigatória")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "É obrigatório ter uma password")]
+        [Required(ErrorMessage = "  Password óbrigatória")]
         [Compare("Password", ErrorMessage = "Password nao corresponde")]
         public string ConfirmPassword { get; set; }
 
