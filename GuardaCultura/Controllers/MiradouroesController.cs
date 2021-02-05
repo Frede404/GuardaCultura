@@ -315,15 +315,24 @@ namespace GuardaCultura.Controllers
 
                 // todo: informar o utilizador, miradouro criado com sucesso
                 //ViewData["sucess"] = "Miradouro criado com sucesso.";
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                ViewBag.MiradouroSucesso = "Criar";
+                return RedirectToAction("CriarSucesso");
 
             }
             //ViewData["error"] = "Falha ao criar o miradouro!";
             return View(miradouro);
         }
-        
 
-            
+        public IActionResult CriarSucesso()
+        {
+            return View();
+        }
+
+        public IActionResult EditarSucesso()
+        {
+            return View();
+        }
 
         // GET: Miradouroes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -473,7 +482,9 @@ namespace GuardaCultura.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                ViewBag.MiradouroSucesso = "Editar";
+                return RedirectToAction("EditarSucesso");
             }
             // todo: informar o utilizador que o miradouro foi editado com sucesso
             return View(miradouro);

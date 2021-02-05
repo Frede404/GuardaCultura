@@ -1,0 +1,25 @@
+﻿@model GuardaCultura.Models.Fotografia
+
+@{
+	ViewData["Title"] = "Sucesso";
+}
+
+<meta http-equiv="refresh" content="2; url=@Url.Action("Ambiente","Ambiente")" />
+
+<section class="wrapper style3 container special">
+	<header class="major">
+		<h1>Registado com sucesso</h1>
+		@*@if (ViewBag.FotoSucesso == "Criar")
+		{
+			<h1>Fotografia Inserida com sucesso</h1>
+		}
+		else if (ViewBag.FotoSucesso == "Editar")
+		{
+			<h1>Fotografia Editada com sucesso</h1>
+		}*@
+	</header>
+</section>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

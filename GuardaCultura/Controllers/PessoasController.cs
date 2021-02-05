@@ -95,10 +95,17 @@ namespace GuardaCultura.Controllers
             
             _context.Add(pessoa);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(AmbienteController.Ambiente),"Ambiente");
-            
+            //return RedirectToAction(nameof(AmbienteController.Ambiente),"Ambiente");
+            ViewBag.PessoaSucesso = "Criar";
+            return RedirectToAction("CriarSucesso");
+
             //ViewData["FuncaoId"] = new SelectList(_context.Funcao, "FuncaoId", "FuncaoDesempenhar", pessoa.FuncaoId);
             //return View(pessoaInfo);
+        }
+
+        public IActionResult CriarSucesso()
+        {
+            return View();
         }
 
         // GET: Pessoas/Edit/5
@@ -263,7 +270,9 @@ namespace GuardaCultura.Controllers
 
             _context.Add(pessoa);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(AmbienteController.Ambiente), "Ambiente");
+            //return RedirectToAction(nameof(AmbienteController.Ambiente), "Ambiente");
+            ViewBag.PessoaSucesso = "Criar";
+            return RedirectToAction("CriarSucesso");
 
             //ViewData["FuncaoId"] = new SelectList(_context.Funcao, "FuncaoId", "FuncaoDesempenhar", pessoa.FuncaoId);
             //return View(pessoaInfo);

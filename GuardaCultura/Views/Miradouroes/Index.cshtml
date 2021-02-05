@@ -206,11 +206,11 @@
 
                         if (Model.pagination.CurrentPage == 1)
                         {
-                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="@Model.EMiradouro" asp-route-m_ativo="@Model.MAtivo" asp-route-m_nome="@Model.MNome" asp-route-page="1">1</a></li>
                         }
                         else
                         {
-                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="1">1</a></li>
+                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="@Model.EMiradouro" asp-route-m_ativo="@Model.MAtivo" asp-route-m_nome="@Model.MNome" asp-route-page="1">1</a></li>
                         }
 
                         int primeiraPagina = Model.pagination.CurrentPage - PagingInfoMiradouro.NUMERO_ANTES;
@@ -233,17 +233,17 @@
                             }
                             else
                             {
-                                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@p">@p</a></li>
+                                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="@Model.EMiradouro" asp-route-m_ativo="@Model.MAtivo" asp-route-m_nome="@Model.MNome" asp-route-page="@p">@p</a></li>
                             }
                         }
 
                         if (Model.pagination.CurrentPage == Model.pagination.TotalPages)
                         {
-                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                            <li class="page-item"><a class="page-link active" asp-action="Index" asp-route-e_miradouro="@Model.EMiradouro" asp-route-m_ativo="@Model.MAtivo" asp-route-m_nome="@Model.MNome" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
                         }
                         else
                         {
-                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="0" asp-route-estado="0" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
+                            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-e_miradouro="@Model.EMiradouro" asp-route-m_ativo="@Model.MAtivo" asp-route-m_nome="@Model.MNome" asp-route-page="@Model.pagination.TotalPages">@Model.pagination.TotalPages</a></li>
                         }
                     }
                 }

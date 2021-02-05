@@ -280,13 +280,25 @@ namespace GuardaCultura.Controllers
                 await _context.SaveChangesAsync();
 
                 // todo: informar o utilizador, foto inserida com sucesso
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                ViewBag.FotoSucesso = "Criar";
+                return RedirectToAction("CriarSucesso");
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
             ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
             ViewData["PessoaId"] = new SelectList(_context.Set<Pessoa>(), "PessoaId", "Nome", fotografia.PessoaId);
             ViewData["TipoImagemId"] = new SelectList(_context.TipoImagem, "TipoImagemId", "Descricao", fotografia.TipoImagemId);
             return View(fotografia);
+        }
+
+        public IActionResult CriarSucesso()
+        {
+            return View();
+        }
+
+        public IActionResult EditarSucesso()
+        {
+            return View();
         }
 
         // GET: Fotografias/Edit/5
@@ -351,7 +363,9 @@ namespace GuardaCultura.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewBag.FotoSucesso = "Editar";
+                return RedirectToAction("EditarSucesso");
+                //return RedirectToAction(nameof(Index));
             }
             ViewData["EstacaoAnoId"] = new SelectList(_context.EstacaoAno, "EstacaoAnoId", "Nome_estacao", fotografia.EstacaoAnoId);
             ViewData["MiradouroId"] = new SelectList(_context.Miradouro, "MiradouroId", "Nome", fotografia.MiradouroId);
