@@ -70,8 +70,10 @@
                                         <p id="caption"></p>
                                     </div>*@
                                 </div>
-
-                                <a asp-controller="Ambiente" asp-action="Galeria" asp-route-id="@paisagem.MiradouroId" class="button btn-primary">Todas as Fotos</a>
+								@if(User.IsInRole("Administrador") || User.IsInRole("Controlador") || User.IsInRole("Turista"))
+                                {
+									<a asp-controller="Ambiente" asp-action="Galeria" asp-route-id="@paisagem.MiradouroId" class="button btn-primary">Todas as Fotos</a>
+                                }
                                 <div class="descricaoimg">
 
                                     <p>

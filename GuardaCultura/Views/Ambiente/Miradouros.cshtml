@@ -83,7 +83,7 @@
                                         <p id="caption"></p>
                                     </div>*@
                                 </div>
-								@if(User.IsInRole("Admin") || User.IsInRole("Controlador") || User.IsInRole("Turista"))
+								@if(User.IsInRole("Administrador") || User.IsInRole("Controlador") || User.IsInRole("Turista"))
                                 {
 									<a asp-controller="Ambiente" asp-action="Galeria" asp-route-id="@miradouro.MiradouroId" class="button btn-primary">Todas as Fotos</a>
                                 }
